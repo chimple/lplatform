@@ -10,10 +10,20 @@ import { MdButtonModule, MdCardModule, MdMenuModule, MdToolbarModule, MdIconModu
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
+import { LessonsComponent } from './lessons/lessons.component';
+import { NavmenuComponent } from './navmenu/navmenu.component';
+import { AlphabetComponent } from './alphabet/alphabet.component';
+import { PhoneticsComponent } from './phonetics/phonetics.component';
+import { WordsComponent } from './words/words.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LessonsComponent,
+    NavmenuComponent,
+    AlphabetComponent,
+    PhoneticsComponent,
+    WordsComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +33,7 @@ import { AppComponent } from './app.component';
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features  
     MdButtonModule,
+    BrowserAnimationsModule,
     MdMenuModule,
     MdCardModule,
     MdToolbarModule,
