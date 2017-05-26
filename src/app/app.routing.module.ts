@@ -1,8 +1,10 @@
-﻿import { NgModule } from '@angular/core';
-
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NavmenuComponent } from './navmenu/navmenu.component';
-
+import { AlphabetComponent } from './alphabet/alphabet.component';
+import { LessonsComponent } from './lessons/lessons.component';
+import { WordsComponent } from './words/words.component';
+import { PhoneticsComponent } from './phonetics/phonetics.component';
 // Root Router Part.
 
 /*const appRoutes: Routes = [
@@ -21,7 +23,12 @@ import { NavmenuComponent } from './navmenu/navmenu.component';
 ];*/
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/signin', pathMatch: 'full' }
+    { path: '', redirectTo: '/alphabet', pathMatch: 'full' },
+    { path: 'alphabet', component: AlphabetComponent},
+    { path: 'phenatic', component: PhoneticsComponent},
+    { path: 'words', component: WordsComponent},
+    { path: 'lessons', component: LessonsComponent},
+
 ];
 
 @NgModule({

@@ -12,7 +12,7 @@ export class NavmenuComponent implements OnInit {
 
     ngOnInit() {
 
-        this.router.navigate(['testNotTaken'], { relativeTo: this.route });
+        //this.router.navigate(['testNotTaken'], { relativeTo: this.route });
     
     }
 
