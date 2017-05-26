@@ -1,0 +1,197 @@
+{
+  "courses" : {
+    "XX01" : {
+      "name" : "English for Indians",
+      "lang" : "English",
+      "image" : "images/XX01.jpg",
+      "learners": "5000435",
+      "creator": "sri@chimple.org"
+    },
+    "XX02" : {
+      "name" : "ಕನ್ನಡ ಕಲಿಯಿರಿ",
+      "lang" : "Kannada",
+      "image" : "images/XX02.jpg",
+      "learners": "403456",
+      "creator": "shyamal@chimple.org"
+    }
+  },
+  "course_details" : {
+    "XX01" : {
+      "alphabets": {
+        "a": {
+          "sound": "sound/XX01/sound/a.mp3",
+          "pronunciation": "sound/XX01/pronunciation/a.mp3",
+          "order": 1
+        },
+        "b": {
+          "sound": "sound/XX01/sound/b.mp3",
+          "pronunciation": "sound/XX01/pronunciation/b.mp3",
+          "order": 2
+        }
+      },
+      "phonetics": {
+        "æ": {
+          "writing": "a",
+          "pronunciation": "sound/XX01/pronunciation/æ.mp3",
+          "order": 1
+        },
+        "pp": {
+          "writing": "pp",
+          "pronunciation": "sound/XX01/pronunciation/pp.mp3",
+          "order": 2
+        },
+        "əl": {
+          "writing": "le",
+          "pronunciation": "sound/XX01/pronunciation/əl.mp3",
+          "order": 3
+        }
+      },
+      "words" : {
+        "apple": {
+          "pronunciation": "sound/XX01/pronunciation/apple.mp3",
+          "image": "images/XX01/apple.mp3",
+          "ref": "apple",
+          "meaning": "A fruit",
+          "phonetics": {
+            "1": {
+              "a": "æ",
+              "order": "1"
+            },
+            "2": {
+              "pp": "p",
+              "order": "2"
+            },
+            "3": {
+              "le": "əl",
+              "order": "1"
+            }
+          }
+        }
+      },
+      "lessons" : {
+        "XX03": {
+          "name": "Lower case alphabets",
+          "teach": "alphabets",
+          "order": "1",
+          "items": {
+            "XX07": {
+              "item": "a",
+              "order": 1
+            },
+            "XX08": {
+              "item": "b",
+              "order": 2
+            },
+            "XX09": {
+              "item": "c",
+              "order": 3
+            }
+          }          
+        },
+        "XX04": {
+          "name": "Fruits",
+          "teach": "words",
+          "order": "2",
+          "items": {
+            "XX0A": {
+              "item": "Apple",
+              "order": 1
+            },
+            "XX0B": {
+              "item": "Banana",
+              "order": 2
+            },
+            "XX0C": {
+              "item": "Orange",
+              "order": 3
+            }
+          }          
+        }
+      }      
+    },
+    "XX02" : {
+      "alphabets": {
+        "ಕ": {
+          "sound": "sound/XX02/sound/ಕ.mp3",
+          "pronunciation": "sound/XX02/pronunciation/ಕ.mp3",
+          "order": 1
+        },
+        "ಖ": {
+          "sound": "sound/XX02/sound/ಖ.mp3",
+          "pronunciation": "sound/XX02/pronunciation/ಖ.mp3",
+          "order": 2
+        }
+      },
+      "phonetics": {
+        "ಸೇ": {
+          "writing": "ಸೇ",
+          "pronunciation": "sound/XX02/pronunciation/ಸೇ.mp3",
+          "order": 1
+        },
+        "ಬು": {
+          "writing": "ಬು",
+          "pronunciation": "sound/XX02/pronunciation/ಬು.mp3",
+          "order": 2
+        }
+      },
+      "words" : {
+        "ಸೇಬು": {
+          "pronunciation": "sound/XX02/pronunciation/ಸೇಬು.mp3",
+          "image": "images/XX02/ಸೇಬು.mp3",
+          "ref": "apple",
+          "meaning": "ಹಣ್ಣುಹಂಪಲು",
+          "phonetics": {
+            "1": {
+              "ಸೇ": "ಸೇ",
+              "order": "1"
+            },
+            "2": {
+              "ಬು": "ಬು",
+              "order": "2"
+            }
+          }
+        }
+      },
+      "lessons" : {
+        "XX05": {
+          "name": "ವರ್ಣಮಾಲ",
+          "teach": "alphabets",
+          "order": "1",
+          "items": {
+            "XX0C": {
+              "item": "ಅ",
+              "order": 1
+            },
+            "XX0D": {
+              "item": "ಆ",
+              "order": 2
+            },
+            "XX0E": {
+              "item": "ಇ",
+              "order": 3
+            }
+          }
+        },
+        "XX06": {
+          "name": "ಹಣ್ಣುಗಳು",
+          "teach": "words",
+          "order": "2",
+          "items": {
+            "XX0F": {
+              "item": "ಸೇಬು",
+              "order": 1
+            },
+            "XX10": {
+              "item": "ಬಾಳೇಹಣ್ಣು",
+              "order": 2
+            },
+            "XX11": {
+              "item": "ಮಾವಿನಹಣ್ಣು",
+              "order": 3
+            }
+          }
+        }
+      }      
+    } 
+  }
+}
