@@ -76,15 +76,27 @@
           "items": {
             "XX07": {
               "item": "a",
-              "order": 1
+              "order": 1,
+              "words": {
+                "1": "apple",
+                "2": "axe"
+              }
             },
             "XX08": {
               "item": "b",
-              "order": 2
+              "order": 2,
+              "words": {
+                "1": "bat",
+                "2": "boy"
+              }
             },
             "XX09": {
               "item": "c",
-              "order": 3
+              "order": 3,
+              "words": {
+                "1": "cat",
+                "2": "cap"
+              }              
             }
           }          
         },
@@ -160,15 +172,27 @@
           "items": {
             "XX0C": {
               "item": "ಅ",
-              "order": 1
+              "order": 1,
+              "words": {
+                "1": "ಅರಸ",
+                "2": "ಅವನು"
+              }              
             },
             "XX0D": {
               "item": "ಆ",
-              "order": 2
+              "order": 2,
+              "words": {
+                "1": "ಆನೆ",
+                "2": "ಆಮೆ"
+              }              
             },
             "XX0E": {
               "item": "ಇ",
-              "order": 3
+              "order": 3,
+              "words": {
+                "1": "ಇವನು",
+                "2": "ಇದು"
+              }              
             }
           }
         },
