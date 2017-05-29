@@ -1,1 +1,46 @@
-Lessons Component
+
+ <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Teach</th>
+        <th>Focus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+
+<br />
+<table class="table table-bordered" ngShow="insertFlag">
+<tbody>
+      <tr>
+        <td><input type="text" id="lessonNameInput" /></td>
+        <td>
+        	<select class="form-control" id="selectTeach">
+			    <option>Alphabet</option>
+			    <option>Words</option>
+			</select>
+        </td>
+        <td></td>
+      </tr>
+</tbody>	
+</table>
+<br />
+<button type="button" class="btn btn-primary" ngShow="insertFlag">Save</button>
+<button type="button" class="btn btn-primary" ngHide="insertFlag" (click)="addLesson()">Add</button>

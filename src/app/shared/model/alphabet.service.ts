@@ -11,12 +11,12 @@ export class AlphabetService {
 
   findAlphabetsByCourse(courseUrl: string): Observable<Alphabet[]> {
     console.log(`findAlphabetsByCourse ${courseUrl}`);
-    return this.db.list(`course_alphabets/${courseUrl}`, {
+    return this.db.list(`course_alphabets`, {
       query: {
-        orderByChild: 'order'
+        orderByChild: 'course',
+        equalTo: `${courseUrl}`
       }
-    })
-      .map(results => Alphabet.fromJsonList(results))
-      .do(console.log);
+    }).map(results => Alphabet.fromJsonList(results));
+    // $results.subscribe(console.log);
   }
 }
