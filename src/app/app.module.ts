@@ -7,7 +7,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdMenuModule, MdToolbarModule, MdIconModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdMenuModule, MdToolbarModule, MdIconModule, MdInputModule } from '@angular/material';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -39,7 +39,8 @@ import { WordsComponent } from './words/words.component';
     MdMenuModule,
     MdCardModule,
     MdToolbarModule,
-    MdIconModule  
+    MdIconModule,
+    MdInputModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

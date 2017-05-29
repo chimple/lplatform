@@ -1,3 +1,18 @@
-<p>
-  words works!
-</p>
+<md-card>
+<md-card-content>
+<section class="example-section">
+  <md-input-container class="example-margin">
+  <input mdInput type="text" placeholder="Word" [(ngModel)]="word">
+  </md-input-container>
+  <md-input-container class="example-margin">
+  <input mdInput type="text" placeholder="" [(ngModel)]="min">
+  </md-input-container>
+  <md-input-container class="example-margin">
+  <input mdInput type="text" placeholder="Max value" [(ngModel)]="max">
+  </md-input-container>
+  <md-input-container class="example-margin">
+  <input mdInput type="text" placeholder="Step size" [(ngModel)]="step">
+  </md-input-container>
+</section>
+</md-card-content>
+</md-card>

@@ -5,12 +5,12 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: "AIzaSyD-WM1hXmdLiQMVCqt0hdKgbBNIOph3Xw4",
-    authDomain: "phonics-efa40.firebaseapp.com",
-    databaseURL: "https://phonics-efa40.firebaseio.com",
-    projectId: "phonics-efa40",
-    storageBucket: "phonics-efa40.appspot.com",
-    messagingSenderId: "734690421912"
-  }  
+ firebase: {
+    apiKey: "AIzaSyBvj9d2ex0xKu5AMTZ7GsmW6y6GxCFn1uw",
+    authDomain: "user-a1ecd.firebaseapp.com",
+    databaseURL: "https://user-a1ecd.firebaseio.com",
+    projectId: "user-a1ecd",
+    storageBucket: "user-a1ecd.appspot.com",
+    messagingSenderId: "619802219178"
+  }
 };
