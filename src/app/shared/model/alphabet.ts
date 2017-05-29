@@ -3,15 +3,14 @@ export class Alphabet {
     return array.map(Alphabet.fromJson);
   }
 
-  static fromJson({$key, character, sound, order, pronounciation}): Alphabet {
-    return new Alphabet($key, character, sound, order, pronounciation);
+  static fromJson({$key, sound, order, pronunciation}): Alphabet {
+    return new Alphabet($key, sound, order, pronunciation);
   }
 
   constructor(public $key: string,
-              public character: string,
               public sound: string,
               public order: number,
-              public pronounciation: string) {
+              public pronunciation: string) {
 
   }
 

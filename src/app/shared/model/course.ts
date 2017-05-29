@@ -4,16 +4,16 @@ export class Course {
     return array.map(Course.fromJson);
   }
 
-  static fromJson({$key, creator, language, learners, name, imageUrl}): Course {
-    return new Course($key, creator, language, learners, name, imageUrl);
+  static fromJson({$key, creator, lang, learners, name, image}): Course {
+    return new Course($key, creator, lang, learners, name, image);
   }
 
   constructor(public $key: string,
               public creator: string,
-              public language: string,
+              public lang: string,
               public learners: number,
               public name: string,
-              public imageUrl: string) {
+              public image: string) {
 
   }
 }
