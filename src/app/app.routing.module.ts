@@ -17,7 +17,7 @@ import { PhoneticsComponent } from './phonetics/phonetics.component';
             { path: '', component: HomeComponent } ,
             { path: 'home', component: HomeComponent } ,
              { path: 'changepassword', component: ChangepasswordComponent } ,
-            
+
         ]
     }
 ];*/
@@ -25,7 +25,7 @@ import { PhoneticsComponent } from './phonetics/phonetics.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/alphabet', pathMatch: 'full' },
     { path: 'alphabet', component: AlphabetComponent},
-    { path: 'phenatic', component: PhoneticsComponent},
+    { path: 'phonetics', component: PhoneticsComponent},
     { path: 'words', component: WordsComponent},
     { path: 'lessons', component: LessonsComponent},
 
