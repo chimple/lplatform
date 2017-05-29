@@ -19,6 +19,7 @@ export class AlphabetComponent implements OnInit {
   ngOnInit() {
     const alphabet$Key: string = this.route.snapshot.params['alphabetId'];
     this.alphabets$ = this.alphabetService.findAlphabetsByCourse(alphabet$Key);
+    console.log(this.alphabets$);
   }
 
 }
