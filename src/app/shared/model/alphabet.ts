@@ -6,8 +6,8 @@ export class Alphabet {
     return array.map(Alphabet.fromJson);
   }
 
-  static fromJson({alphabet, course, order, pronunciation, sound}): Alphabet {
-    return new Alphabet (alphabet, course, order, pronunciation, sound);
+  static fromJson({$key, course, order, pronunciation, sound}): Alphabet {
+    return new Alphabet ($key, course, order, pronunciation, sound);
   }
 
   constructor(public alphabet: string,
