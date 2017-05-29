@@ -4,13 +4,16 @@ export class LessonItem {
     return array.map(LessonItem.fromJson);
   }
 
-  static fromJson({$key, item, order}): LessonItem {
-    return new LessonItem($key, item, order);
+  static fromJson({$key, lesson, course, item, order, words}): LessonItem {
+    return new LessonItem($key, lesson, course, item, order, words);
   }
 
-  constructor(public $key: string,
+  constructor(public lessonItem: string,
+              public lesson: string,
+              public course: string,
               public item: string,
-              public order: number) {
+              public order: number,
+              public words: string[]) {
 
   }
 }
