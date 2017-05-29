@@ -1,0 +1,39 @@
+
+<div *ngIf="courseDetail$ | async as courseDetail">
+  <div>{{courseDetail.description}}</div>
+
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default" [routerLink]="alphabet/courseDetail.$key">ALPHABETS</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default" [routerLink]="phonetics/courseDetail.$key">PHONETICS</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default">WORDS</button>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-default">LESSONS</button>
+    </div>
+  </div>
+</div>
+
+<br/><br/>
+
+<router-outlet></router-outlet>
+
+
+<!--<ng2-tab-->
+  <!--selected="js"-->
+  <!--selected-index-class="selected"-->
+  <!--selected-contents-class="fadeIn animated">-->
+  <!--<div class="tabs">-->
+    <!--<div index="html">HTML</div>-->
+    <!--<div index="js">Javascript</div>-->
+  <!--</div>-->
+  <!--<div class="tab-contents">-->
+    <!--<div contents="html">HTML {{1}}</div>-->
+    <!--<div contents="js">Javascript {{1}}</div>-->
+  <!--</div>-->
+<!--</ng2-tab>-->

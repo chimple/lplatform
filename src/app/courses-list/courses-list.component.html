@@ -1,0 +1,8 @@
+<a class="list-group-item" *ngFor="let course of courses">
+  <div [routerLink]="course.$key">
+    <h4 class="list-group-item-heading">{{ course.name }}</h4>
+    <p class="list-group-item-text">Creator: {{ course.creator }}</p>
+    <p class="list-group-item-text">Language: {{ course.lang }} </p>
+    <p class="list-group-item-text">Learners: {{ course.learners }}</p>
+  </div>
+</a>

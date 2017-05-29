@@ -1,0 +1,11 @@
+<h2>ALL COURSES</h2>
+
+<h4>Total Courses: {{ courses?.length }}</h4>
+
+<input class="search-bar" placeholder="Search" (keyup) = "search(input.value)" #input>
+<br/><br/><br/>
+
+<div class="list-group">
+  <app-courses-list [courses]="filtered"></app-courses-list>
+</div>
+
