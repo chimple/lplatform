@@ -15,6 +15,14 @@
       "creator": "shyamal@chimple.org"
     }
   },
+  "course_details":{
+    "XX01": {
+      "description": "This is Basic English Course"
+    },
+    "XX02": {
+      "description": "This is Basic Kannada Course"
+    }
+  },
   "course_alphabets": {
     "XX01": {
       "a": {

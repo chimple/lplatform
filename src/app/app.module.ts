@@ -31,6 +31,10 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import {UploadService} from './shared/uploads/upload.service';
 import { RecordAudioComponent } from './record-audio/record-audio.component';
+import {AlphabetService} from './shared/model/alphabet.service';
+import {PhoneticsService} from './shared/model/phonetics.service';
+import {WordService} from './shared/model/word.service';
+import {LessonService} from './shared/model/lesson.service';
 
 
 @NgModule({
@@ -49,6 +53,7 @@ import { RecordAudioComponent } from './record-audio/record-audio.component';
     CourseDetailComponent,
     UploadFormComponent,
     RecordAudioComponent
+
   ],
   imports: [
     BrowserModule,
@@ -61,7 +66,7 @@ import { RecordAudioComponent } from './record-audio/record-audio.component';
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, CoursesService, UploadService],
+  providers: [AuthService, AuthGuard, CoursesService, UploadService, AlphabetService, PhoneticsService, WordService, LessonService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
