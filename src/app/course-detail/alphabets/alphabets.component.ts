@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {Alphabet} from "../../shared/model/alphabet";
-import {AlphabetService} from "../../shared/model/alphabet.service";
+import {Observable} from 'rxjs/Observable';
+import {Alphabet} from '../../shared/model/alphabet';
+import {AlphabetService} from '../../shared/model/alphabet.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-alphabet',
@@ -10,14 +11,14 @@ import {AlphabetService} from "../../shared/model/alphabet.service";
 })
 export class AlphabetComponent implements OnInit {
 
-  alphabets$: Observable<Alphabet>;
+  alphabets$: Observable<Alphabet[]>;
 
-  constructor(private alphabetService: AlphabetService) {
+  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
 
   ngOnInit() {
-    // this.alphabets$ = this.findAlphabetsByCourse();
+    const alphabet$Key: string = this.route.snapshot.params['alphabetId'];
+    this.alphabets$ = this.alphabetService.findAlphabetsByCourse(alphabet$Key);
   }
-
 
 }
