@@ -35,6 +35,7 @@ import {AlphabetService} from './shared/model/alphabet.service';
 import {PhoneticService} from './shared/model/phonetic.service';
 import {WordService} from './shared/model/word.service';
 import {LessonService} from './shared/model/lesson.service';
+import { SessionComponent } from './learn/session.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {LessonService} from './shared/model/lesson.service';
     CoursesListComponent,
     CourseDetailComponent,
     UploadFormComponent,
-    RecordAudioComponent
+    RecordAudioComponent,
+    SessionComponent
 
   ],
   imports: [
