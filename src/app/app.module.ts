@@ -36,6 +36,7 @@ import {PhoneticService} from './shared/model/phonetic.service';
 import {WordService} from './shared/model/word.service';
 import {LessonService} from './shared/model/lesson.service';
 import { SessionComponent } from './learn/session.component';
+import { DragulaModule } from 'ng2-dragula';
 
 
 @NgModule({
@@ -66,7 +67,7 @@ import { SessionComponent } from './learn/session.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, DragulaModule
   ],
   providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
   bootstrap: [AppComponent]

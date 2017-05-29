@@ -15,16 +15,16 @@
     <form #f="ngForm">
       <div class="col-xs-2">
         <label>Phonetics</label>
-        <input type="text" placeholder="Alphabet" class="form-control">
+        <input type="text" placeholder="Phonetics" class="form-control" required ngModel #phonetics name="phonetics">
       </div>
       <div class="col-xs-2">
         <label>Written</label>
-        <input type="text" placeholder="Alphabet" class="form-control">
+        <input type="text" placeholder="Written" class="form-control" required ngModel #written name="written">
       </div>
 
       <div class="col-xs-4" >
         <label>Pronunciation</label><br>
-        <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
+        <button class="btn btn-default" style="border-radius:20px 0px 0px 20px " (click)="onUpload()">
           Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
         </button>
         <button class="btn btn-default">
@@ -35,7 +35,7 @@
       </div>
       <div class="col-xs-2">
         <label></label><br>
-        <button class="btn btn-success" type="submit">Add</button>
+        <button class="btn btn-success" type="submit" [disabled]="!f.valid">Add</button>
       </div>
 
     </form>
