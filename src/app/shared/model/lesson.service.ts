@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import{Http, Response, Headers} from '@angular/http';
 import 'rxjs/Rx';
@@ -10,6 +11,4 @@ export class LessonService {
   constructor(private db: AngularFireDatabase) {
 
   }
-
-  
 }
