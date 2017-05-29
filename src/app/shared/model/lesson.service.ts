@@ -1,14 +1,20 @@
-
-import { Injectable } from '@angular/core';
-import{Http, Response, Headers} from '@angular/http';
-import 'rxjs/Rx';
-import{Observable} from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Course} from './course';
 import {AngularFireDatabase} from 'angularfire2/database';
+import {LessonItem} from './lesson-item';
 
 @Injectable()
 export class LessonService {
-	temp:any;
-  constructor(private db: AngularFireDatabase) {
 
+  constructor(private db: AngularFireDatabase) {
+  }
+
+  getLessonItems(lessonId: string): Observable<LessonItem[]> {
+    console.log(lessonId);
+
+    return this.db.list(`course_lesson_items/${lessonId}`)
+      .do(console.log)
+      .map(LessonItem.fromJsonList);
   }
 }
