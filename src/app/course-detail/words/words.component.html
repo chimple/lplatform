@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let worditem of wordlist" (click)="showitem(worditem.phonetics)">
+    <tr *ngFor="let worditem of words$ | async" (click)="showitem(worditem.phonetics)">
       <td>{{worditem.word}}</td>
       <td>{{worditem.meaning}}</td>
       <td>{{worditem.pronunciation}}</td>
@@ -80,7 +80,7 @@
         <div class="col-md-3">
           <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
         </div>
-        
+
       </div>
     </div>
   </div>
