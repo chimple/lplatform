@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CoursesService} from '../shared/model/courses.service';
+import {CourseService} from '../shared/model/course.service';
 import {Course} from '../shared/model/course';
 import {Observable} from 'rxjs/Observable';
 
@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
   allCourses: Course[];
   filtered: Course[];
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit() {
-    const receivedCourses = this.coursesService.findAllCourses();
+    const receivedCourses = this.courseService.findAllCourses();
     this.courses$ = receivedCourses;
     receivedCourses
       .subscribe(

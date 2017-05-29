@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {NavmenuComponent} from './navmenu/navmenu.component';
-import {AlphabetComponent} from './alphabet/alphabet.component';
+import {AlphabetComponent} from './alphabets/alphabets.component';
 import {LessonsComponent} from './lessons/lessons.component';
 import {WordsComponent} from './words/words.component';
 import {PhoneticsComponent} from './phonetics/phonetics.component';

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AlphabetComponent } from './alphabet.component';
+import { AlphabetComponent } from './alphabets.component';
 
 describe('AlphabetComponent', () => {
   let component: AlphabetComponent;

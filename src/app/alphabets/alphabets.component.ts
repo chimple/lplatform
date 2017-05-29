@@ -5,8 +5,8 @@ import {AlphabetService} from "../shared/model/alphabet.service";
 
 @Component({
   selector: 'app-alphabet',
-  templateUrl: './alphabet.component.html',
-  styleUrls: ['./alphabet.component.css']
+  templateUrl: './alphabets.component.html',
+  styleUrls: ['./alphabets.component.css']
 })
 export class AlphabetComponent implements OnInit {
 
