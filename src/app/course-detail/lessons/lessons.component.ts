@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-/*import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdMenuModule, MdToolbarModule, MdIconModule } from '@angular/material';*/
 import { LessonService } from '../../shared/model/lesson.service';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
-
+import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-lessons',
@@ -13,21 +10,28 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
   providers: [LessonService]
 })
 export class LessonsComponent implements OnInit {
-	items: FirebaseListObservable<any[]>;
 	insertFlag:boolean = false;
-	constructor(db: AngularFireDatabase) {
-		this.items = db.list('/course_lessons');
-		console.log(this.items);
+	lessonform : FormGroup;	
+	constructor(){
+
 	}
 
 
 
-  ngOnInit() {
-  	//this.courseDetail$ = this.courseService.getCourseDetail(courseUrl);
-  }
+	ngOnInit() {
+		let lessonName='';
+   		let teachSelect='';
+		this.lessonform= new FormGroup({
+			'lessonName':new FormControl(lessonName,Validators.required),
+			'teachSelect':new FormControl(teachSelect,Validators.required)
+		});
+	}
 
-  addLesson(){
-  	this.insertFlag = true;
-  }
+	addLesson():void {
+		this.insertFlag = true;
+	}
+	submitLesson(value){
+		console.log(value);
+	}
 
 }
