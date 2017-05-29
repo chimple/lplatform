@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {Phonetic} from '../../shared/model/phonetic';
+import {PhoneticService} from '../../shared/model/phonetic.service';
 
 @Component({
   selector: 'app-phonetics',
@@ -8,9 +11,14 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class PhoneticsComponent implements OnInit {
 
-  constructor(private router: ActivatedRoute) { }
+  phonetics$: Observable<Phonetic[]>;
+
+  constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
+  }
 
   ngOnInit() {
+    const phonetics$key: string = this.route.snapshot.params['phoneticId'];
+    this.phonetics$ = this.phoneticService.findPhoneticsByCourse(phonetics$key);
   }
 
 }

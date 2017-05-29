@@ -6,6 +6,16 @@
         <th>Written</th>
         <th>Pronunciation</th>
       </tr>
+      <tr *ngFor="let phonetic of phonetics$ | async">
+        <td>{{phonetic.alphabet}}</td>
+        <td>{{phonetic.writing}}</td>
+        <td>{{phonetic.pronunciation}}</td>
+        <td>
+          <app-upload-form></app-upload-form>
+          <app-record-audio></app-record-audio>
+        </td>
+      </tr>
+
     </table>
   </div>
 </div>
