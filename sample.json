@@ -15,7 +15,7 @@
       "creator": "shyamal@chimple.org"
     }
   },
-  "course_details":{
+  "course_details": {
     "XX01": {
       "description": "This is Basic English Course"
     },
@@ -24,210 +24,224 @@
     }
   },
   "course_alphabets": {
-    "XX01": {
-      "a": {
-        "sound": "sound/XX01/sound/a.mp3",
-        "pronunciation": "sound/XX01/pronunciation/a.mp3",
-        "order": 1
-      },
-      "b": {
-        "sound": "sound/XX01/sound/b.mp3",
-        "pronunciation": "sound/XX01/pronunciation/b.mp3",
-        "order": 2
-      }
+    "XXA1": {
+      "course": "XX01",
+      "sound": "sound/XX01/sound/a.mp3",
+      "pronunciation": "sound/XX01/pronunciation/a.mp3",
+      "order": 1,
+      "alphabet": "a"
     },
-    "XX02": {
-      "ಕ": {
-        "sound": "sound/XX02/sound/ಕ.mp3",
-        "pronunciation": "sound/XX02/pronunciation/ಕ.mp3",
-        "order": 1
-      },
-      "ಖ": {
-        "sound": "sound/XX02/sound/ಖ.mp3",
-        "pronunciation": "sound/XX02/pronunciation/ಖ.mp3",
-        "order": 2
-      }
+    "XXA2": {
+      "course": "XX01",
+      "sound": "sound/XX01/sound/b.mp3",
+      "pronunciation": "sound/XX01/pronunciation/b.mp3",
+      "order": 2,
+      "alphabet": "b"
+    },
+    "XXA3": {
+      "sound": "sound/XX02/sound/ಕ.mp3",
+      "pronunciation": "sound/XX02/pronunciation/ಕ.mp3",
+      "order": 1,
+      "alphabet": "ಕ",
+      "course": "XX01"
+    },
+    "XXA4": {
+      "sound": "sound/XX02/sound/ಖ.mp3",
+      "pronunciation": "sound/XX02/pronunciation/ಖ.mp3",
+      "order": 2,
+      "alphabet": "ಖ",
+      "course": "XX01"
     }
   },
   "course_phonetics": {
-    "XX01": {
-      "æ": {
-        "writing": "a",
-        "pronunciation": "sound/XX01/pronunciation/æ.mp3",
-        "order": 1
-      },
-      "pp": {
-        "writing": "pp",
-        "pronunciation": "sound/XX01/pronunciation/pp.mp3",
-        "order": 2
-      },
-      "əl": {
-        "writing": "le",
-        "pronunciation": "sound/XX01/pronunciation/əl.mp3",
-        "order": 3
-      }
+    "PH01": {
+      "writing": "a",
+      "pronunciation": "sound/XX01/pronunciation/æ.mp3",
+      "order": 1,
+      "course": "XX01",
+      "phonetic": "æ"
     },
-    "XX02": {
-      "ಸೇ": {
-        "writing": "ಸೇ",
-        "pronunciation": "sound/XX02/pronunciation/ಸೇ.mp3",
-        "order": 1
-      },
-      "ಬು": {
-        "writing": "ಬು",
-        "pronunciation": "sound/XX02/pronunciation/ಬು.mp3",
-        "order": 2
-      }
+    "PH02": {
+      "writing": "pp",
+      "pronunciation": "sound/XX01/pronunciation/pp.mp3",
+      "order": 2,
+      "course": "XX01",
+      "phonetic": "pp"
+    },
+    "PH03": {
+      "writing": "le",
+      "pronunciation": "sound/XX01/pronunciation/əl.mp3",
+      "order": 3,
+      "course": "XX01",
+      "phonetic": "əl"
+    },
+    "PH04": {
+      "writing": "ಸೇ",
+      "pronunciation": "sound/XX02/pronunciation/ಸೇ.mp3",
+      "order": 1,
+      "course": "XX02",
+      "phonetic": "ಸೇ"
+    },
+    "PH05": {
+      "writing": "ಬು",
+      "pronunciation": "sound/XX02/pronunciation/ಬು.mp3",
+      "order": 2,
+      "course": "XX02",
+      "phonetic": "ಬು"
     }
   },
   "course_words": {
-    "XX01": {
-      "apple": {
-        "pronunciation": "sound/XX01/pronunciation/apple.mp3",
-        "image": "images/XX01/apple.mp3",
-        "ref": "apple",
-        "meaning": "A fruit",
-        "phonetics": {
-          "1": {
-            "a": "æ",
-            "order": "1"
-          },
-          "2": {
-            "pp": "p",
-            "order": "2"
-          },
-          "3": {
-            "le": "əl",
-            "order": "1"
-          }
+    "W01": {
+      "course": "XX01",
+      "word": "apple",
+      "pronunciation": "sound/XX01/pronunciation/apple.mp3",
+      "image": "images/XX01/apple.mp3",
+      "ref": "apple",
+      "meaning": "A fruit",
+      "phonetics": {
+        "1": {
+          "a": "æ",
+          "order": "1"
+        },
+        "2": {
+          "pp": "p",
+          "order": "2"
+        },
+        "3": {
+          "le": "əl",
+          "order": "1"
         }
       }
     },
-    "XX02": {
-      "ಸೇಬು": {
-        "pronunciation": "sound/XX02/pronunciation/ಸೇಬು.mp3",
-        "image": "images/XX02/ಸೇಬು.mp3",
-        "ref": "apple",
-        "meaning": "ಹಣ್ಣುಹಂಪಲು",
-        "phonetics": {
-          "1": {
-            "ಸೇ": "ಸೇ",
-            "order": "1"
-          },
-          "2": {
-            "ಬು": "ಬು",
-            "order": "2"
-          }
+    "WO2": {
+      "course": "XX02",
+      "word": "ಸೇಬು",
+      "pronunciation": "sound/XX02/pronunciation/ಸೇಬು.mp3",
+      "image": "images/XX02/ಸೇಬು.mp3",
+      "ref": "apple",
+      "meaning": "ಹಣ್ಣುಹಂಪಲು",
+      "phonetics": {
+        "1": {
+          "ಸೇ": "ಸೇ",
+          "order": "1"
+        },
+        "2": {
+          "ಬು": "ಬು",
+          "order": "2"
         }
       }
     }
   },
   "course_lessons": {
-    "XX01": {
-      "XX03": {
-        "name": "Lower case alphabets",
-        "teach": "alphabets",
-        "order": "1"
-      },
-      "XX04": {
-        "name": "Fruits",
-        "teach": "words",
-        "order": "2"
-      }
+    "XX03": {
+      "course": "XX01",
+      "name": "Lower case alphabets",
+      "teach": "alphabets",
+      "order": "1"
     },
-    "XX02": {
-      "XX05": {
-        "name": "ವರ್ಣಮಾಲ",
-        "teach": "alphabets",
-        "order": "1"
-      },
-      "XX06": {
-        "name": "ಹಣ್ಣುಗಳು",
-        "teach": "words",
-        "order": "2"
-      }
+    "XX04": {
+      "course": "XX01",
+      "name": "Fruits",
+      "teach": "words",
+      "order": "2"
+    },
+    "XX05": {
+      "course": "XX02",
+      "name": "ವರ್ಣಮಾಲ",
+      "teach": "alphabets",
+      "order": "1"
+    },
+    "XX06": {
+      "course": "XX02",
+      "name": "ಹಣ್ಣುಗಳು",
+      "teach": "words",
+      "order": "2"
     }
   },
   "course_lesson_items": {
-    "XX03": {
-      "XX07": {
-        "item": "a",
-        "order": 1,
-        "words": {
-          "1": "apple",
-          "2": "axe"
-        }
-      },
-      "XX08": {
-        "item": "b",
-        "order": 2,
-        "words": {
-          "1": "bat",
-          "2": "boy"
-        }
-      },
-      "XX09": {
-        "item": "c",
-        "order": 3,
-        "words": {
-          "1": "cat",
-          "2": "cap"
-        }
+    "XX07": {
+      "lesson": "XX03",
+      "item": "a",
+      "order": 1,
+      "words": {
+        "1": "apple",
+        "2": "axe"
       }
     },
-    "XX04": {
-      "XX0A": {
-        "item": "Apple",
-        "order": 1
-      },
-      "XX0B": {
-        "item": "Banana",
-        "order": 2
-      },
-      "XX0C": {
-        "item": "Orange",
-        "order": 3
+    "XX08": {
+      "lesson": "XX03",
+      "item": "b",
+      "order": 2,
+      "words": {
+        "1": "bat",
+        "2": "boy"
       }
     },
-    "XX05": {
-      "XX0C": {
-        "item": "ಅ",
-        "order": 1,
-        "words": {
-          "1": "ಅರಸ",
-          "2": "ಅವನು"
-        }
-      },
-      "XX0D": {
-        "item": "ಆ",
-        "order": 2,
-        "words": {
-          "1": "ಆನೆ",
-          "2": "ಆಮೆ"
-        }
-      },
-      "XX0E": {
-        "item": "ಇ",
-        "order": 3,
-        "words": {
-          "1": "ಇವನು",
-          "2": "ಇದು"
-        }
+    "XX09": {
+      "lesson": "XX03",
+      "item": "c",
+      "order": 3,
+      "words": {
+        "1": "cat",
+        "2": "cap"
       }
     },
-    "XX06": {
-      "XX0F": {
-        "item": "ಸೇಬು",
-        "order": 1
-      },
-      "XX10": {
-        "item": "ಬಾಳೇಹಣ್ಣು",
-        "order": 2
-      },
-      "XX11": {
-        "item": "ಮಾವಿನಹಣ್ಣು",
-        "order": 3
+    "XX0A": {
+      "lesson": "XX04",
+      "item": "Apple",
+      "order": 1
+    },
+    "XX0B": {
+      "lesson": "XX04",
+      "item": "Banana",
+      "order": 2
+    },
+    "XX0C": {
+      "lesson": "XX04",
+      "item": "Orange",
+      "order": 3
+    },
+    "XX0C": {
+      "lesson": "XX05",
+      "item": "ಅ",
+      "order": 1,
+      "words": {
+        "1": "ಅರಸ",
+        "2": "ಅವನು"
       }
+    },
+    "XX0D": {
+      "lesson": "XX05",
+      "item": "ಆ",
+      "order": 2,
+      "words": {
+        "1": "ಆನೆ",
+        "2": "ಆಮೆ"
+      }
+    },
+    "XX0E": {
+      "lesson": "XX05",
+      "item": "ಇ",
+      "order": 3,
+      "words": {
+        "1": "ಇವನು",
+        "2": "ಇದು"
+      }
+    },
+    "XX0F": {
+      "lesson": "XX06",
+      "item": "ಸೇಬು",
+      "order": 1
+    },
+    "XX10": {
+      "lesson": "XX06",
+      "item": "ಬಾಳೇಹಣ್ಣು",
+      "order": 2
+    },
+    "XX11": {
+      "lesson": "XX06",
+      "item": "ಮಾವಿನಹಣ್ಣು",
+      "order": 3
     }
   }
 }

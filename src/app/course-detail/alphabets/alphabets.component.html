@@ -6,6 +6,11 @@
         <th>Sound</th>
         <th>Pronunciation</th>
       </tr>
+      <tr *ngFor="let alphabet of alphabets$ | async">
+        <td>{{alphabet.alphabet}}</td>
+        <td>{{alphabet.sound}}</td>
+        <td>{{alphabet.pronunciation}}</td>
+      </tr>
     </table>
   </div>
 </div>
