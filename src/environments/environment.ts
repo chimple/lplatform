@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBkjiA8hB9dAJcPg5J4w3lK2aLaa_tDgsU',
-    authDomain: 'chimple-learn.firebaseapp.com',
-    databaseURL: 'https://chimple-learn.firebaseio.com',
-    projectId: 'chimple-learn',
-    storageBucket: 'chimple-learn.appspot.com',
-    messagingSenderId: '459345255283'
+    apiKey: "AIzaSyDGEjysP7Vgh62R_uojupyiBjWAnfQE0gc",
+    authDomain: "chimple-73a86.firebaseapp.com",
+    databaseURL: "https://chimple-73a86.firebaseio.com",
+    projectId: "chimple-73a86",
+    storageBucket: "chimple-73a86.appspot.com",
+    messagingSenderId: "281045105019"
   }
 };
