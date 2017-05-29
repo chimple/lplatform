@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Alphabet} from "../shared/model/alphabet";
-import {AlphabetService} from "../shared/model/alphabet.service";
+import {Alphabet} from "../../shared/model/alphabet";
+import {AlphabetService} from "../../shared/model/alphabet.service";
 
 @Component({
   selector: 'app-alphabet',
@@ -13,6 +13,7 @@ export class AlphabetComponent implements OnInit {
   alphabets$: Observable<Alphabet>;
 
   constructor(private alphabetService: AlphabetService) {
+  	//alert('here');
   }
 
   ngOnInit() {

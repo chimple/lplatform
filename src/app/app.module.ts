@@ -10,11 +10,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 
 import {AppComponent} from './app.component';
-import {LessonsComponent} from './lessons/lessons.component';
+import {LessonsComponent} from './course-detail/lessons/lessons.component';
 import {NavmenuComponent} from './navmenu/navmenu.component';
-import {AlphabetComponent} from './alphabet/alphabet.component';
-import {PhoneticsComponent} from './phonetics/phonetics.component';
-import {WordsComponent} from './words/words.component';
+import {AlphabetComponent} from './course-detail/alphabet/alphabet.component';
+import {PhoneticsComponent} from './course-detail/phonetics/phonetics.component';
+import {WordsComponent} from './course-detail/words/words.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthService} from './shared/security/auth.service';
