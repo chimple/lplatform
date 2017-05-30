@@ -8,6 +8,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
+import * as firebase from 'firebase/app';
 
 import {AppComponent} from './app.component';
 import {LessonsComponent} from './course-detail/lessons/lessons.component';
@@ -24,6 +25,8 @@ import { TopmenuComponent } from './topmenu/topmenu.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/Subject';
+
 import {AuthGuard} from './shared/security/auth.guard';
 import {CourseService} from './shared/model/course.service';
 import { CoursesListComponent } from './courses/courses.component';
