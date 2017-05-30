@@ -11,7 +11,7 @@ declare var swal: any;
   styleUrls: ['./phonetics.component.css']
  })
 export class PhoneticsComponent implements OnInit {
-
+  myPhonetics: boolean = false;
   phonetics$: Observable<Phonetic[]>;
 
   constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
@@ -21,7 +21,11 @@ export class PhoneticsComponent implements OnInit {
     const phonetics$key: string = this.route.snapshot.params['phoneticId'];
     this.phonetics$ = this.phoneticService.findPhoneticsByCourse(phonetics$key);
   }
-  onUpload() {
+
+  addNewPhone() {
+    this.myPhonetics = true;
+  }
+   onUpload() {
     swal({
       title: 'Are you sure?',
       text: ' You wont be able to revert this! ',
