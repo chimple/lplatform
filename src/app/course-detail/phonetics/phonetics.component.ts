@@ -55,6 +55,7 @@ export class PhoneticsComponent implements OnInit {
   save(form: NgForm) {
     console.log(form.value);
     this.phoneticService.createPhonetic(this.phonetics$key, form.value);
+    form.reset();
   }
 
 }
