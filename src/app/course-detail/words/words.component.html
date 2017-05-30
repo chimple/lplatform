@@ -1,118 +1,130 @@
-<table class="table table-responsive">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Word</th>
-      <th>Meaning</th>
-      <th>Pronunciation</th>
-      <th>Picture</th>
-      <th>Refer</th>
-    </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let worditem of words$ | async; let i=index" >
-    <tr (click)="showitem(i)">
-      <td>
-        <button><span class="glyphicon glyphicon-saved" style="color: blue"></span></button>
-      </td>
-      <td>
-      <p *ngIf="show!==i">{{worditem.word}}</p>
-      <p *ngIf="show===i"><input type="text" name="word" class="form-control" [(ngModel)]="worditem.word"></p>
-      </td>
-      <td>
-      <p *ngIf="show!==i">{{worditem.meaning}}</p>
-       <p *ngIf="show===i"><input type="text" name="meaning" class="form-control" [(ngModel)]="worditem.meaning"></p>
-      <td>
-        <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
-        Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
-        </button>
-        <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
-        <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
-      </td>
-      <td>
-      <span id="fileselector">
-        <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
-          <input id="upload-file-selector" type="file">
-          Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
-        </label>
-      </span>
-      </td>
-      <td>
-      <p *ngIf="show!==i">>{{worditem.ref}}</p>
-       <p *ngIf="show===i"><input type="text" name="ref" class="form-control" [(ngModel)]="worditem.ref"></p>
-      </td>
+<form [formGroup]="editform" (ngSubmit)="oneditData(editform.value)">
+  <table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>Word</th>
+        <th>Meaning</th>
+        <th>Pronunciation</th>
+        <th>Picture</th>
+        <th>Refer</th>
       </tr>
-      <tr *ngIf="show===i">
-      <td colspan="5">
-        <div class="col-md-12 col-md-offset-1" style="margin-top: 10px;">
-          <div class="row"  style="margin-bottom: 10px;" *ngFor="let item of worditem.phonetics">
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let worditem of words$ | async; let i=index ">
+      <tr (dblclick)="showitem(worditem,i)">
+        <td>
+          <p *ngIf="show!==i">{{worditem.word}}</p>
+          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" ></p>
+        </td>
+        <td>
+          <p *ngIf="show!==i">{{worditem.meaning}}</p>
+          <p *ngIf="show===i"><input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" ></p>
+          <td>
+            <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
+            Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+            </button>
+            <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+            <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
+          </td>
+          <td>
+            <span id="fileselector">
+              <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
+                <input id="upload-file-selector" type="file">
+                Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+              </label>
+            </span>
+          </td>
+          <td>
+            <p *ngIf="show!==i">{{worditem.ref}}</p>
+            <p *ngIf="show===i"><textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea></p>
+          </td>
+        </tr>
+        <tr *ngIf="show===i">
+          <td colspan="5">
+            <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
+              <div class="row" *ngFor="let editctrl of editform.get('phonetics').controls; let ip=index" [formGroupName]="ip" style="margin-bottom: 10px;">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
+                </div>
+                <div class="col-md-3">
+                  <select class='form-control' formControlName="phonetic">
+                    <option value="">---select---</option>
+                    <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-danger" type="button" (click)="onDeleteEdit(ip)">X</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <button type="submit" class="btn btn-info">Save</button>
+                    <button type="button" class="btn btn-info" (click)="onAddEdit()">Add Phonetics</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </form>
+  <div *ngIf="chkflag">
+    <hr>
+    <form [formGroup]="wordform" (ngSubmit)="onSubmitData(wordform.value)">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <label>Word</label>
+            <input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" >
+          </div>
+          <div class="col-md-4">
+            <label>Meaning</label>
+            <input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" >
+          </div>
+          <div class="col-md-4">
+            <label>Ref</label>
+            <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
+          </div>
+        </div>
+        <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
+          <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let i=index" [formGroupName]="i" style="margin-bottom: 10px;">
             <div class="col-md-2">
             </div>
             <div class="col-md-3">
-              <input type="text" class="form-control"  placeholder="Enter phonetics">
+              <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
             </div>
             <div class="col-md-3">
-              <select class='form-control' ngModel>
-              <option value="">---select---</option>
-              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-            </select>
+              <select class='form-control' ngModel formControlName="phonetic">
+                <option value="">---select---</option>
+                <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-danger" type="button" (click)="onDeleteold(i)">X</button>
             </div>
           </div>
         </div>
-      </td>
-    </tr>
-    </ng-container>
-  </tbody>
-</table>
-<div *ngIf="chkflag">
-  <hr>
-  <form [formGroup]="wordform" (ngSubmit)="onSubmitData(wordform.value)">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-4">
-          <label>Word</label>
-          <input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" >
-        </div>
-        <div class="col-md-4">
-          <label>Meaning</label>
-          <input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" >
-        </div>
-        <div class="col-md-4">
-          <label>Ref</label>
-          <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
-        </div>
       </div>
-      <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
-        <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let i=index" [formGroupName]="i" style="margin-bottom: 10px;">
-          <div class="col-md-2">
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
-          </div>
-          <div class="col-md-3">
-            <select class='form-control' ngModel formControlName="phonetic">
-              <option value="">---select---</option>
-              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-danger" type="button" (click)="onDeleteold(i)">X</button>
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div>
-        <div class="col-md-9"></div>
-        <div class="col-md-3">
-          <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
-        </div>
-      </div>
-    </div>
+      <button type="submit" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>
+    </form>
   </div>
-<button type="submit" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>
-  </form>
-</div>
-<button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
-
+  <button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
