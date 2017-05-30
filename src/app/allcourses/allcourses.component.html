@@ -3,8 +3,28 @@
 </p>
  -->
 
- <div class="row">
- 	<div class="col-lg-4">
- 		hi siva
+ <div class="row course_container">
+ 	<div class="col-xs-12 list_of_courses_headline">
+ 		<h4>Courses by the Chimple Community</h4>
+ 	</div>
+ 	<div class="col-xs-12 col-sm-6 col-lg-3 " *ngFor="let course of totalCoursesArray">
+	 	<div class="list_of_courses">
+	 		<a>
+	 			<img class="img-responsive" [src]="course.image" />
+	 		</a>
+	 		<div class="course_details">
+	 			<div class="clearfix">
+				    <span class="author pull-right">
+				        by 
+				    	<a title="{{course.creator}}">{{course.creator}}</a>
+				    </span>
+				    <a class="category" title="{{course.lang}}">{{course.lang}}</a>
+				</div>
+				<h3>{{course.name}}</h3>
+				<div class="learners_count">
+					<span class="glyphicon glyphicon-user" title="{{course.learners}} are learning this course"></span> &nbsp; {{course.learners}}
+				</div>
+	 		</div>
+	 	</div>
  	</div>
  </div>
