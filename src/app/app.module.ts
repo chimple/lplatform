@@ -67,7 +67,8 @@ import { DragulaModule } from 'ng2-dragula';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule, DragulaModule
+    ReactiveFormsModule,
+    DragulaModule
   ],
   providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
   bootstrap: [AppComponent]
