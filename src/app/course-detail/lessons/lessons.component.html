@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="col-xs-12">
-
+<form (ngSubmit)="updateLesson()" #lessonEdit="ngForm">
 <table class="table table-striped">
   <thead>
   <tr>
@@ -47,6 +47,8 @@
     </td>
   </tr>
   </tbody> -->
+
+
   <tbody>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex=index " #lessonRef>
@@ -57,19 +59,19 @@
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input type="text" name="lesson" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
+      <input type="text" name="lesson" *ngIf="editFlag===lIndex" ngModel value="{{lesson.name}}" />
     </td>
 
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" name="teach" value="{{lesson.teach}}" />
+      <input type="text" *ngIf="editFlag===lIndex" name="teach" ngModel value="{{lesson.teach}}" />
     </td>
 
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
         <div *ngIf="editFlag===lIndex">
-          <select name="phonetic">
+          <select name="phonetic" ngModel>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
         </div>
@@ -82,11 +84,11 @@
 
   </tr>
   </tbody>
-</table>
 
+</table>
+  </form>
 </div>
 </div>
-<br/>
 
 <div class="row" *ngIf="insertFlag">
   <div class="col-xs-12">
@@ -115,13 +117,12 @@
             </select>
           </div>
         </div>
+        <br />
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
   </div>
 </div>
 
-
-<br/>
-
 <button type="button" *ngIf="!insertFlag" class="btn btn-primary" (click)="addLesson()">Add</button>
+<br />
 <router-outlet></router-outlet>
