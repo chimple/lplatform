@@ -28,24 +28,28 @@
       "a": {
         "sound": "sound/XX01/sound/a.mp3",
         "pronunciation": "sound/XX01/pronunciation/a.mp3",
-        "order": 1
+        "order": 1,
+        "course": "XX01"
       },
       "b": {
         "sound": "sound/XX01/sound/b.mp3",
         "pronunciation": "sound/XX01/pronunciation/b.mp3",
-        "order": 2
+        "order": 2,
+        "course": "XX01"
       }
     },
     "XX02": {
       "ಕ": {
         "sound": "sound/XX02/sound/ಕ.mp3",
         "pronunciation": "sound/XX02/pronunciation/ಕ.mp3",
-        "order": 1
+        "order": 1,
+        "course": "XX02"
       },
       "ಖ": {
         "sound": "sound/XX02/sound/ಖ.mp3",
         "pronunciation": "sound/XX02/pronunciation/ಖ.mp3",
-        "order": 2
+        "order": 2,
+        "course": "XX02"
       }
     }
   },
@@ -54,29 +58,34 @@
       "æ": {
         "writing": "a",
         "pronunciation": "sound/XX01/pronunciation/æ.mp3",
-        "order": 1
+        "order": 1,
+        "course": "XX01"
       },
       "pp": {
         "writing": "pp",
         "pronunciation": "sound/XX01/pronunciation/pp.mp3",
-        "order": 2
+        "order": 2,
+        "course": "XX01"
       },
       "əl": {
         "writing": "le",
         "pronunciation": "sound/XX01/pronunciation/əl.mp3",
-        "order": 3
+        "order": 3,
+        "course": "XX01"
       }
     },
     "XX02": {
       "ಸೇ": {
         "writing": "ಸೇ",
         "pronunciation": "sound/XX02/pronunciation/ಸೇ.mp3",
-        "order": 1
+        "order": 1,
+        "course": "XX02"
       },
       "ಬು": {
         "writing": "ಬು",
         "pronunciation": "sound/XX02/pronunciation/ಬು.mp3",
-        "order": 2
+        "order": 2,
+        "course": "XX02"
       }
     }
   },
@@ -87,6 +96,7 @@
         "image": "images/XX01/apple.mp3",
         "ref": "apple",
         "meaning": "A fruit",
+        "course": "XX01",
         "phonetics": {
           "1": {
             "a": "æ",
@@ -108,6 +118,7 @@
         "pronunciation": "sound/XX02/pronunciation/ಸೇಬು.mp3",
         "image": "images/XX02/ಸೇಬು.mp3",
         "ref": "apple",
+        "course": "XX02",
         "meaning": "ಹಣ್ಣುಹಂಪಲು",
         "phonetics": {
           "1": {
@@ -153,6 +164,8 @@
       "XX07": {
         "item": "a",
         "order": 1,
+        "course": "XX01",
+        "lesson": "XX03",
         "words": {
           "1": "apple",
           "2": "axe"
@@ -161,6 +174,8 @@
       "XX08": {
         "item": "b",
         "order": 2,
+        "course": "XX01",
+        "lesson": "XX03",
         "words": {
           "1": "bat",
           "2": "boy"
@@ -169,6 +184,8 @@
       "XX09": {
         "item": "c",
         "order": 3,
+        "course": "XX01",
+        "lesson": "XX03",
         "words": {
           "1": "cat",
           "2": "cap"
@@ -178,14 +195,20 @@
     "XX04": {
       "XX0A": {
         "item": "Apple",
+        "course": "XX01",
+        "lesson": "XX04",
         "order": 1
       },
       "XX0B": {
         "item": "Banana",
+        "course": "XX01",
+        "lesson": "XX04",
         "order": 2
       },
       "XX0C": {
         "item": "Orange",
+        "course": "XX01",
+        "lesson": "XX04",
         "order": 3
       }
     },
@@ -193,6 +216,8 @@
       "XX0C": {
         "item": "ಅ",
         "order": 1,
+        "course": "XX02",
+        "lesson": "XX05",
         "words": {
           "1": "ಅರಸ",
           "2": "ಅವನು"
@@ -201,6 +226,8 @@
       "XX0D": {
         "item": "ಆ",
         "order": 2,
+        "course": "XX02",
+        "lesson": "XX05",
         "words": {
           "1": "ಆನೆ",
           "2": "ಆಮೆ"
@@ -209,6 +236,8 @@
       "XX0E": {
         "item": "ಇ",
         "order": 3,
+        "course": "XX02",
+        "lesson": "XX05",
         "words": {
           "1": "ಇವನು",
           "2": "ಇದು"
@@ -218,14 +247,20 @@
     "XX06": {
       "XX0F": {
         "item": "ಸೇಬು",
+        "course": "XX02",
+        "lesson": "XX05",
         "order": 1
       },
       "XX10": {
         "item": "ಬಾಳೇಹಣ್ಣು",
+        "course": "XX02",
+        "lesson": "XX05",
         "order": 2
       },
       "XX11": {
         "item": "ಮಾವಿನಹಣ್ಣು",
+        "course": "XX02",
+        "lesson": "XX05",
         "order": 3
       }
     }

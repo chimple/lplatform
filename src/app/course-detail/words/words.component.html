@@ -1,0 +1,89 @@
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>Word</th>
+      <th>Meaning</th>
+      <th>Pronunciation</th>
+      <th>Picture</th>
+      <th>Refer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let worditem of words$ | async" (click)="showitem(worditem.phonetics)">
+      <td>{{worditem.word}}</td>
+      <td>{{worditem.meaning}}</td>
+      <td>{{worditem.pronunciation}}</td>
+      <td>{{worditem.image}}</td>
+      <td>{{worditem.ref}}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="chkflag">
+  <hr>
+  <form [formGroup]="wordform" (ngSubmit)="onSubmitData(wordform.value)">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-2">
+          <label>Word</label>
+          <input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" >
+        </div>
+        <div class="col-md-2">
+          <label>Meaning</label>
+          <input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" >
+        </div>
+        <div class="col-md-3">
+          <label>Pronunciation</label><br>
+          <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
+          Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+          </button>
+          <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+          <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
+        </div>
+        <div class="col-md-2" >
+          <label>Image</label><br>
+          <span id="fileselector">
+            <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
+              <input id="upload-file-selector" type="file" formControlName="image">
+              Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+            </label>
+          </span>
+        </div>
+        <div class="col-md-3">
+          <label>Ref</label>
+          <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
+        </div>
+      </div>
+      <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
+        <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let i=index" [formGroupName]="i" style="margin-bottom: 10px;">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control" formControlName="breakword" placeholder="Enter phonetics">
+          </div>
+          <div class="col-md-3">
+            <select class='form-control' ngModel formControlName="sample">
+              <option value="">---select---</option>
+              <option [ngValue]="category.categoryName" *ngFor="let category of category">{{category.categoryName}}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-danger" type="button" (click)="onDeleteold(i)">X</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
+<button type="submit" [disabled]="!wordform.valid" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>

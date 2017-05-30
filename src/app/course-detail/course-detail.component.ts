@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CoursesService} from '../shared/model/courses.service';
+import {CourseService} from '../shared/model/course.service';
 import {Observable} from 'rxjs/Observable';
 import {CourseDetail} from '../shared/model/course-detail';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class CourseDetailComponent implements OnInit {
 
   courseDetail$: Observable<CourseDetail>;
-  constructor(private courseService: CoursesService, private router: ActivatedRoute) {
+  constructor(private courseService: CourseService, private router: ActivatedRoute) {
   }
 
   ngOnInit() {

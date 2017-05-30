@@ -10,11 +10,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 
 import {AppComponent} from './app.component';
-import {LessonsComponent} from './lessons/lessons.component';
+import {LessonsComponent} from './course-detail/lessons/lessons.component';
 import {NavmenuComponent} from './navmenu/navmenu.component';
-import {AlphabetComponent} from './alphabet/alphabet.component';
-import {PhoneticsComponent} from './phonetics/phonetics.component';
-import {WordsComponent} from './words/words.component';
+import {AlphabetComponent} from './course-detail/alphabets/alphabets.component';
+import {PhoneticsComponent} from './course-detail/phonetics/phonetics.component';
+import {WordsComponent} from './course-detail/words/words.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthService} from './shared/security/auth.service';
@@ -25,16 +25,18 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
 import {AuthGuard} from './shared/security/auth.guard';
-import {CoursesService} from './shared/model/courses.service';
-import { CoursesListComponent } from './courses-list/courses-list.component';
+import {CourseService} from './shared/model/course.service';
+import { CoursesListComponent } from './courses/courses.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import {UploadService} from './shared/uploads/upload.service';
 import { RecordAudioComponent } from './record-audio/record-audio.component';
 import {AlphabetService} from './shared/model/alphabet.service';
-import {PhoneticsService} from './shared/model/phonetics.service';
+import {PhoneticService} from './shared/model/phonetic.service';
 import {WordService} from './shared/model/word.service';
 import {LessonService} from './shared/model/lesson.service';
+import { SessionComponent } from './learn/session.component';
+import { DragulaModule } from 'ng2-dragula';
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {LessonService} from './shared/model/lesson.service';
     CoursesListComponent,
     CourseDetailComponent,
     UploadFormComponent,
-    RecordAudioComponent
+    RecordAudioComponent,
+    SessionComponent
 
   ],
   imports: [
@@ -64,9 +67,9 @@ import {LessonService} from './shared/model/lesson.service';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, DragulaModule
   ],
-  providers: [AuthService, AuthGuard, CoursesService, UploadService, AlphabetService, PhoneticsService, WordService, LessonService],
+  providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

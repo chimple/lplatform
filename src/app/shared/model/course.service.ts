@@ -5,7 +5,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {CourseDetail} from './course-detail';
 
 @Injectable()
-export class CoursesService {
+export class CourseService {
 
   constructor(private db: AngularFireDatabase) {
   }
