@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {WordPhonetic} from './word-phonetic';
 
 export class Word {
 
@@ -8,7 +9,7 @@ export class Word {
 
   static fromJson({$key, image, meaning, phonetics, pronunciation, ref}): Word {
     phonetics = _.without(phonetics, undefined);
-    return new Word($key, image, meaning, phonetics, pronunciation, ref);
+    return new Word($key, image, meaning, WordPhonetic.fromJsonList(phonetics), pronunciation, ref);
   }
 
   constructor(public word: string,

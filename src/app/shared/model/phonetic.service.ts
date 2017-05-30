@@ -20,13 +20,13 @@ export class PhoneticService {
   findPhoneticsPropertyByCourse(courseUrl: string) {
     console.log(`findPhoneticsByCourse ${courseUrl}`);
 
-    const result$ = this.db.list(`course_phonetics/${courseUrl}`, {
-      query: {
-        orderByChild: 'order'
-      }
-    }).map(results => Phonetic.fromJsonListFetchProperty(results, 'alphabet'));
-
-    result$.subscribe(console.log);
+    // const result$ = this.db.list(`course_phonetics/${courseUrl}`, {
+    //   query: {
+    //     orderByChild: 'order'
+    //   }
+    // }).map(results => Phonetic.fromJsonListFetchProperty(results, 'alphabet'));
+    //
+    // result$.subscribe(console.log);
 
     return this.db.list(`course_phonetics/${courseUrl}`, {
       query: {

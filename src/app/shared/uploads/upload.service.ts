@@ -77,7 +77,15 @@ export class UploadService {
 
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {
-    this.db.list(`${this.basePath}/`).push(upload);
+    this.db.list(`${this.basePath}/`).push(upload)
+      .then(
+        success => {
+          alert('success');
+        },
+        fail => {
+          alert('failure');
+        }
+      );
   }
 
   private saveBlobFileData(upload: BlobUpload) {
