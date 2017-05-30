@@ -1,4 +1,4 @@
-@@ -1,127 +0,0 @@
+
 <div class="row">
   <div class="col-xs-12">
 
@@ -77,7 +77,7 @@
     </td>
 
     <td>
-      <a [routerLink]="langWord"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+      <a [routerLink]="['language-word']"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
     </td>
 
   </tr>
@@ -124,3 +124,4 @@
 <br/>
 
 <button type="button" *ngIf="!insertFlag" class="btn btn-primary" (click)="addLesson()">Add</button>
+<router-outlet></router-outlet>
