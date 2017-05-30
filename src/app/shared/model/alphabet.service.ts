@@ -7,7 +7,7 @@ import * as firebase from 'firebase/app';
 import {Subject} from 'rxjs/Subject';
 import {Http} from '@angular/http';
 import {CourseService} from './course.service';
-import {CourseDetail} from "./course-detail";
+import {CourseDetail} from './course-detail';
 
 @Injectable()
 export class AlphabetService {
@@ -71,8 +71,6 @@ export class AlphabetService {
     const newKey = alphabetToSave.alphabet;
     delete(alphabetToSave.alphabet);
 
-    console.log(`new key for alphabet ${newKey}`);
-    console.log(`courseDetail ${JSON.stringify(courseDetailToSave)}`);
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
