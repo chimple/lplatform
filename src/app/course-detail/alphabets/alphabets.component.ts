@@ -16,6 +16,7 @@ export class AlphabetComponent implements OnInit {
   alphabet$Key: string;
   alphabets: Alphabet[];
   myAlphabet: boolean = false;
+  editAlpha: any;
 
   constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
@@ -26,6 +27,10 @@ export class AlphabetComponent implements OnInit {
     this.alphabets$.subscribe(
       alphabets => this.alphabets = alphabets
     );
+  }
+
+  editAlph(i) {
+    this.editAlpha = i;
   }
 
   addNewAlpha() {
