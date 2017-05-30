@@ -21,6 +21,7 @@ export class LessonsComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
 
   @ViewChild('lf') lessonsForm:NgForm;
+  @ViewChild('lessonEdit') lessonsEditForm:NgForm;
   constructor(private lessonService: LessonService, private route: ActivatedRoute) { }
 
 
@@ -41,8 +42,9 @@ export class LessonsComponent implements OnInit {
     this.editFlag = lIndex;
 
   }
-  updateLesson(param){
-    console.log();
+  updateLesson(lessonKey){
+    console.log("lessonKey: "+ lessonKey);
+    this.lessonsEditForm;
     this.editFlag ="";
   }
 
