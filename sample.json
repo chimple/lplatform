@@ -17,10 +17,18 @@
   },
   "course_details":{
     "XX01": {
-      "description": "This is Basic English Course"
+      "description": "This is Basic English Course",
+      "alphabets" : 2,
+      "words" : 0,
+      "phonetics" : 0,
+      "lessons" : 0
     },
     "XX02": {
-      "description": "This is Basic Kannada Course"
+      "description": "This is Basic Kannada Course",
+      "alphabets" : 2,
+      "words" : 0,
+      "phonetics" : 0,
+      "lessons" : 0
     }
   },
   "course_alphabets": {

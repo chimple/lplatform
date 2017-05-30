@@ -6,12 +6,14 @@ import {FirebaseListFactoryOpts} from 'angularfire2/interfaces';
 import * as firebase from 'firebase/app';
 import {Subject} from 'rxjs/Subject';
 import {Http} from '@angular/http';
+import {CourseService} from './course.service';
+import {CourseDetail} from "./course-detail";
 
 @Injectable()
 export class AlphabetService {
   sdkDb: any;
 
-  constructor(private db: AngularFireDatabase, private http: Http) {
+  constructor(private courseService: CourseService, private db: AngularFireDatabase, private http: Http) {
     this.sdkDb = firebase.database().ref();
   }
 
@@ -53,12 +55,26 @@ export class AlphabetService {
   }
 
   createAlphabet(courseUrl: string, alphabet: any): Observable<any> {
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
 
-    const alphabetToSave = Object.assign({}, alphabet, {course: courseUrl});
+    const order = courseDetail.alphabets + 1;
+    courseDetail.alphabets = order;
 
-    // const newKey = this.sdkDb.child(`course_alphabets`).push().key;
+    const alphabetToSave = Object.assign({}, alphabet, {course: courseUrl}, {order: order});
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
     const newKey = alphabetToSave.alphabet;
+    delete(alphabetToSave.alphabet);
+
+    console.log(`new key for alphabet ${newKey}`);
+    console.log(`courseDetail ${JSON.stringify(courseDetailToSave)}`);
     const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
     const subject = new Subject();
 
