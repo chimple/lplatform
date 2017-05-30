@@ -54,7 +54,9 @@
       <tr *ngFor="let alphabet of alphabets$ | async">
         <td>{{alphabet.alphabet}}</td>
         <td>
-            <app-upload-form></app-upload-form>
+            <app-upload-form [filedata]="{'objectname':alphabet.alphabet,'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
+
+            </app-upload-form>
 
             <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
             </button>
@@ -64,7 +66,9 @@
         </td>
         <td>
           <!--<label>Sound</label><br>-->
-          <app-upload-form ></app-upload-form>
+          <app-upload-form [filedata]="{'objectname':alphabet.alphabet,'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}">
+
+          </app-upload-form>
           <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
           <!--Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>-->
           <!--</button>-->
