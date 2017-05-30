@@ -1,50 +1,88 @@
+<div class="row">
+  <div class="col-xs-12">
 <table class="table table-striped">
   <thead>
   <tr>
+    <th><span class="glyphicon glyphicon-refresh"></span></th>
     <th>Name</th>
     <th>Teach</th>
     <th>Focus</th>
+    <th>Select</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let lesson of lessons$ | async">
-    <td>{{lesson.name}}</td>
-    <td>{{lesson.teach}}</td>
+  <tr *ngFor="let lesson of lessons$ | async; let lIndex=index ">
     <td>
-      <button class="btn btn-info"><span class="glyphicon glyphicon-hand-right blue"></span></button>
+      <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
+      <span *ngIf="editFlag===lIndex" (click)="updateLesson()" class="glyphicon glyphicon-save"></span>
+    </td>
+    <td>
+      <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
+      <input type="text" *ngIf="editFlag===lIndex" id="editLessonName" value="{{lesson.name}}" />
+    </td>
+
+    <td>    
+      <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
+      <input type="text" *ngIf="editFlag===lIndex" id="editLessonTeach" value="{{lesson.teach}}" />
+    </td>
+
+    <td>
+      <div *ngIf="lesson.teach==='words'">
+        <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
+        <div *ngIf="editFlag===lIndex">
+          <select>
+            <option>fr</option>
+            <option>ui</option>
+            <option>ts</option>    
+          </select>
+        </div>
+      </div> 
+    </td>
+    
+    <td>
+      <a href="javascript:void(0);"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
     </td>
   </tr>
   </tbody>
 </table>
+</div>
+</div>
 <br/>
 
-<div>
-  <form [formGroup]="lessonform" (ngSubmit)="submitLesson(lessonform.value)">
-    <table class="tabletable-bordered">
-      <tbody>
-      <tr>
-        <td>
-          <label>Lesson Name:</label>
-          <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
-          <input class="form-control" type="text" placeholder="John" formControlName="lessonName">
-        </td>
+<div class="row" *ngIf="insertFlag">
+  <div class="col-xs-12">
+    <form id="lessonForm" (ngSubmit)="submitLesson()" #lf="ngForm">
+        <div class="row">
+          <div class="col-xs-4">
+            <label>Lesson Name:</label>
+            <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
+            <input class="form-control" type="text" id="lessonName" placeholder="Name" ngModel name="Lesson Name" required #lesson>
+          </div>
 
-        <td>
-          <label>Teach: </label>
-          <select class="form-control" formControlName="teachSelect">
-            <option value="">--Select--</option>
-            <option value="alphabets">Alphabets</option>
-            <option value="words">Words</option>
-          </select>
-        </td>
-      </tr>
+          <div class="col-xs-4">
+            <label>Teach: </label>
+            <select class="form-control" name="Lesson Teach" id="lessonTeach">
+              <option value="">--Select--</option>
+              <option value="alphabets">Alphabets</option>
+              <option value="words">Words</option>
+            </select>
+          </div>
 
-    </table>
-
-  </form>
+          <div class="col-xs-4">
+            <label>Phonetics: </label>
+            <select class="form-control" name="Lesson Phonetics" id="lessonPhonetics">
+              <option value="">--Select--</option>
+              <option value="fr">fr</option>
+              <option value="ui">ui</option>
+              <option value="ui">ts</option>
+            </select>
+          </div>
+        </div>
+    </form>
+  </div>
 </div>
 
 
 <br/>
-<button type="submit" class="btn btn-primary">Save</button>
-<button type="button" class="btn btn-primary" (click)="addLesson()">Add</button>
+<button type="submit" from="lessonForm" class="btn btn-primary" *ngIf="insertFlag">Save</button>
+<button type="button" *ngIf="!insertFlag" class="btn btn-primary" (click)="addLesson()">Add</button>
