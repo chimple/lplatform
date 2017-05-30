@@ -19,7 +19,6 @@ export class WordsComponent implements OnInit {
   editform: FormGroup;
   show = '';
   word$Key: string;
-
   constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
   }
 
@@ -84,6 +83,10 @@ export class WordsComponent implements OnInit {
     console.log(data);
     this.wordService.createWord(this.word$Key, data);
     this.wordform.reset();
+  }
+   onDelete(data) {
+    console.log(data);
+    //this.wordService.createWord(this.word$Key, data);
   }
   oneditData(editdata){
     console.log(editdata);
