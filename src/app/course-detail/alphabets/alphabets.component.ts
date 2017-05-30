@@ -21,7 +21,7 @@ export class AlphabetComponent implements OnInit {
 
   ngOnInit() {
     this.alphabet$Key = this.route.snapshot.params['alphabetId'];
-    this.alphabets$ = this.alphabetService.loadFirstAlphabetsPage(this.alphabet$Key, 1);
+    this.alphabets$ = this.alphabetService.findAlphabetsByCourse(this.alphabet$Key);
     this.alphabets$.subscribe(
       alphabets => this.alphabets = alphabets
     );
