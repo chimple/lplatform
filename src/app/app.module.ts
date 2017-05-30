@@ -41,6 +41,8 @@ import {LessonService} from './shared/model/lesson.service';
 import { SessionComponent } from './learn/session.component';
 import { DragulaModule } from 'ng2-dragula';
 import { AllcoursesComponent } from './allcourses/allcourses.component';
+import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
+import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { AllcoursesComponent } from './allcourses/allcourses.component';
     UploadFormComponent,
     RecordAudioComponent,
     SessionComponent,
-    AllcoursesComponent
+    AllcoursesComponent,
+    LanguageWordComponent,
+    LanguageAlphabetComponent
 
   ],
   imports: [

@@ -20,7 +20,7 @@ export class LessonsComponent implements OnInit {
   //defaultTeach = "alphabets";
   lessons$: Observable<Lesson[]>;
 
-  @ViewChild('f') lessonsForm:NgForm;
+  @ViewChild('lf') lessonsForm:NgForm;
   constructor(private lessonService: LessonService, private route: ActivatedRoute) { }
 
 
@@ -34,15 +34,15 @@ export class LessonsComponent implements OnInit {
   }
 
   submitLesson() {
-    
+    console.log(this.lessonsForm.value);
   }
 
   editLesson(lIndex){
     this.editFlag = lIndex;
 
   }
-  updateLesson(){
-
+  updateLesson(param){
+    console.log();
     this.editFlag ="";
   }
 
