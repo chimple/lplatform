@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default header" role="navigation">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="sr-only">Toggle navigation</span>
@@ -12,16 +12,16 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav navbar-right">
-      <li>
+     <!--  <li>
         <a routerLink="courses" routerLinkActive="active">COURSES</a>
-      </li>
-      <li>
+      </li> -->
+      <li class="login">
         <a routerLink="login" routerLinkActive="active" *ngIf="!authInfo?.isLoggedIn()">LOGIN</a>
       </li>
-      <li>
+      <li class="register">
         <a routerLink="register" routerLinkActive="active" *ngIf="!authInfo?.isLoggedIn()">REGISTER</a>
       </li>
-      <li>
+      <li class="logout">
         <a (click)="logout()" *ngIf="authInfo?.isLoggedIn()">LOGOUT</a>
       </li>
     </ul>

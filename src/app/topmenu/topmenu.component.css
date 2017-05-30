@@ -1,0 +1,11 @@
+.login a,.register a,.logout a,.header a{
+	color: white !important;
+	font-family: cursive;
+}
+
+.header{
+	background:rgba(15, 90, 206, 0.67);
+}
+.login a:hover,.register a:hover,.logout a:hover{
+	background-color: rgba(78, 78, 84, 0.17);
+}
