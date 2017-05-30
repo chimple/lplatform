@@ -42,9 +42,9 @@ export class LessonsComponent implements OnInit {
     this.editFlag = lIndex;
 
   }
-  updateLesson(lessonKey){
-    console.log("lessonKey: "+ lessonKey);
-    this.lessonsEditForm;
+  updateLesson(){
+    //console.log("lessonKey: "+ lessonKey);
+    console.log("Update Lesson: "+this.lessonsEditForm.value);
     this.editFlag ="";
   }
 
