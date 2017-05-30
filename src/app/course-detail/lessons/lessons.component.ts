@@ -16,6 +16,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class LessonsComponent implements OnInit {
 
+
+
   insertFlag = false;
   editFlag: any;
   lessons$: Observable<Lesson[]>;
@@ -23,7 +25,8 @@ export class LessonsComponent implements OnInit {
   phoneticsSelection$: Observable<string[]>;
 
   @ViewChild('lf') lessonsForm: NgForm;
-  @ViewChild('lessonEdit') lessonsEditForm: NgForm;
+   @ViewChild('lessonEdit') lessonsEditForm: NgForm;
+  @ViewChild('tf') testForm: NgForm;
   constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -51,6 +54,8 @@ export class LessonsComponent implements OnInit {
     console.log("Update Lesson: "+this.lessonsEditForm.value);
     this.editFlag ="";
   }
+
+
 }
 
 
