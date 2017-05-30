@@ -21,14 +21,14 @@
       "alphabets" : 2,
       "words" : 1,
       "phonetics" : 3,
-      "lessons" : 0
+      "lessons" : 2
     },
     "XX02": {
       "description": "This is Basic Kannada Course",
       "alphabets" : 2,
       "words" : 0,
       "phonetics" : 0,
-      "lessons" : 0
+      "lessons" : 2
     }
   },
   "course_alphabets": {
@@ -69,8 +69,8 @@
         "order": 1,
         "course": "XX01"
       },
-      "pp": {
-        "writing": "pp",
+      "p": {
+        "writing": "p",
         "pronunciation": "sound/XX01/pronunciation/pp.mp3",
         "order": 2,
         "course": "XX01"

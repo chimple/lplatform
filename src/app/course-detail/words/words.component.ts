@@ -16,7 +16,7 @@ export class WordsComponent implements OnInit {
   phoneticsSelection$: Observable<string[]>;
   wordform: FormGroup;
   chkflag: boolean = false;
-  phoneitem: any;
+  editform: FormGroup;
   show = '';
   word$Key: string;
 
@@ -32,20 +32,23 @@ export class WordsComponent implements OnInit {
   }
 
   private initForm() {
-    const word = '';
-    const meaning = '';
-    const pronunciation = '';
-    const image = '';
-    const ref = '';
-    const phonetics = new FormArray([]);
+    let word = '';
+    let meaning = '';
+    let ref = '';
+    let phonetics = new FormArray([]);
     this.wordform = new FormGroup({
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
-      'pronunciation': new FormControl(pronunciation, Validators.required),
-      'image': new FormControl(image, Validators.required),
       'ref': new FormControl(ref, Validators.required),
       'phonetics': phonetics
     });
+    this.editform = new FormGroup({
+      'word': new FormControl(word, Validators.required),
+      'meaning': new FormControl(meaning, Validators.required),
+      'ref': new FormControl(ref, Validators.required),
+      'phonetics': phonetics
+    });
+
   }
 
   onAddnew() {
@@ -59,24 +62,68 @@ export class WordsComponent implements OnInit {
 
   addnew() {
     this.chkflag = true;
+    this.show = '';
   }
 
   onDeleteold(index: number) {
     (<FormArray>this.wordform.get('phonetics')).removeAt(index);
   }
 
-  showitem(index) {
-    if (this.show !== '') {
+  showitem(value:any,index) {
+    this.chkflag = false;
+    if (this.show !== '' && index===this.show) {
       console.log(this.show);
       this.show = '';
     } else {
       this.show = index;
-
+      this.editdata(value);
     }
   }
 
   onSubmitData(data) {
     console.log(data);
     this.wordService.createWord(this.word$Key, data);
+    this.wordform.reset();
   }
+  oneditData(editdata){
+    console.log(editdata);
+   this.wordService.createWord(this.word$Key, editdata);
+    this.show = '';
+  }
+  editdata(alldata){
+    let word = '';
+    let meaning = '';
+    let ref = '';
+    let phonetics = new FormArray([]);
+    if(alldata){
+      word=alldata.word;
+      meaning=alldata.meaning;
+      ref=alldata.ref;
+      for(let ingredient of alldata.phonetics){
+          phonetics.push(
+            new FormGroup({
+              'alphabet': new FormControl(ingredient.alphabet,Validators.required),
+              'phonetic' : new FormControl(ingredient.phonetics,Validators.required)
+            })
+            );
+        }
+      }
+    this.editform = new FormGroup({
+      'word': new FormControl(word, Validators.required),
+      'meaning': new FormControl(meaning, Validators.required),
+      'ref': new FormControl(ref, Validators.required),
+      'phonetics': phonetics
+    });
+}
+onDeleteEdit(index: number){
+  (<FormArray>this.editform.get('phonetics')).removeAt(index);
+}
+onAddEdit(){
+   (<FormArray>this.editform.get('phonetics')).push(
+      new FormGroup({
+        'alphabet': new FormControl(null, Validators.required),
+        'phonetic': new FormControl(null, Validators.required)
+      })
+    );
+}
 }

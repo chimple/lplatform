@@ -22,7 +22,7 @@
       <input type="text" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
     </td>
 
-    <td>    
+    <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
       <input type="text" *ngIf="editFlag===lIndex" value="{{lesson.teach}}" />
     </td>
@@ -34,13 +34,13 @@
           <select>
             <option>fr</option>
             <option>ui</option>
-            <option>ts</option>    
+            <option>ts</option>
           </select>
         </div>
-      </div> 
+      </div>
 
     </td>
-    
+
     <td>
       <a [routerLink]="langWord"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
     </td>
@@ -59,7 +59,7 @@
       <input type="text" name="lesson" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
     </td>
 
-    <td>    
+    <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
       <input type="text" *ngIf="editFlag===lIndex" name="teach" value="{{lesson.teach}}" />
     </td>
@@ -68,15 +68,13 @@
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
         <div *ngIf="editFlag===lIndex">
-          <select name="Phonetics">
-            <option>fr</option>
-            <option>ui</option>
-            <option>ts</option>    
+          <select name="phonetic">
+            <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
         </div>
-      </div> 
+      </div>
     </td>
-    
+
     <td>
       <a [routerLink]="langWord"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
     </td>
@@ -110,11 +108,9 @@
 
           <div class="col-xs-4">
             <label>Phonetics: </label>
-            <select class="form-control" name="phonetics" id="lessonPhonetics" ngModel required>
+            <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
               <option value="">--Select--</option>
-              <option value="fr">fr</option>
-              <option value="ui">ui</option>
-              <option value="ui">ts</option>
+              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
             </select>
           </div>
         </div>
