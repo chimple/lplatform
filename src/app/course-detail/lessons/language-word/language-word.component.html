@@ -1,3 +1,85 @@
-<p>
-  language-word works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    Lower case alphabets
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><span class="glyphicon glyphicon-refresh"></span></th>
+    <th>Alphabet</th>
+    <th>Words</th>
+  </tr>
+  </thead>
+  <tbody>
+
+<!--   <tr *ngFor="let lwIndex=index " #lwRef>
+    <td>
+      <span *ngIf="editLW!==lwIndex" (click)="editAlphabet(lwIndex)" class="glyphicon glyphicon-pencil"></span>
+      <button type="submit" *ngIf="lwEditFlag===lwIndex" class="glyphicon glyphicon-save"></button>
+    </td>
+    <td>
+      <p *ngIf="lwEditFlag!==lwIndex">{{}}</p>
+      <input type="text" name="item" *ngIf="lwEditFlag===lwIndex" value="a" />
+    </td>
+    <td>
+        <div *ngIf="lwEditFlag!==lwIndex">fr, ui, ts</div>
+        <div *ngIf="lwEditFlag===lwIndex">
+          <select name="words">
+            <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+          </select>
+        </div>
+    </td>
+  </tr> -->
+
+    <tr>
+      <td><span class="glyphicon glyphicon-pencil"></span></td>
+      <td><p>a</p></td>
+      <td>
+          <div>Apple, Axe, Asia</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
+</div>
+<br/>
+
+
+
+<div class="row" *ngIf="lwInsertFlag">
+  <div class="col-xs-12">
+    <form (ngSubmit)="submitLW()" #lw="ngForm">
+        <div class="row">
+          <div class="col-xs-4">
+            <label>Lesson Name:</label>
+            <input class="form-control" type="text" placeholder="Alphabet" ngModel name="item" required>
+          </div>
+
+
+          <div class="col-xs-4">
+            <label>Words: </label>
+            <select class="form-control" name="words" ngModel required>
+              <option value="">--Select--</option>
+              <!-- <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option> -->
+              <option>Apple</option>
+              <option>Asia</option>
+              <option>Axe</option>
+            </select>
+          </div>
+
+          <div class="col-xs-4"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</div>
+
+<br/>
+
+<button type="button" *ngIf="!lwInsertFlag" class="btn btn-primary" (click)="addAlphabet()">Add</button>
+

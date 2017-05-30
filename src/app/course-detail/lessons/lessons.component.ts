@@ -4,8 +4,8 @@ import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {Lesson} from '../../shared/model/lesson';
-import {ActivatedRoute} from '@angular/router';
 import {PhoneticService} from '../../shared/model/phonetic.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-lessons',
