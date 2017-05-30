@@ -46,9 +46,10 @@ export class LessonsComponent implements OnInit {
 
   }
 
-  updateLesson(param) {
-    console.log(param);
-    this.editFlag = '';
+  updateLesson(){
+    //console.log("lessonKey: "+ lessonKey);
+    console.log("Update Lesson: "+this.lessonsEditForm.value);
+    this.editFlag ="";
   }
 }
 
