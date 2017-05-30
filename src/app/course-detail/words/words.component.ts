@@ -5,6 +5,7 @@ import {FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {Word} from '../../shared/model/word';
+import {PhoneticService} from "../../shared/model/phonetic.service";
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
@@ -12,16 +13,18 @@ import {Word} from '../../shared/model/word';
 })
 export class WordsComponent implements OnInit {
   words$: Observable<Word[]>;
+  phoneticsSelection$: Observable<string[]>;
   wordform: FormGroup;
   chkflag: boolean = false;
   phoneitem:any;
   show='';
-  constructor(private wordService: WordService, private route: ActivatedRoute) {
+  constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     const word$Key: string = this.route.snapshot.params['wordId'];
     this.words$ = this.wordService.findWordsByCourse(word$Key);
+    this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(word$Key);
     this.initForm();
   }
 

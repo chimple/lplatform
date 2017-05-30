@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
 import {ActivatedRoute} from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-alphabet',
@@ -20,7 +21,7 @@ export class AlphabetComponent implements OnInit {
 
   ngOnInit() {
     this.alphabet$Key = this.route.snapshot.params['alphabetId'];
-    this.alphabets$ = this.alphabetService.loadFirstAlphabetsPage(this.alphabet$Key, 2);
+    this.alphabets$ = this.alphabetService.loadFirstAlphabetsPage(this.alphabet$Key, 1);
     this.alphabets$.subscribe(
       alphabets => this.alphabets = alphabets
     );
@@ -48,5 +49,16 @@ export class AlphabetComponent implements OnInit {
 
   }
 
+
+  save(form: NgForm) {
+    console.log(JSON.stringify(form.value));
+    this.alphabetService.createAlphabet(this.alphabet$Key, form.value)
+      .subscribe(
+        () => {
+          alert('success in alphabet creation');
+        },
+        err => alert(`error in creating new alphabet ${err}`)
+      );
+  }
 
 }

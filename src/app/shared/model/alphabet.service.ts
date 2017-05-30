@@ -1,13 +1,18 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Alphabet} from './alphabet';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {FirebaseListFactoryOpts} from 'angularfire2/interfaces';
+import * as firebase from 'firebase/app';
+import {Subject} from 'rxjs/Subject';
+import {Http} from '@angular/http';
 
 @Injectable()
 export class AlphabetService {
+  sdkDb: any;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private http: Http) {
+    this.sdkDb = firebase.database().ref();
   }
 
   findAlphabetsByCourse(courseUrl: string, query: FirebaseListFactoryOpts = {query: {orderByChild: 'order'}}): Observable<Alphabet[]> {
@@ -45,5 +50,36 @@ export class AlphabetService {
         orderByChild: 'order'
       }
     }).map(alphabets => alphabets.slice(0, alphabets.length - 1));
+  }
+
+  createAlphabet(courseUrl: string, alphabet: any): Observable<any> {
+
+    const alphabetToSave = Object.assign({}, alphabet, {course: courseUrl});
+
+    // const newKey = this.sdkDb.child(`course_alphabets`).push().key;
+    const newKey = alphabetToSave.alphabet;
+    const dataToSave = {};
+    dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
+    const subject = new Subject();
+
+    return this.firebaseUpdate(dataToSave);
+  }
+
+  firebaseUpdate(dataToSave): Observable<any> {
+    const subject = new Subject();
+
+    this.sdkDb.update(dataToSave)
+      .then(
+        val => {
+          subject.next(val);
+          subject.complete();
+        },
+        err => {
+          subject.error(err);
+          subject.complete();
+        }
+      );
+
+    return subject.asObservable();
   }
 }
