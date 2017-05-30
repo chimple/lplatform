@@ -38,6 +38,26 @@ export class WordService {
     }).map(results => Word.fromJsonList(results));
   }
 
+  deleteWord(courseUrl: string, input: any): void {
+    console.log(`input ${JSON.stringify(input)}`);
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    courseDetail.words = courseDetail.words - 1;
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    this.firebaseUpdate(dataToSave);
+
+    const wordToDelete$ = this.db.object(`course_words/${courseUrl}/${input}`);
+    wordToDelete$.remove();
+  }
+
   createWord(courseUrl: string, input: any): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)
@@ -83,6 +103,24 @@ export class WordService {
     const subject = new Subject();
 
     this.sdkDb.update(dataToSave)
+      .then(
+        val => {
+          subject.next(val);
+          subject.complete();
+        },
+        err => {
+          subject.error(err);
+          subject.complete();
+        }
+      );
+
+    return subject.asObservable();
+  }
+
+  firebaseRemove(deleteKey): Observable<any> {
+    const subject = new Subject();
+
+    this.sdkDb.remove(deleteKey)
       .then(
         val => {
           subject.next(val);
