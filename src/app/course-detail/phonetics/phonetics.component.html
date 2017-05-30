@@ -42,7 +42,9 @@
         <td>{{phonetic.writing}}</td>
         <td>
 
-          <app-upload-form></app-upload-form>
+          <app-upload-form [filedata]="{'objectname':phonetic.alphabet,'componentname':'alphabet','courseId':phonetics$key,'uploadFor':'pronunciation'}">
+
+          </app-upload-form>
           <button class="btn btn-default">
             Record <span class="glyphicon glyphicon-record" style="color: red"></span>
           </button>
