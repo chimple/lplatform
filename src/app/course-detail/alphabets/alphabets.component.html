@@ -54,19 +54,14 @@
       <tr *ngFor="let alphabet of alphabets$ | async">
         <td>{{alphabet.alphabet}}</td>
         <td>
-
-            <!--<label>Sound</label><br>-->
-            <!--<app-upload-form ></app-upload-form>-->
-            <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
-              <!--Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>-->
-
             <app-upload-form></app-upload-form>
 
             <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
             </button>
             <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span
               class="glyphicon glyphicon-play"></span></button>
-            {{alphabet.sound}}</td>
+            {{alphabet.sound}}
+        </td>
         <td>
           <!--<label>Sound</label><br>-->
           <app-upload-form ></app-upload-form>
