@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {LessonService} from '../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
-import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm } from '@angular/forms';
-import {Observable} from "rxjs/Observable";
-import {Lesson} from "../../shared/model/lesson";
-import {ActivatedRoute} from "@angular/router";
+import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {Lesson} from '../../shared/model/lesson';
+import {ActivatedRoute} from '@angular/router';
+import {PhoneticService} from '../../shared/model/phonetic.service';
 
 @Component({
   selector: 'app-lessons',
@@ -15,19 +16,20 @@ import {ActivatedRoute} from "@angular/router";
 
 export class LessonsComponent implements OnInit {
 
-  insertFlag: boolean = false;
-  editFlag:any;
-  //defaultTeach = "alphabets";
+  insertFlag = false;
+  editFlag: any;
   lessons$: Observable<Lesson[]>;
+  course$Key: string;
+  phoneticsSelection$: Observable<string[]>;
 
-  @ViewChild('lf') lessonsForm:NgForm;
-  @ViewChild('lessonEdit') lessonsEditForm:NgForm;
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) { }
-
+  @ViewChild('lf') lessonsForm: NgForm;
+  @ViewChild('lessonEdit') lessonsEditForm: NgForm;
+  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const course$Key: string = this.route.snapshot.params['lessonId'];
-    this.lessons$ = this.lessonService.findAllLessonByCourse(course$Key);
+    this.course$Key = this.route.snapshot.params['lessonId'];
+    this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
+    this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
   }
 
   addLesson(): void {
@@ -36,18 +38,18 @@ export class LessonsComponent implements OnInit {
 
   submitLesson() {
     console.log(this.lessonsForm.value);
+    this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
   }
 
-  editLesson(lIndex){
+  editLesson(lIndex) {
     this.editFlag = lIndex;
 
   }
-  updateLesson(lessonKey){
-    console.log("lessonKey: "+ lessonKey);
-    this.lessonsEditForm;
-    this.editFlag ="";
-  }
 
+  updateLesson(param) {
+    console.log(param);
+    this.editFlag = '';
+  }
 }
 
 
