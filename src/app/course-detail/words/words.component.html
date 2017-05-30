@@ -15,8 +15,13 @@
       <td>
         <button><span class="glyphicon glyphicon-saved" style="color: blue"></span></button>
       </td>
-      <td>{{worditem.word}}</td>
-      <td>{{worditem.meaning}}</td>
+      <td>
+      <p *ngIf="show!==i">{{worditem.word}}</p>
+      <p *ngIf="show===i"><input type="text" name="word" class="form-control" [(ngModel)]="worditem.word"></p>
+      </td>
+      <td>
+      <p *ngIf="show!==i">{{worditem.meaning}}</p>
+       <p *ngIf="show===i"><input type="text" name="meaning" class="form-control" [(ngModel)]="worditem.meaning"></p>
       <td>
         <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
         Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
@@ -24,13 +29,18 @@
         <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
         <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
       </td>
-      <td><span id="fileselector">
+      <td>
+      <span id="fileselector">
         <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
           <input id="upload-file-selector" type="file">
           Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
         </label>
-      </span></td>
-      <td>{{worditem.ref}}</td>
+      </span>
+      </td>
+      <td>
+      <p *ngIf="show!==i">>{{worditem.ref}}</p>
+       <p *ngIf="show===i"><input type="text" name="ref" class="form-control" [(ngModel)]="worditem.ref"></p>
+      </td>
       </tr>
       <tr *ngIf="show===i">
       <td colspan="5">
@@ -42,9 +52,10 @@
               <input type="text" class="form-control"  placeholder="Enter phonetics">
             </div>
             <div class="col-md-3">
-              <select class='form-control'>
-                <option value="">---select---</option>
-              </select>
+              <select class='form-control' ngModel>
+              <option value="">---select---</option>
+              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+            </select>
             </div>
           </div>
         </div>
@@ -76,10 +87,10 @@
           <div class="col-md-2">
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" formControlName="breakword" placeholder="Enter phonetics">
+            <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
           </div>
           <div class="col-md-3">
-            <select class='form-control' ngModel formControlName="sample">
+            <select class='form-control' ngModel formControlName="phonetic">
               <option value="">---select---</option>
               <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
             </select>
@@ -90,7 +101,6 @@
         </div>
       </div>
     </div>
-  </form>
   <div class="row">
     <div class="col-md-12">
       <div>
@@ -101,6 +111,8 @@
       </div>
     </div>
   </div>
+<button type="submit" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>
+  </form>
 </div>
 <button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
-<button type="submit" [disabled]="!wordform.valid" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>
+

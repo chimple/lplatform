@@ -25,6 +25,7 @@ export class WordsComponent implements OnInit {
     const word$Key: string = this.route.snapshot.params['wordId'];
     this.words$ = this.wordService.findWordsByCourse(word$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(word$Key);
+    console.log(this.words$);
     this.initForm();
   }
 
@@ -48,8 +49,8 @@ export class WordsComponent implements OnInit {
   onAddnew() {
     (<FormArray>this.wordform.get('phonetics')).push(
       new FormGroup({
-        'breakword': new FormControl(null, Validators.required),
-        'sample': new FormControl(null, Validators.required)
+        'alphabet': new FormControl(null, Validators.required),
+        'phonetic': new FormControl(null, Validators.required)
       })
     );
   }
@@ -67,6 +68,10 @@ export class WordsComponent implements OnInit {
     this.show='';
   }else{
      this.show=index;
+
   }
+  }
+  onSubmitData(data){
+    console.log(data);
   }
 }
