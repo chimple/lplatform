@@ -10,11 +10,18 @@
         <td>{{phonetic.alphabet}}</td>
         <td>{{phonetic.writing}}</td>
         <td>{{phonetic.pronunciation}}</td>
-        <td>
-        </td>
+
       </tr>
 
     </table>
+
+    <div class="col-xs-3"></div>
+    <button type="button" class="btn btn-default"
+            style="border-radius:20px 0px 0px 20px ;cursor:pointer;color:deepskyblue" (click)="previous()">
+      <span class="glyphicon glyphicon-triangle-left"></span> Previous</button>
+    <button type="button" class="btn btn-default"
+            style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue" (click)="next()"> Next
+      <span class="glyphicon glyphicon-triangle-right"></span></button>
   </div>
 </div>
 <hr>
