@@ -5,7 +5,7 @@ import {FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {Word} from '../../shared/model/word';
-import {PhoneticService} from "../../shared/model/phonetic.service";
+import {PhoneticService} from '../../shared/model/phonetic.service';
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
@@ -16,15 +16,17 @@ export class WordsComponent implements OnInit {
   phoneticsSelection$: Observable<string[]>;
   wordform: FormGroup;
   chkflag: boolean = false;
-  phoneitem:any;
-  show='';
+  phoneitem: any;
+  show = '';
+  word$Key: string;
+
   constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    const word$Key: string = this.route.snapshot.params['wordId'];
-    this.words$ = this.wordService.findWordsByCourse(word$Key);
-    this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(word$Key);
+    this.word$Key = this.route.snapshot.params['wordId'];
+    this.words$ = this.wordService.findWordsByCourse(this.word$Key);
+    this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.word$Key);
     console.log(this.words$);
     this.initForm();
   }
@@ -62,16 +64,19 @@ export class WordsComponent implements OnInit {
   onDeleteold(index: number) {
     (<FormArray>this.wordform.get('phonetics')).removeAt(index);
   }
-  showitem(index){
-    if(this.show!==''){
-    console.log(this.show);
-    this.show='';
-  }else{
-     this.show=index;
 
+  showitem(index) {
+    if (this.show !== '') {
+      console.log(this.show);
+      this.show = '';
+    } else {
+      this.show = index;
+
+    }
   }
-  }
-  onSubmitData(data){
+
+  onSubmitData(data) {
     console.log(data);
+    this.wordService.createWord(this.word$Key, data);
   }
 }

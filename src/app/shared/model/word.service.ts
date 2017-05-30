@@ -7,11 +7,13 @@ import {CourseDetail} from './course-detail';
 import {CourseService} from './course.service';
 import {Subject} from 'rxjs/Subject';
 import * as firebase from 'firebase/app';
+import * as _ from 'lodash';
 
 @Injectable()
 export class WordService {
 
   sdkDb: any;
+
   constructor(private db: AngularFireDatabase, private phoneticService: PhoneticService, private courseService: CourseService) {
     this.sdkDb = firebase.database().ref();
   }
@@ -36,26 +38,42 @@ export class WordService {
     }).map(results => Word.fromJsonList(results));
   }
 
-  createWord(courseUrl: string, word: any): Observable<any> {
+  createWord(courseUrl: string, input: any): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)
       .subscribe(
         courseInfo => courseDetail = courseInfo
       );
 
-    const order = courseDetail.alphabets + 1;
-    courseDetail.alphabets = order;
+    courseDetail.words = courseDetail.words + 1;
 
-    const wordToSave = Object.assign({}, word, {course: courseUrl}, {order: order});
+
+    let i = 1;
+    let phonetics = {};
+    phonetics = _.reduce(input.phonetics, (result, item) => {
+      const key = item['alphabet'];
+      const val = item['phonetic'];
+      console.log(`key in reduce ${key}`);
+      console.log(`value in reduce ${val}`);
+      const p = {};
+      p['order'] = i;
+      p[key] = val;
+      result[i] = p;
+      i++;
+      return result;
+    }, phonetics);
+
+    const wordToSave = Object.assign({}, {key: input.word}, {phonetics: phonetics},
+      {meaning: input.meaning}, {ref: input.ref}, {course: courseUrl});
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
-    const newKey = wordToSave.alphabet;
-    delete(wordToSave.alphabet);
+    const newKey = wordToSave.key;
+    delete(wordToSave.key);
 
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
-    dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = wordToSave;
+    dataToSave[`course_words/${courseUrl}/${newKey}`] = wordToSave;
     const subject = new Subject();
 
     return this.firebaseUpdate(dataToSave);

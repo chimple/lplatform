@@ -1,11 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Phonetic} from './phonetic';
 import {AngularFireDatabase} from 'angularfire2/database';
+import {Observable} from 'rxjs/Observable';
+import {CourseDetail} from './course-detail';
+import {CourseService} from './course.service';
+import {Subject} from 'rxjs/Subject';
+import * as firebase from 'firebase/app';
+
 
 @Injectable()
 export class PhoneticService {
+  sdkDb: any;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private courseService: CourseService) {
+    this.sdkDb = firebase.database().ref();
   }
 
   findPhoneticsByCourse(courseUrl: string) {
@@ -35,4 +43,48 @@ export class PhoneticService {
     }).map(results => Phonetic.fromJsonListFetchProperty(results, 'alphabet'));
   }
 
+
+  createPhonetic(courseUrl: string, input: any): Observable<any> {
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    const order = courseDetail.phonetics + 1;
+    courseDetail.phonetics = order;
+
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const phoneticToSave = Object.assign({}, {phonetic: input.phonetics}, {writing: input.written}, {course: courseUrl}, {order: order});
+
+    const newKey = phoneticToSave.phonetic;
+    delete(phoneticToSave.phonetic);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    dataToSave[`course_phonetics/${courseUrl}/${newKey}`] = phoneticToSave;
+    const subject = new Subject();
+
+    return this.firebaseUpdate(dataToSave);
+  }
+
+  firebaseUpdate(dataToSave): Observable<any> {
+    const subject = new Subject();
+
+    this.sdkDb.update(dataToSave)
+      .then(
+        val => {
+          subject.next(val);
+          subject.complete();
+        },
+        err => {
+          subject.error(err);
+          subject.complete();
+        }
+      );
+
+    return subject.asObservable();
+  }
 }

@@ -19,8 +19,8 @@
     "XX01": {
       "description": "This is Basic English Course",
       "alphabets" : 2,
-      "words" : 0,
-      "phonetics" : 0,
+      "words" : 1,
+      "phonetics" : 3,
       "lessons" : 0
     },
     "XX02": {
