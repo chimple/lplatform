@@ -14,7 +14,8 @@ export class WordsComponent implements OnInit {
   words$: Observable<Word[]>;
   wordform: FormGroup;
   chkflag: boolean = false;
-
+  phoneitem:any;
+  show='';
   constructor(private wordService: WordService, private route: ActivatedRoute) {
   }
 
@@ -56,5 +57,13 @@ export class WordsComponent implements OnInit {
 
   onDeleteold(index: number) {
     (<FormArray>this.wordform.get('phonetics')).removeAt(index);
+  }
+  showitem(index){
+    if(this.show!==''){
+    console.log(this.show);
+    this.show='';
+  }else{
+     this.show=index;
+  }
   }
 }

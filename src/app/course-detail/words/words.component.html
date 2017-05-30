@@ -1,6 +1,7 @@
 <table class="table table-responsive">
   <thead>
     <tr>
+      <th></th>
       <th>Word</th>
       <th>Meaning</th>
       <th>Pronunciation</th>
@@ -9,13 +10,47 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let worditem of words$ | async" (click)="showitem(worditem.phonetics)">
+  <ng-container *ngFor="let worditem of words$ | async; let i=index" >
+    <tr (click)="showitem(i)">
+      <td>
+        <button><span class="glyphicon glyphicon-saved" style="color: blue"></span></button>
+      </td>
       <td>{{worditem.word}}</td>
       <td>{{worditem.meaning}}</td>
-      <td>{{worditem.pronunciation}}</td>
-      <td>{{worditem.image}}</td>
+      <td>
+        <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
+        Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+        </button>
+        <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+        <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
+      </td>
+      <td><span id="fileselector">
+        <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
+          <input id="upload-file-selector" type="file">
+          Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
+        </label>
+      </span></td>
       <td>{{worditem.ref}}</td>
+      </tr>
+      <tr *ngIf="show===i">
+      <td colspan="5">
+        <div class="col-md-12 col-md-offset-1" style="margin-top: 10px;">
+          <div class="row"  style="margin-bottom: 10px;" *ngFor="let item of worditem.phonetics">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control"  placeholder="Enter phonetics">
+            </div>
+            <div class="col-md-3">
+              <select class='form-control'>
+                <option value="">---select---</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>
+    </ng-container>
   </tbody>
 </table>
 <div *ngIf="chkflag">
@@ -23,32 +58,15 @@
   <form [formGroup]="wordform" (ngSubmit)="onSubmitData(wordform.value)">
     <div class="row">
       <div class="col-md-12">
-        <div class="col-md-2">
+        <div class="col-md-4">
           <label>Word</label>
           <input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" >
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
           <label>Meaning</label>
           <input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" >
         </div>
-        <div class="col-md-3">
-          <label>Pronunciation</label><br>
-          <button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">
-          Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
-          </button>
-          <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
-          <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
-        </div>
-        <div class="col-md-2" >
-          <label>Image</label><br>
-          <span id="fileselector">
-            <label class="btn btn-default" for="upload-file-selector" style="border-radius:20px 20px 20px 20px">
-              <input id="upload-file-selector" type="file" formControlName="image">
-              Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
-            </label>
-          </span>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <label>Ref</label>
           <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
         </div>
@@ -80,7 +98,6 @@
         <div class="col-md-3">
           <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
         </div>
-
       </div>
     </div>
   </div>
