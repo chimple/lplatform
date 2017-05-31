@@ -21,20 +21,22 @@ textarea.ng-invalid.ng-touched{
 }
 /* Displaying all courses CSS starts here */
 
-.list_of_courses_headline h4{
+.list_of_courses_headline h4,.list_of_courseLesson_headline h4{
 	font-family: initial;
 	font-weight: 600;
 	font-size: 20px;
-	margin-bottom: 70px;
+}
+.list_of_courses_headline,.list_of_courseLesson_headline{
+    margin-bottom: 70px;
 }
 
-.list_of_courses img{
+.list_of_courses img,.list_of_courseLesson img{
     height: 200px;
     background-color: #f5f5f5;
     border-radius: 6.2px 6.2px 0 0;
 }
 
-.list_of_courses{
+.list_of_courses,.list_of_courseLesson{
 	background-color: #fff;
     border-radius: 5px;
     box-shadow: rgba(0,0,0,0.08) 0 1px 2px;
@@ -78,7 +80,7 @@ textarea.ng-invalid.ng-touched{
     width: 80px;
 }
 
-.course_details h3 {
+.course_details h3,.courseLesson_details h3 {
     width: 100%;
     height: 54px;
     margin: 0;
@@ -88,12 +90,26 @@ textarea.ng-invalid.ng-touched{
     clear: both;
     text-align: center;
 }
+.courseLesson_details h3 {
+    height:35px;
+    font-size: 16px;
+}
 .learners_count{
 	text-align: center;
 }
 
-.course_container a {
+.course_container a,.courseLesson_container a {
 	cursor: pointer;
+}
+.course_lessons_count{
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 50%;
+    margin: 80px;
+}
+
+.list_of_courseLesson:hover{
+    background: #e8e5e5;
 }
 
 /* Displaying all courses CSS ends here */
