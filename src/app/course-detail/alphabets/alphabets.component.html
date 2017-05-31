@@ -74,12 +74,12 @@
         </td>
         <td>
             <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
+
             'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
-
             </app-upload-form>
-
-            <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
-            </button>
+            <app-record-audio [filedata]="{'objectname':alphabet.alphabet,
+              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
+            </app-record-audio>
             <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span
               class="glyphicon glyphicon-play"></span></button>
             {{alphabet.sound}}
