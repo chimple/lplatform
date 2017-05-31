@@ -83,19 +83,24 @@
 
 
             <button class="btn btn-default"
+                    onclick="document.getElementById('alpha-sounds').play()"
+
                     style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
-              <audio controls="controls" >
-                <source src="{{alphabet.sound}}" type="audio/mp3">
-              </audio>
-              <span
-              class="glyphicon glyphicon-play" ></span></button>
-            {{alphabet.sound}}
-        </td>
-<td>
-            <audio controls="controls">
+             <span
+              class="glyphicon glyphicon-play" ></span>
+            </button>
+          <audio controls="controls" id="alpha-sounds" hidden >
             <source src="{{alphabet.sound}}" type="audio/mp3">
           </audio>
-</td>
+            <!--{{alphabet.sound}}-->
+        </td>
+        
+
+<!--<td>-->
+            <!--<audio controls="controls">-->
+            <!--<source src="{{alphabet.sound}}" type="audio/mp3">-->
+          <!--</audio>-->
+<!--</td>-->
 
         <td>
           <!--<label>Sound</label><br>-->
