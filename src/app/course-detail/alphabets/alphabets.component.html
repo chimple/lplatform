@@ -78,11 +78,30 @@
             'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-upload-form>
             <app-record-audio [filedata]="{'objectname':alphabet.alphabet,
-              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
+              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-record-audio>
-            <audio controls="controls">
+
+
+            <button class="btn btn-default"
+                    onclick="document.getElementById('alpha-sounds').play()"
+
+                    style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
+             <span
+              class="glyphicon glyphicon-play" ></span>
+            </button>
+          <audio controls="controls" id="alpha-sounds" hidden >
             <source src="{{alphabet.sound}}" type="audio/mp3">
-          </audio>        </td>
+          </audio>
+            <!--{{alphabet.sound}}-->
+        </td>
+        
+
+<!--<td>-->
+            <!--<audio controls="controls">-->
+            <!--<source src="{{alphabet.sound}}" type="audio/mp3">-->
+          <!--</audio>-->
+<!--</td>-->
+
         <td>
           <!--<label>Sound</label><br>-->
           <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
