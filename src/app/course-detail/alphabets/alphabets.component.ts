@@ -29,8 +29,13 @@ export class AlphabetComponent implements OnInit {
     );
   }
 
+  editAlphRow() {
+
+  }
+
   editAlph(i) {
     this.editAlpha = i;
+    console.log(i);
   }
 
   addNewAlpha() {
