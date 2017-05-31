@@ -5,7 +5,10 @@ input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched{
  border: 1px solid red;
 }
-
+/*body {  background-image: url(wallpaper-cartoon-23.jpg);*/
+  /*background-size: 100% 150%;*/
+  /*background-repeat: no-repeat;*/
+/*}*/
 
 .gu-mirror{position:fixed!important;margin:0!important;z-index:9999!important;
   opacity:.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80)}
