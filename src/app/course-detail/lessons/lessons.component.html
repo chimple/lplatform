@@ -22,6 +22,7 @@
     <td>
       <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
       <button type="submit" *ngIf="editFlag===lIndex" class="glyphicon glyphicon-save"></button>
+      <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
@@ -65,6 +66,7 @@
             <label>Lesson Name:</label>
             <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
             <input class="form-control" type="text" id="lessonName" placeholder="Name" ngModel name="name" required #lesson>
+            <input type="hidden" name="lesson" [ngModel]="lesson.lesson" />
           </div>
 
           <div class="col-xs-4">
