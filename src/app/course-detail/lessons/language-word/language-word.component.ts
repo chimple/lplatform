@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
@@ -12,30 +12,29 @@ import {Observable} from 'rxjs/Observable';
 })
 export class LanguageWordComponent implements OnInit {
 
-  lwInsertFlag: boolean = false;
-  lwEditFlag: any;
+  lwInsertFlag:boolean = false;
+  lwEditFlag:any;
 
   @ViewChild('lw') lwForm: NgForm;
 
-  constructor(private lessonService: LessonService) {
-  }
+  constructor(private lessonService: LessonService) { }
 
   ngOnInit() {
   }
 
-  editAlphabet(lwIndex) {
+  editAlphabet(lwIndex){
     this.lwEditFlag = lwIndex;
   }
 
 
   /* -------------------------------------- */
 
-  addAlphabet() {
+  addAlphabet(){
 
     this.lwInsertFlag = true;
   }
 
-  submitLW() {
+  submitLW(){
     console.log(this.lwForm.value);
   }
 
