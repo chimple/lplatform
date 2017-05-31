@@ -57,7 +57,7 @@
           <span *ngIf="editAlpha!== i "
                 (click)="editAlph(i)"
                 class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
-          <button class="btn btn-default" type="submit"
+          <button class="btn btn-default" type="submit" (click)="editAlphRow(alphabet.value)"
                   *ngIf="editAlpha===i" style="border-radius: 50%">
             <span class="glyphicon glyphicon-save"
                   style="color: green; cursor: pointer"> </span>
@@ -66,23 +66,42 @@
         </td>
         <td class="col-xs-1">
           <p *ngIf="editAlpha!==i">{{alphabet.alphabet}}</p>
-          <input type="text" name="lesson"
-                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}" class="form-control" />
+          <input type="text" name="alphabet"
+                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}"
+                 class="form-control" #alphabet/>
 
           <!--{{alphabet.alphabet}}-->
         </td>
         <td>
             <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
-            'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
 
+            'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-upload-form>
+            <app-record-audio [filedata]="{'objectname':alphabet.alphabet,
+              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
+            </app-record-audio>
 
-            <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
+
+            <button class="btn btn-default"
+                    onclick="document.getElementById('alpha-sounds').play()"
+
+                    style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
+             <span
+              class="glyphicon glyphicon-play" ></span>
             </button>
-            <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span
-              class="glyphicon glyphicon-play"></span></button>
-            {{alphabet.sound}}
+          <audio controls="controls" id="alpha-sounds" hidden >
+            <source src="{{alphabet.sound}}" type="audio/mp3">
+          </audio>
+            <!--{{alphabet.sound}}-->
         </td>
+        
+
+<!--<td>-->
+            <!--<audio controls="controls">-->
+            <!--<source src="{{alphabet.sound}}" type="audio/mp3">-->
+          <!--</audio>-->
+<!--</td>-->
+
         <td>
           <!--<label>Sound</label><br>-->
           <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
