@@ -1,6 +1,4 @@
-<a class="list-group-item" *ngFor="let lessonItem of lessonItems$ | async">
-  <div [routerLink]="lessonItem.$key">
-    <h4 class="list-group-item-heading">{{ lessonItem.item }}</h4>
-    <p class="list-group-item-text">order: {{ lessonItem.order }}</p>
-  </div>
-</a>
+<div>
+  <button type="button" class="btn btn-primary" (click)="loadComponent()">Next</button>
+  <ng-template board></ng-template>
+</div>

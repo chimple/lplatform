@@ -37,7 +37,9 @@
         <th>Written</th>
         <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
       </tr>
-      <tr *ngFor="let phonetic of phonetics$ | async ; let i = index">
+
+      <tbody [dragula]='"phonetics-drag"' >
+         <tr *ngFor="let phonetic of phonetics$ | async ; let i = index" >
         <td>
           <span *ngIf="editPhone!== i "
                 (click)="editPhonetic(i)"
@@ -77,6 +79,9 @@
         </td>
 
       </tr>
+
+      </tbody>
+
 
     </table>
 
