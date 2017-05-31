@@ -36,8 +36,8 @@
         </tr>
         <tr *ngIf="show===i">
           <td colspan="5">
-            <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
-              <div class="row" *ngFor="let editctrl of editform.get('phonetics').controls; let ip=index" [formGroupName]="ip" style="margin-bottom: 10px;">
+            <div class="col-md-12 col-md-offset-1" formArrayName="phoneticdata" style="margin-top: 10px;">
+              <div class="row" *ngFor="let editctrl of editform.get('phoneticdata').controls; let ip=index" [formGroupName]="ip" style="margin-bottom: 10px;">
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-3">
@@ -91,7 +91,7 @@
           </div>
         </div>
         <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
-          <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let i=index" [formGroupName]="i" style="margin-bottom: 10px;">
+          <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let ai=index" [formGroupName]="ai" style="margin-bottom: 10px;">
             <div class="col-md-2">
             </div>
             <div class="col-md-3">
@@ -104,7 +104,7 @@
               </select>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-danger" type="button" (click)="onDeleteold(i)">X</button>
+              <button class="btn btn-danger" type="button" (click)="onDeleteold(ai)">X</button>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success pull-left" *ngIf="chkflag">Save Data</button>
+      <button type="submit" class="btn btn-success pull-left" *ngIf="chkflag" [disabled]="!wordform.valid">Save Data</button>
     </form>
   </div>
   <button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
