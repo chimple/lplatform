@@ -23,8 +23,8 @@
           <p *ngIf="show===i"><input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" ></p>
           <td>
             <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
-            <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
-            <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
+            <button type="button" class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+            <button type="button" class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
           </td>
           <td>
           <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>
