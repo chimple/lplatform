@@ -6,7 +6,7 @@
         <span class="glyphicon glyphicon-plus" style="color: green"></span></button>
     </div>
 
-    <div *ngIf="myPhonetics" >
+    <div *ngIf="myPhonetics">
 
       <form (ngSubmit)="save(f)" #f="ngForm">
         <div class="col-xs-2">
@@ -27,40 +27,71 @@
 </div>
 
 
-
 <hr>
 <div class="row">
   <div class="col-xs-12">
     <table class="table table-striped table-style table-responsive">
       <tr>
+        <th><span class="glyphicon glyphicon-flash" style="color: #ff36ed"></span></th>
         <th>Phonetics</th>
         <th>Written</th>
-        <th>Pronunciation</th>
+        <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
       </tr>
-      <tr *ngFor="let phonetic of phonetics$ | async">
-        <td>{{phonetic.alphabet}}</td>
-        <td>{{phonetic.writing}}</td>
+
+      <tbody [dragula]='"phonetics-drag"' >
+         <tr *ngFor="let phonetic of phonetics$ | async ; let i = index" >
+        <td>
+          <span *ngIf="editPhone!== i "
+                (click)="editPhonetic(i)"
+                class="glyphicon glyphicon-pencil"
+                style="color: green; cursor: pointer"></span>
+          <button class="btn btn-default" type="submit"
+                  *ngIf="editPhone===i" style="border-radius: 50%">
+            <span class="glyphicon glyphicon-save"
+                  style="color: green; cursor: pointer"> </span>
+
+          </button>
+        </td>
+        <td class="col-xs-1">
+          <p *ngIf="editPhone!==i">{{phonetic.alphabet}}</p>
+          <input type="text" name="lesson"
+                 *ngIf="editPhone===i" value="{{phonetic.alphabet}}" class="form-control"/>
+          <!--{{phonetic.alphabet}}-->
+        </td>
+        <td class="col-xs-1">
+          <p *ngIf="editPhone!==i">{{phonetic.writing}}</p>
+          <input type="text" name="lesson"
+                 *ngIf="editPhone===i" value="{{phonetic.writing}}" class="form-control"/>
+          <!--{{phonetic.writing}}-->
+        </td>
         <td>
 
-          <app-upload-form></app-upload-form>
+          <app-upload-form [filedata]="{'objectname':phonetic.alphabet,
+          'componentname':'phonetic','courseId':phonetics$key,'uploadFor':'pronunciation'}">
+
+          </app-upload-form>
           <button class="btn btn-default">
             Record <span class="glyphicon glyphicon-record" style="color: red"></span>
           </button>
           <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
             <span class="glyphicon glyphicon-play"></span></button>
-          {{phonetic.pronunciation}}</td>
+          {{phonetic.pronunciation}}
+        </td>
 
       </tr>
+
+      </tbody>
+
 
     </table>
 
     <!--<div class="col-xs-3"></div>-->
     <!--<button type="button" class="btn btn-default"-->
-            <!--style="border-radius:20px 0px 0px 20px ;cursor:pointer;color:deepskyblue" (click)="previous()">-->
-      <!--<span class="glyphicon glyphicon-triangle-left"></span> Previous</button>-->
+    <!--style="border-radius:20px 0px 0px 20px ;cursor:pointer;color:deepskyblue" (click)="previous()">-->
+    <!--<span class="glyphicon glyphicon-triangle-left"></span> Previous</button>-->
     <!--<button type="button" class="btn btn-default"-->
-            <!--style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue" (click)="next()"> Next-->
-      <!--<span class="glyphicon glyphicon-triangle-right"></span></button>-->
+    <!--style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue" (click)="next()"> Next-->
+    <!--<span class="glyphicon glyphicon-triangle-right"></span></button>-->
   </div>
 </div>
 <hr>

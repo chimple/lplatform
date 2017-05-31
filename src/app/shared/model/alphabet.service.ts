@@ -74,9 +74,17 @@ export class AlphabetService {
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
-    const subject = new Subject();
-
     return this.firebaseUpdate(dataToSave);
+  }
+
+  updateSoundLink(courseUrl: string, key: string, soundFileName: string): void {
+    const alphabetUpdate$ = this.db.object(`course_alphabets/${courseUrl}/${key}`);
+    alphabetUpdate$.update({sound: soundFileName});
+  }
+
+  updatePronunciationLink(courseUrl: string, key: string, pronunciationFileName: string): void {
+    const alphabetUpdate$ = this.db.object(`course_alphabets/${courseUrl}/${key}`);
+    alphabetUpdate$.update({pronunciation: pronunciationFileName});
   }
 
   firebaseUpdate(dataToSave): Observable<any> {

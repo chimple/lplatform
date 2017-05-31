@@ -14,6 +14,7 @@ import {CourseService} from "./course.service";
 export class LessonService {
 
   sdkDb: any;
+
   constructor(private db: AngularFireDatabase, private courseService: CourseService) {
     this.sdkDb = firebase.database().ref();
   }
@@ -44,9 +45,20 @@ export class LessonService {
 
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
-    const lessonToSave = Object.assign({}, {phonetic: input.phonetic}, {name: input.name}, {teach: input.teach}, {course: courseUrl}, {order: order});
+    let lessonToSave;
+    if (input.phonetic) {
+      lessonToSave = Object.assign({}, {phonetic: input.phonetic}, {name: input.name}, {teach: input.teach}, {course: courseUrl}, {order: order});
+    } else {
+      lessonToSave = Object.assign({}, {name: input.name}, {teach: input.teach}, {course: courseUrl}, {order: order});
+    }
 
-    const newKey = this.sdkDb.child(`course_lessons`).push().key;
+
+    let newKey;
+    if (input.lesson) {
+      newKey = input.lesson;
+    } else {
+      newKey = this.sdkDb.child(`course_lessons`).push().key;
+    }
 
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;

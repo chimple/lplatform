@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {WordService} from '../../shared/model/word.service';
 import {ActivatedRoute} from '@angular/router';
 import {FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {Word} from '../../shared/model/word';
 import {PhoneticService} from '../../shared/model/phonetic.service';
@@ -19,6 +18,7 @@ export class WordsComponent implements OnInit {
   editform: FormGroup;
   show = '';
   word$Key: string;
+
   constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
   }
 
@@ -31,10 +31,10 @@ export class WordsComponent implements OnInit {
   }
 
   private initForm() {
-    let word = '';
-    let meaning = '';
-    let ref = '';
-    let phonetics = new FormArray([]);
+    const word = '';
+    const meaning = '';
+    const ref = '';
+    const phonetics = new FormArray([]);
     this.wordform = new FormGroup({
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
@@ -68,9 +68,9 @@ export class WordsComponent implements OnInit {
     (<FormArray>this.wordform.get('phonetics')).removeAt(index);
   }
 
-  showitem(value:any,index) {
+  showitem(value: any, index) {
     this.chkflag = false;
-    if (this.show !== '' && index===this.show) {
+    if (this.show !== '' && index === this.show) {
       console.log(this.show);
       this.show = '';
     } else {
@@ -84,49 +84,56 @@ export class WordsComponent implements OnInit {
     this.wordService.createWord(this.word$Key, data);
     this.wordform.reset();
   }
-   onDelete(data) {
-    console.log(data);
-    //this.wordService.createWord(this.word$Key, data);
+
+  onDelete(data) {
+    console.log(data); 
+    if(confirm('Are you sure to delete ?')){
+    this.wordService.deleteWord(this.word$Key, data);
   }
-  oneditData(editdata){
+  }
+
+  oneditData(editdata) {
     console.log(editdata);
-   this.wordService.createWord(this.word$Key, editdata);
+    this.wordService.createWord(this.word$Key, editdata);
     this.show = '';
   }
-  editdata(alldata){
+
+  editdata(alldata) {
     let word = '';
     let meaning = '';
     let ref = '';
     let phonetics = new FormArray([]);
-    if(alldata){
-      word=alldata.word;
-      meaning=alldata.meaning;
-      ref=alldata.ref;
-      for(let ingredient of alldata.phonetics){
-          phonetics.push(
-            new FormGroup({
-              'alphabet': new FormControl(ingredient.alphabet,Validators.required),
-              'phonetic' : new FormControl(ingredient.phonetics,Validators.required)
-            })
-            );
-        }
+    if (alldata) {
+      word = alldata.word;
+      meaning = alldata.meaning;
+      ref = alldata.ref;
+      for ( let ingredient of alldata.phonetics ) {
+        phonetics.push(
+          new FormGroup({
+            'alphabet': new FormControl(ingredient.alphabet, Validators.required),
+            'phonetic': new FormControl(ingredient.phonetics, Validators.required)
+          })
+        );
       }
+    }
     this.editform = new FormGroup({
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
       'phonetics': phonetics
     });
-}
-onDeleteEdit(index: number){
-  (<FormArray>this.editform.get('phonetics')).removeAt(index);
-}
-onAddEdit(){
-   (<FormArray>this.editform.get('phonetics')).push(
+  }
+
+  onDeleteEdit(index: number) {
+    (<FormArray>this.editform.get('phonetics')).removeAt(index);
+  }
+
+  onAddEdit() {
+    (<FormArray>this.editform.get('phonetics')).push(
       new FormGroup({
         'alphabet': new FormControl(null, Validators.required),
         'phonetic': new FormControl(null, Validators.required)
       })
     );
-}
+  }
 }

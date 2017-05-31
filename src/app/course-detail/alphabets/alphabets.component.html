@@ -46,15 +46,36 @@
   <div class="col-xs-12">
     <table class="table table-striped table-style table-responsive">
       <tr>
-        <th>Alphabet</th>
-        <th>Sound</th>
-        <th>Pronunciation</th>
+        <th><span class="glyphicon glyphicon-flash" style="color: #ff36ed"></span></th>
+        <th>Alphabet </th>
+        <th>Sound <span class="glyphicon glyphicon-volume-up" style="color: #ff36ed"></span></th>
+        <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
       </tr>
-
-      <tr *ngFor="let alphabet of alphabets$ | async">
-        <td>{{alphabet.alphabet}}</td>
+      <tbody [dragula]='"alphabet-drag"' >
+      <tr *ngFor="let alphabet of alphabets$ | async ; let i = index">
         <td>
-            <app-upload-form></app-upload-form>
+          <span *ngIf="editAlpha!== i "
+                (click)="editAlph(i)"
+                class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
+          <button class="btn btn-default" type="submit"
+                  *ngIf="editAlpha===i" style="border-radius: 50%">
+            <span class="glyphicon glyphicon-save"
+                  style="color: green; cursor: pointer"> </span>
+
+          </button>
+        </td>
+        <td class="col-xs-1">
+          <p *ngIf="editAlpha!==i">{{alphabet.alphabet}}</p>
+          <input type="text" name="lesson"
+                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}" class="form-control" />
+
+          <!--{{alphabet.alphabet}}-->
+        </td>
+        <td>
+            <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
+            'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
+
+            </app-upload-form>
 
             <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
             </button>
@@ -64,7 +85,10 @@
         </td>
         <td>
           <!--<label>Sound</label><br>-->
-          <app-upload-form ></app-upload-form>
+          <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
+          'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}">
+
+          </app-upload-form>
           <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
           <!--Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>-->
           <!--</button>-->
@@ -74,6 +98,7 @@
             class="glyphicon glyphicon-play"></span></button>
           {{alphabet.pronunciation}}</td>
       </tr>
+      </tbody>
 
     </table>
     <div class="col-xs-3"></div>

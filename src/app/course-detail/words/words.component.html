@@ -12,22 +12,22 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let worditem of words$ | async; let i=index ">
-      <tr (dblclick)="showitem(worditem.word)">
+      <tr (dblclick)="showitem(worditem,i)">
       <td><button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)">X</button></td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
-          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" ></p>
+          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" readonly></p>
         </td>
         <td>
           <p *ngIf="show!==i">{{worditem.meaning}}</p>
           <p *ngIf="show===i"><input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" ></p>
           <td>
-            <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'words','courseId':word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
+            <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
             <button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
             <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
           </td>
           <td>
-          <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'words','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>
+          <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>
           </td>
           <td>
             <p *ngIf="show!==i">{{worditem.ref}}</p>

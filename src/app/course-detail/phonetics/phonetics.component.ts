@@ -14,6 +14,7 @@ declare var swal: any;
 export class PhoneticsComponent implements OnInit {
   phonetics$key: string;
   myPhonetics: boolean = false;
+  editPhone: any;
   phonetics$: Observable<Phonetic[]>;
 
   constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
@@ -26,6 +27,9 @@ export class PhoneticsComponent implements OnInit {
 
   addNewPhone() {
     this.myPhonetics = true;
+  }
+  editPhonetic(i) {
+    this.editPhone = i;
   }
 
   onUpload() {
