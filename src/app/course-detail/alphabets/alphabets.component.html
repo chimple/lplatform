@@ -52,7 +52,7 @@
         <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
       </tr>
       <tbody [dragula]='"alphabet-drag"' >
-      <tr *ngFor="let alphabet of alphabets$ | async ; let i = index">
+      <tr *ngFor="let alphabet of alphabets$ | async ; let i = index ">
         <td>
           <span *ngIf="editAlpha!== i "
                 (click)="editAlph(i)"

@@ -35,6 +35,7 @@ export class WordsComponent implements OnInit {
     const meaning = '';
     const ref = '';
     const phonetics = new FormArray([]);
+    const phoneticdata = new FormArray([]);
     this.wordform = new FormGroup({
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
@@ -45,7 +46,7 @@ export class WordsComponent implements OnInit {
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
-      'phonetics': phonetics
+      'phoneticdata': phoneticdata
     });
 
   }
@@ -86,27 +87,32 @@ export class WordsComponent implements OnInit {
   }
 
   onDelete(data) {
-    console.log(data);
+    console.log(data); 
+    if(confirm('Are you sure to delete ?')){
     this.wordService.deleteWord(this.word$Key, data);
+  }
   }
 
   oneditData(editdata) {
+    editdata.phonetic=editdata.phoneticdata;
+    delete editdata.phoneticdata;
     console.log(editdata);
-    this.wordService.createWord(this.word$Key, editdata);
-    this.show = '';
+
+    //this.wordService.createWord(this.word$Key, editdata);
+    //this.show = '';
   }
 
   editdata(alldata) {
     let word = '';
     let meaning = '';
     let ref = '';
-    let phonetics = new FormArray([]);
+    let phoneticdata = new FormArray([]);
     if (alldata) {
       word = alldata.word;
       meaning = alldata.meaning;
       ref = alldata.ref;
       for ( let ingredient of alldata.phonetics ) {
-        phonetics.push(
+        phoneticdata.push(
           new FormGroup({
             'alphabet': new FormControl(ingredient.alphabet, Validators.required),
             'phonetic': new FormControl(ingredient.phonetics, Validators.required)
@@ -118,16 +124,16 @@ export class WordsComponent implements OnInit {
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
-      'phonetics': phonetics
+      'phoneticdata': phoneticdata
     });
   }
 
   onDeleteEdit(index: number) {
-    (<FormArray>this.editform.get('phonetics')).removeAt(index);
+    (<FormArray>this.editform.get('phoneticdata')).removeAt(index);
   }
 
   onAddEdit() {
-    (<FormArray>this.editform.get('phonetics')).push(
+    (<FormArray>this.editform.get('phoneticdata')).push(
       new FormGroup({
         'alphabet': new FormControl(null, Validators.required),
         'phonetic': new FormControl(null, Validators.required)
