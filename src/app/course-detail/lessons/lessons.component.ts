@@ -16,7 +16,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class LessonsComponent implements OnInit {
 
-
+  tst:any = "Sharath";
   teachSelect:any;
   insertFlag = false;
   editFlag: any;
@@ -26,7 +26,7 @@ export class LessonsComponent implements OnInit {
 
   @ViewChild('lf') lessonsForm: NgForm;
    @ViewChild('lessonEdit') lessonsEditForm: NgForm;
-  @ViewChild('tf') testForm: NgForm;
+   @ViewChild('tf') testForms: NgForm;
   constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -40,13 +40,14 @@ export class LessonsComponent implements OnInit {
   }
 
   submitLesson() {
-    console.log(this.lessonsForm.value);
+    console.log("Submit Lesson: "+this.lessonsForm.value);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
   }
   teachDropDownChanged(param){
     this.teachSelect = param;
   }
   /* -------------------------------------------------- */
+
 
   editLesson(lIndex) {
     this.editFlag = lIndex;
@@ -57,6 +58,11 @@ export class LessonsComponent implements OnInit {
     //console.log("lessonKey: "+ lessonKey);
     console.log("Update Lesson: "+this.lessonsEditForm.value);
     this.editFlag ="";
+  }
+
+
+  testForm(){
+    console.log("Test Form: "+this.testForms.value);
   }
 
 
