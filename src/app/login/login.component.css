@@ -1,0 +1,15 @@
+.login_form button{
+	width: 200px;
+	text-align: center;
+	margin: 5%;
+}
+.login_form{
+	text-align: center;
+	background-color: rgba(136, 126, 126, 0.2);
+	padding: 30px;
+	border: 3px solid rgba(180, 178, 187, 0.53);
+    border-radius: 5px;
+}
+.login_form_row{
+	margin-top:170px;
+}
