@@ -11,6 +11,7 @@ import { CourselessonsService } from './courselessons.service';
 export class CourselessonsComponent implements OnInit {
   language:any;
   courseId:any;
+  courseLessons = [];
   constructor(private activatedRoute:ActivatedRoute,private courseLessonsService:CourselessonsService) { }
 
   ngOnInit() {
@@ -20,7 +21,9 @@ export class CourselessonsComponent implements OnInit {
     });
   	this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
   		(data)=>{
-  			console.log(data);
+  			for(let key in data){
+  				this.courseLessons.push(data[key]);
+  			}
   		}
   	);
   }

@@ -1,3 +1,18 @@
-<p>
-  courselessons works!
-</p>
+<div class="row list_of_courseLesson_headline">
+	<div class="col-xs-6">
+ 		<h4><span style="font-size:16px;">Course Name:</span> {{language}}</h4>
+ 	</div>
+</div>
+<div class="row courseLesson_container">
+	<div class="col-xs-12 col-sm-6 col-lg-3 " *ngFor="let courseLesson of courseLessons">
+		<div class="list_of_courseLesson">
+			<a>
+				<img class="img-responsive" [src]="courseLesson.image" />
+			</a>
+			<div class="courseLesson_details">
+				<h3>{{courseLesson.name}}</h3>
+				<span class="course_lessons_count">{{courseLesson.order}}</span>
+			</div>
+		</div>
+	</div>
+</div>	
