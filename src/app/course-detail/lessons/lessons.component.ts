@@ -42,8 +42,7 @@ export class LessonsComponent implements OnInit {
   }
 
   submitLesson() {
-    console.log(`S
-    ubmit Lesson: ${this.lessonsForm.value}`);
+    console.log(`Submit Lesson: ${this.lessonsForm.value}`);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
   }
 
