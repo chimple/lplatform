@@ -1,7 +1,7 @@
 <hr />
 <div class="row">
   <div class="col-xs-12">
-    Lower case alphabets
+    Lower case Words
   </div>
 </div>
 <div class="row">
@@ -35,11 +35,12 @@
     </td>
   </tr> -->
 
-    <tr>
+    <tr *ngFor="let lessonWrd of lessonWord$ | async; let lwIndex= index ">
       <td><span class="glyphicon glyphicon-pencil"></span></td>
-      <td><p>a</p></td>
+      
+      <td><p>{{lessonWrd.item}}</p></td>
       <td>
-          <div>Apple, Axe, Asia</div>
+          <span *ngFor="let lw of lessonWrd">{{lw}}</span>
       </td>
     </tr>
 
