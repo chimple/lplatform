@@ -1,5 +1,1 @@
-<div>
-  <ul id="audio"></ul>
-  <button [disabled]="isRecording" (click)="record()">Record</button>
-  <button [disabled]="!isRecording" (click)="stop()">Stop</button>
-</div>
+ <button (click)="toggleRecording()" class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
