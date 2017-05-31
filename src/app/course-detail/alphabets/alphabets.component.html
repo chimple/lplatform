@@ -51,7 +51,7 @@
         <th>Sound <span class="glyphicon glyphicon-volume-up" style="color: #ff36ed"></span></th>
         <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
       </tr>
-      <tbody [dragula]='"alphabet-drag"' [dragulaModel]='alphabets$'>
+      <tbody [dragula]='"alphabet-drag"' >
       <tr *ngFor="let alphabet of alphabets$ | async ; let i = index">
         <td>
           <span *ngIf="editAlpha!== i "
