@@ -57,18 +57,18 @@
           <span *ngIf="editAlpha!== i "
                 (click)="editAlph(i)"
                 class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
-          <button class="btn btn-default" type="submit" (click)="editAlphRow(alphabet.value)"
-                  *ngIf="editAlpha===i" style="border-radius: 50%">
+          <button class="btn btn-default" type="submit" (click)="editAlphRow(alphabetName)"
+                  *ngIf="editAlpha=== i" style="border-radius: 50%">
             <span class="glyphicon glyphicon-save"
                   style="color: green; cursor: pointer"> </span>
 
           </button>
         </td>
         <td class="col-xs-1">
-          <p *ngIf="editAlpha!==i">{{alphabet.alphabet}}</p>
-          <input type="text" name="alphabet"
-                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}"
-                 class="form-control" #alphabet/>
+          <p *ngIf="editAlpha!== i">{{alphabet.alphabet}}</p>
+          <input type="text" name="alphabetName"
+                 *ngIf="editAlpha=== i" value="{{alphabet.alphabet}}"
+                 class="form-control" #alphabetName/>
 
           <!--{{alphabet.alphabet}}-->
         </td>
