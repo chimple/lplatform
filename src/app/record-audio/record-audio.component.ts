@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UploadService} from '../shared/uploads/upload.service';
 import {BlobUpload} from '../shared/uploads/blob-upload';
 
@@ -10,6 +10,7 @@ declare const MediaRecorder: any;
   styleUrls: ['./record-audio.component.css']
 })
 export class RecordAudioComponent implements OnInit {
+  @Input() filedata: any;
 
   public isRecording = false;
   private chunks: any = [];
@@ -20,8 +21,8 @@ export class RecordAudioComponent implements OnInit {
       this.mediaRecorder = new MediaRecorder(stream);
       this.mediaRecorder.onstop = e => {
         const audio = new Audio();
-        // const blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
-        // this.chunks.length = 0;
+        const blob = new Blob(this.chunks, { 'type': 'audio/mp3; codecs=opus' });
+        this.chunks.length = 0;
         // audio.src = window.URL.createObjectURL(blob);
         // audio.load();
         // audio.play();
@@ -40,8 +41,9 @@ export class RecordAudioComponent implements OnInit {
         // li.appendChild(mt);
         // li.appendChild(hf);
         // ul.appendChild(li);
-        // const blobUpload = new BlobUpload(blob);
-        // this.upSvc.pushBlobUpload(blobUpload);
+        console.log(`file data ${this.filedata}`);
+        const blobUpload = new BlobUpload(blob, this.filedata);
+        this.upSvc.pushBlobUpload(blobUpload);
       };
 
       this.mediaRecorder.ondataavailable = e => this.chunks.push(e.data);
@@ -52,20 +54,21 @@ export class RecordAudioComponent implements OnInit {
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia);
 
-    navigator.getUserMedia({ audio: true }, onSuccess, e => console.log(e));
+    navigator.getUserMedia({audio: true}, onSuccess, e => console.log(e));
   }
 
   ngOnInit() {
   }
 
 
-  public record() {
-    this.isRecording = true;
-    this.mediaRecorder.start();
-  }
-
-  public stop() {
-    this.isRecording = false;
-    this.mediaRecorder.stop();
+  public toggleRecording() {
+    if (this.isRecording) {
+      this.isRecording = false;
+      this.mediaRecorder.stop();
+    } else {
+      this.isRecording = true;
+      this.mediaRecorder.start();
+    }
   }
 }
+

@@ -4,10 +4,10 @@ export class CourseDetail {
     return array.map(CourseDetail.fromJson);
   }
 
-  static fromJson({$key, description}): CourseDetail {
-    return new CourseDetail($key, description);
+  static fromJson({$key, description, alphabets, phonetics, words, lessons}): CourseDetail {
+    return new CourseDetail($key, description, alphabets, phonetics, words, lessons);
   }
 
-  constructor(public $key: string, public description: string) {
+  constructor(public $key: string, public description: string, public alphabets: number, public phonetics: number, public words: number, public lessons: number) {
   }
 }

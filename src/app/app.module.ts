@@ -8,6 +8,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
+import * as firebase from 'firebase/app';
 
 import {AppComponent} from './app.component';
 import {LessonsComponent} from './course-detail/lessons/lessons.component';
@@ -24,6 +25,8 @@ import { TopmenuComponent } from './topmenu/topmenu.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/Subject';
+
 import {AuthGuard} from './shared/security/auth.guard';
 import {CourseService} from './shared/model/course.service';
 import { CoursesListComponent } from './courses/courses.component';
@@ -36,6 +39,12 @@ import {PhoneticService} from './shared/model/phonetic.service';
 import {WordService} from './shared/model/word.service';
 import {LessonService} from './shared/model/lesson.service';
 import { SessionComponent } from './learn/session.component';
+import { DragulaModule } from 'ng2-dragula';
+import { AllcoursesComponent } from './allcourses/allcourses.component';
+import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
+import { BoardDirective } from "app/learn/board/board.directive";
+import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
+import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 
 
 @NgModule({
@@ -54,7 +63,12 @@ import { SessionComponent } from './learn/session.component';
     CourseDetailComponent,
     UploadFormComponent,
     RecordAudioComponent,
-    SessionComponent
+    SessionComponent,
+    AllcoursesComponent,
+    BoardDirective,
+    AlphabetBoardComponent,
+    LanguageWordComponent,
+    LanguageAlphabetComponent
 
   ],
   imports: [
@@ -66,9 +80,11 @@ import { SessionComponent } from './learn/session.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragulaModule
   ],
   providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
+  entryComponents: [AlphabetBoardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

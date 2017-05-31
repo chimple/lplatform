@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Upload} from '../shared/uploads/upload';
 import {UploadService} from '../shared/uploads/upload.service';
 import * as _ from 'lodash';
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
   styleUrls: ['./upload-form.component.css']
 })
 export class UploadFormComponent implements OnInit {
-
+  @Input() filedata: any;
   selectedFiles: FileList;
   currentUpload: Upload;
 
@@ -19,13 +19,12 @@ export class UploadFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  detectFiles(event) {
-    this.selectedFiles = event.target.files;
-  }
 
-  uploadSingle() {
+  detectFiles(event, filedata) {
+    console.log(filedata);
+    this.selectedFiles = event.target.files;
     const file = this.selectedFiles.item(0);
-    this.currentUpload = new Upload(file);
+    this.currentUpload = new Upload(file, filedata);
     this.upSvc.pushUpload(this.currentUpload);
   }
 }

@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './shared/security/auth.guard';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { SessionComponent } from './learn/session.component';
+import { AllcoursesComponent } from './allcourses/allcourses.component';
+import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
+import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 
 const appRoutes: Routes = [
   {
@@ -34,7 +37,11 @@ const appRoutes: Routes = [
           },
           {
             path: 'lessons/:lessonId',
-            component: LessonsComponent
+            component: LessonsComponent,
+            children:[
+              { path: 'language-alphabet', component: LanguageAlphabetComponent },
+              { path: 'language-word', component: LanguageWordComponent }
+            ]
           }
         ]
       },
@@ -55,8 +62,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: AllcoursesComponent
   },
   {
     path: 'session/:lessonId',
@@ -64,7 +70,7 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: ''
   }
 
 ];

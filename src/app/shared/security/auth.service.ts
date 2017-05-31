@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
 
-  static UNKNOWN_USER = new AuthInfo(null);
+  static UNKNOWN_USER = new AuthInfo(null,null);
 
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
 
@@ -33,7 +33,7 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        const authInfo = new AuthInfo(res.uid);
+        const authInfo = new AuthInfo(res.uid,res);
         console.log(res);
         console.log(`res.uid ${res.uid}`);
         this.authInfo$.next(authInfo);
@@ -54,7 +54,7 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        const authInfo = new AuthInfo(res.user.uid);
+        const authInfo = new AuthInfo(res.user.uid,res.user);
         console.log(`res.uid ${res.user.uid}`);
         this.authInfo$.next(authInfo);
         subject.next(res.user);

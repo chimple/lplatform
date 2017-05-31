@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default header" role="navigation">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="sr-only">Toggle navigation</span>
@@ -6,23 +6,35 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">Chimple Learning</a>
+    <a class="navbar-brand header_logo" href="#">Chimple Learning</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav navbar-right">
-      <li>
+     <!--  <li>
         <a routerLink="courses" routerLinkActive="active">COURSES</a>
-      </li>
-      <li>
+      </li> -->
+      <li class="login">
         <a routerLink="login" routerLinkActive="active" *ngIf="!authInfo?.isLoggedIn()">LOGIN</a>
       </li>
-      <li>
+      <!-- REGISTER button is comented because currently we are not using custom login/register -->
+     <!--  <li class="register">
         <a routerLink="register" routerLinkActive="active" *ngIf="!authInfo?.isLoggedIn()">REGISTER</a>
+      </li> -->
+      <li class="user_image" *ngIf="authInfo?.getUser()?.photoURL">
+        <img class="img-circle" [src]="authInfo?.getUser()?.photoURL" />
       </li>
-      <li>
-        <a (click)="logout()" *ngIf="authInfo?.isLoggedIn()">LOGOUT</a>
+      <li class="user_details" *ngIf="authInfo?.getUser()">
+        <span class="header-dropdown-arrow" (click)="showUserInfo()"></span>
+        <ul class="header-user-profile"[class.is-active]="isCollapsedContent">
+          <li><span class="glyphicon glyphicon-user"></span> &nbsp; Hi, 
+              <b>{{authInfo?.getUser()?.displayName}}</b>
+          </li>
+          <li><span class="glyphicon glyphicon-edit"></span> &nbsp; Create a course</li>
+          <li><span class="glyphicon glyphicon-log-out"></span> &nbsp; 
+              <a (click)="logout()" class="logout">Logout</a></li>
+        </ul>
       </li>
     </ul>
   </div>
