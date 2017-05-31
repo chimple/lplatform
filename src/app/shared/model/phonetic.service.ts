@@ -70,6 +70,11 @@ export class PhoneticService {
     return this.firebaseUpdate(dataToSave);
   }
 
+  updatePronunciationLink(courseUrl: string, key: string, pronunciationFileName: string): void {
+    const phoneticUpdate$ = this.db.object(`course_phonetics/${courseUrl}/${key}`);
+    phoneticUpdate$.update({pronunciation: pronunciationFileName});
+  }
+
   firebaseUpdate(dataToSave): Observable<any> {
     const subject = new Subject();
 

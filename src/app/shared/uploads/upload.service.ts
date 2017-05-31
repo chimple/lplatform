@@ -2,7 +2,11 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import * as firebase from 'firebase';
 import {Upload} from './upload';
-import {BlobUpload} from "./blob-upload";
+import {BlobUpload} from './blob-upload';
+import {AlphabetService} from '../model/alphabet.service';
+import {PhoneticService} from '../model/phonetic.service';
+import {WordService} from '../model/word.service';
+import {LessonService} from '../model/lesson.service';
 
 
 @Injectable()
@@ -11,7 +15,9 @@ export class UploadService {
   private uploadTask: firebase.storage.UploadTask;
   uploads: FirebaseListObservable<Upload[]>;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private alphabetService: AlphabetService,
+              private phoneticService: PhoneticService, private wordService: WordService,
+              private lessonService: LessonService) {
   }
 
   getUploads(query = {}) {
@@ -54,6 +60,7 @@ export class UploadService {
       }
     );
   }
+
   pushBlobUpload(upload: BlobUpload) {
     const storageRef = firebase.storage().ref();
     this.uploadTask = storageRef.child(`${this.basePath}/${upload.name}`).put(upload.file);
@@ -75,12 +82,33 @@ export class UploadService {
     );
   }
 
+  updateReferenceForUpload(filedata, fileUrl) {
+    console.log(`request received ${filedata.componentname}`);
+    console.log(`request received ${filedata.courseId}`);
+    console.log(`request received ${filedata.objectname}`);
+    console.log(`request received ${filedata.uploadFor}`);
+
+    if (filedata.componentname === 'alphabet' && filedata.uploadFor === 'sound') {
+      this.alphabetService.updateSoundLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'alphabet' && filedata.uploadFor === 'pronunciation') {
+      this.alphabetService.updatePronunciationLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'phonetic' && filedata.uploadFor === 'pronunciation') {
+      this.phoneticService.updatePronunciationLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'word' && filedata.uploadFor === 'pronunciation') {
+      this.wordService.updatePronunciationLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'word' && filedata.uploadFor === 'image') {
+      this.wordService.updateImageLink(filedata.courseId, filedata.objectname, fileUrl);
+    }
+  }
+
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {
     this.db.list(`${this.basePath}/`).push(upload)
       .then(
         success => {
           alert('success');
+          // update related links
+          this.updateReferenceForUpload(upload.fileData, upload.url);
         },
         fail => {
           alert('failure');
@@ -103,6 +131,4 @@ export class UploadService {
     const storageRef = firebase.storage().ref();
     storageRef.child(`${this.basePath}/${name}`).delete();
   }
-
-
 }
