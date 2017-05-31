@@ -16,7 +16,7 @@
       <td><button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)">X</button></td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
-          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" ></p>
+          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" readonly></p>
         </td>
         <td>
           <p *ngIf="show!==i">{{worditem.meaning}}</p>
