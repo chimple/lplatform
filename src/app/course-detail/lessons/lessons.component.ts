@@ -40,10 +40,10 @@ export class LessonsComponent implements OnInit {
   addLesson(): void {
     this.insertFlag = true;
   }
-
   submitLesson() {
     console.log(`Submit Lesson: ${this.lessonsForm.value}`);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
+
   }
 
   teachDropDownChanged(param) {
@@ -52,21 +52,14 @@ export class LessonsComponent implements OnInit {
 
   /* -------------------------------------------------- */
 
-
   editLesson(lIndex) {
     this.editFlag = lIndex;
 
   }
-
   updateLesson() {
     console.log(`Update Lesson: ${this.lessonsEditForm.value}`);
     this.lessonService.createLesson(this.course$Key, this.lessonsEditForm.value);
     this.editFlag = '';
-  }
-
-
-  testForm() {
-    console.log('Test Form: ' + this.testForms.value);
   }
 
 

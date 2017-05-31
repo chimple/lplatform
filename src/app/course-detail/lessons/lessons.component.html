@@ -36,7 +36,9 @@
 
     <td>
       <div *ngIf="lesson.teach==='words'">
-        <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
+        <div *ngIf="editFlag!==lIndex">
+          <span *ngFor="let category of (phoneticsSelection$ | async)">{{category}}, </span>
+        </div>
         <div *ngIf="editFlag===lIndex">
           <select name="phonetic" class="form-control" ngModel>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
@@ -46,7 +48,22 @@
     </td>
 
     <td>
-      <a [routerLink]="['language-word']"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+      <!-- <div *ngIf="lesson.teach==='words'">
+      <a [routerLink]="['language-word',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+      </div>
+      <div *ngIf="lesson.teach==='alphabets'">
+        <a [routerLink]="['language-alphabet',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24">
+      </div> -->
+
+     <!-- <a *ngIf="lesson.teach==='words'; then [routerLink]='["language-word",lesson.lesson]'; else [routerLink]='["language-alphabet",lesson.lesson]'" ><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a> -->
+
+    <div *ngIf="lesson.teach==='words'">
+     <a [routerLink]="['language-word',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     </div>
+
+     <div *ngIf="lesson.teach!=='words'">
+     <a [routerLink]="['language-alphabet',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     </div>
     </td>
 
   </tr>
