@@ -23,6 +23,7 @@ export class LessonsComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
   course$Key: string;
   phoneticsSelection$: Observable<string[]>;
+  //courseDetail$: Observable<CourseDetail>;
 
   @ViewChild('lf') lessonsForm: NgForm;
   @ViewChild('lessonEdit') lessonsEditForm: NgForm;

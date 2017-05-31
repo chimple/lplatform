@@ -41,6 +41,10 @@ const appRoutes: Routes = [
             children:[
               { path: 'language-alphabet', component: LanguageAlphabetComponent },
               { path: 'language-word', component: LanguageWordComponent }
+              /*
+              { path: 'language-alphabet/:lessonId', component: LanguageAlphabetComponent },
+              { path: 'language-word/:lessonId', component: LanguageWordComponent }
+              */
             ]
           }
         ]
