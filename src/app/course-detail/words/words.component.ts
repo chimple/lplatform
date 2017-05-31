@@ -97,9 +97,8 @@ export class WordsComponent implements OnInit {
     editdata.phonetic=editdata.phoneticdata;
     delete editdata.phoneticdata;
     console.log(editdata);
-
-    //this.wordService.createWord(this.word$Key, editdata);
-    //this.show = '';
+    this.wordService.createWord(this.word$Key, editdata);
+    this.show = '';
   }
 
   editdata(alldata) {
