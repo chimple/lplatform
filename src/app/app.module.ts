@@ -43,6 +43,8 @@ import { DragulaModule } from 'ng2-dragula';
 import { AllcoursesComponent } from './allcourses/allcourses.component';
 import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
 import { BoardDirective } from "app/learn/board/board.directive";
+import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
+import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import { BoardDirective } from "app/learn/board/board.directive";
     SessionComponent,
     AllcoursesComponent,
     BoardDirective,
-    AlphabetBoardComponent
+    AlphabetBoardComponent,
+    LanguageWordComponent,
+    LanguageAlphabetComponent
 
   ],
   imports: [

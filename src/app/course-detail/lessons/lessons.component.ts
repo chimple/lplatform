@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {LessonService} from '../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
-import {Observable} from "rxjs/Observable";
-import {Lesson} from "../../shared/model/lesson";
-import {ActivatedRoute} from "@angular/router";
+import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {Lesson} from '../../shared/model/lesson';
+import {PhoneticService} from '../../shared/model/phonetic.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-lessons',
@@ -12,34 +13,59 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./lessons.component.css'],
   providers: [LessonService]
 })
+
 export class LessonsComponent implements OnInit {
-  insertFlag: boolean = false;
-  lessonform: FormGroup;
+
+  tst:any = "Sharath";
+  teachSelect:any;
+  insertFlag = false;
+  editFlag: any;
   lessons$: Observable<Lesson[]>;
+  course$Key: string;
+  phoneticsSelection$: Observable<string[]>;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) {
-
-  }
-
+  @ViewChild('lf') lessonsForm: NgForm;
+   @ViewChild('lessonEdit') lessonsEditForm: NgForm;
+   @ViewChild('tf') testForms: NgForm;
+  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const lessonName = '';
-    const teachSelect = '';
-    this.lessonform = new FormGroup({
-      'lessonName': new FormControl(lessonName, Validators.required),
-      'teachSelect': new FormControl(teachSelect, Validators.required)
-    });
-
-    const course$Key: string = this.route.snapshot.params['lessonId'];
-    this.lessons$ = this.lessonService.findAllLessonByCourse(course$Key);
+    this.course$Key = this.route.snapshot.params['lessonId'];
+    this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
+    this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
   }
 
   addLesson(): void {
     this.insertFlag = true;
   }
 
-  submitLesson(value) {
-    console.log(value);
+  submitLesson() {
+    console.log("Submit Lesson: "+this.lessonsForm.value);
+    this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
+  }
+  teachDropDownChanged(param){
+    this.teachSelect = param;
+  }
+  /* -------------------------------------------------- */
+
+
+  editLesson(lIndex) {
+    this.editFlag = lIndex;
+
   }
 
+  updateLesson(){
+    //console.log("lessonKey: "+ lessonKey);
+    console.log("Update Lesson: "+this.lessonsEditForm.value);
+    this.editFlag ="";
+  }
+
+
+  testForm(){
+    console.log("Test Form: "+this.testForms.value);
+  }
+
+
 }
+
+

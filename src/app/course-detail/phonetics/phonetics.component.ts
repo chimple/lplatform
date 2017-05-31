@@ -3,24 +3,35 @@ import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Phonetic} from '../../shared/model/phonetic';
 import {PhoneticService} from '../../shared/model/phonetic.service';
+import {NgForm} from '@angular/forms';
 declare var swal: any;
 
 @Component({
   selector: 'app-phonetics',
   templateUrl: './phonetics.component.html',
   styleUrls: ['./phonetics.component.css']
- })
+})
 export class PhoneticsComponent implements OnInit {
-
+  phonetics$key: string;
+  myPhonetics: boolean = false;
+  editPhone: any;
   phonetics$: Observable<Phonetic[]>;
 
   constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
   }
 
   ngOnInit() {
-    const phonetics$key: string = this.route.snapshot.params['phoneticId'];
-    this.phonetics$ = this.phoneticService.findPhoneticsByCourse(phonetics$key);
+    this.phonetics$key = this.route.snapshot.params['phoneticId'];
+    this.phonetics$ = this.phoneticService.findPhoneticsByCourse(this.phonetics$key);
   }
+
+  addNewPhone() {
+    this.myPhonetics = true;
+  }
+  editPhonetic(i) {
+    this.editPhone = i;
+  }
+
   onUpload() {
     swal({
       title: 'Are you sure?',
@@ -30,7 +41,7 @@ export class PhoneticsComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then(function() {
+    }).then(function () {
       // this.paperName = ' ';
       // this.questionsCheckedArr = [];
       // this.paperCreationArray = [];
@@ -43,6 +54,12 @@ export class PhoneticsComponent implements OnInit {
         'success'
       );
     });
+  }
+
+  save(form: NgForm) {
+    console.log(form.value);
+    this.phoneticService.createPhonetic(this.phonetics$key, form.value);
+    form.reset();
   }
 
 }

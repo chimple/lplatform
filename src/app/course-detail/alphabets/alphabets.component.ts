@@ -15,6 +15,8 @@ export class AlphabetComponent implements OnInit {
   alphabets$: Observable<Alphabet[]>;
   alphabet$Key: string;
   alphabets: Alphabet[];
+  myAlphabet: boolean = false;
+  editAlpha: any;
 
   constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
@@ -27,6 +29,13 @@ export class AlphabetComponent implements OnInit {
     );
   }
 
+  editAlph(i) {
+    this.editAlpha = i;
+  }
+
+  addNewAlpha() {
+    this.myAlphabet = true;
+  }
 
   next() {
     this.alphabetService.loadNextPage(
