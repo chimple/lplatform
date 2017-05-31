@@ -41,6 +41,8 @@ import {LessonService} from './shared/model/lesson.service';
 import { SessionComponent } from './learn/session.component';
 import { DragulaModule } from 'ng2-dragula';
 import { AllcoursesComponent } from './allcourses/allcourses.component';
+import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
+import { BoardDirective } from "app/learn/board/board.directive";
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { AllcoursesComponent } from './allcourses/allcourses.component';
     UploadFormComponent,
     RecordAudioComponent,
     SessionComponent,
-    AllcoursesComponent
+    AllcoursesComponent,
+    BoardDirective,
+    AlphabetBoardComponent
 
   ],
   imports: [
@@ -76,6 +80,7 @@ import { AllcoursesComponent } from './allcourses/allcourses.component';
     DragulaModule
   ],
   providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
+  entryComponents: [AlphabetBoardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
