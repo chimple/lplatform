@@ -12,8 +12,12 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let worditem of words$ | async; let i=index ">
-      <tr (dblclick)="showitem(worditem,i)">
-      <td><button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)">X</button></td>
+      <tr>
+      <td>
+      <button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+      <button class="btn btn-primary" type="button" *ngIf="show!==i" (click)="showitem(worditem,i)"><span class="glyphicon glyphicon-pencil" title="Edit"></span></button>
+      <button class="btn btn-primary" type="submit" *ngIf="show===i"><span class="glyphicon glyphicon-saved" title="Save"></span></button>
+      </td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
           <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" readonly></p>
@@ -37,7 +41,7 @@
         <tr *ngIf="show===i">
           <td colspan="5">
             <div class="col-md-12 col-md-offset-1" formArrayName="phoneticdata" style="margin-top: 10px;">
-              <div class="row" *ngFor="let editctrl of editform.get('phoneticdata').controls; let ip=index" [formGroupName]="ip" style="margin-bottom: 10px;">
+              <div class="row" *ngFor="let editctrl of editform.get('phoneticdata').controls; let ip=index " [formGroupName]="ip" style="margin-bottom: 10px;">
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-3">
@@ -50,18 +54,18 @@
                   </select>
                 </div>
                 <div class="col-md-2">
-                  <button class="btn btn-danger" type="button" (click)="onDeleteEdit(ip)">X</button>
+                  <button class="btn btn-danger" type="button" (click)="onDeleteEdit(ip)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div>
-                  <div class="col-md-6">
+                  <div class="col-md-10">
                   </div>
-                  <div class="col-md-6">
-                    <button type="submit" class="btn btn-info">Save</button>
-                    <button type="button" class="btn btn-info" (click)="onAddEdit()">Add Phonetics</button>
+                  <div class="col-md-2">
+                    <!-- <button type="submit" class="btn btn-info">Save</button> -->
+                    <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Phonetic"><span class="glyphicon glyphicon-plus-sign"></span></button>
                   </div>
                 </div>
               </div>
@@ -104,7 +108,7 @@
               </select>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-danger" type="button" (click)="onDeleteold(ai)">X</button>
+              <button class="btn btn-danger" type="button" (click)="onDeleteold(ai)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
             </div>
           </div>
         </div>
@@ -112,9 +116,9 @@
       <div class="row">
         <div class="col-md-12">
           <div>
-            <div class="col-md-9"></div>
-            <div class="col-md-3">
-              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()">Add Phonetics</button>
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()" title="Add Phonetics"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
           </div>
         </div>
