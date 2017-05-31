@@ -1,6 +1,6 @@
-#fileselector {
+.fileselector {
   margin: 10px;
 }
-#upload-file-selector {
+.upload-file-selector {
   display:none;
 }
