@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let worditem of words$ | async; let i=index ">
-      <tr (dblclick)="showitem(worditem.word)">
+      <tr (dblclick)="showitem(worditem,i)">
       <td><button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)">X</button></td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
