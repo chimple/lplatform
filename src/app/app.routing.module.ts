@@ -14,6 +14,7 @@ import { SessionComponent } from './learn/session.component';
 import { AllcoursesComponent } from './allcourses/allcourses.component';
 import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
+import { CourselessonsComponent } from './courselessons/courselessons.component';
 
 const appRoutes: Routes = [
   {
@@ -44,6 +45,10 @@ const appRoutes: Routes = [
             ]
           }
         ]
+      },
+      {
+        path: ':language/:courseId',
+        component: CourselessonsComponent
       },
       {
         path: '',
