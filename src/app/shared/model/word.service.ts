@@ -99,6 +99,17 @@ export class WordService {
     return this.firebaseUpdate(dataToSave);
   }
 
+  updateImageLink(courseUrl: string, key: string, imageFileName: string): void {
+    const wordUpdate$ = this.db.object(`course_words/${courseUrl}/${key}`);
+    wordUpdate$.update({image: imageFileName});
+  }
+
+  updatePronunciationLink(courseUrl: string, key: string, pronunciationFileName: string): void {
+    const wordUpdate$ = this.db.object(`course_words/${courseUrl}/${key}`);
+    wordUpdate$.update({pronunciation: pronunciationFileName});
+  }
+
+
   firebaseUpdate(dataToSave): Observable<any> {
     const subject = new Subject();
 

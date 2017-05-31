@@ -1,8 +1,11 @@
 
+
+
 <div class="row">
   <div class="col-xs-12">
-
-<table class="table table-striped">
+<form (ngSubmit)="updateLesson()" #lessonEdit="ngForm">
+<!-- <form [formGroup]="editform" (ngSubmit)="updateLesson(editform.value)"> -->
+<table class="table table-striped table-responsive">
   <thead>
   <tr>
     <th><span class="glyphicon glyphicon-refresh"></span></th>
@@ -12,44 +15,10 @@
     <th>Select</th>
   </tr>
   </thead>
-<!--   <tbody>
-  <tr *ngFor="let lesson of lessons$ | async; let lIndex=index " #lessonRef>
-    <td>
-      <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
-      <span *ngIf="editFlag===lIndex" (click)="updateLesson(lessonRef, lesson.lesson)"  class="glyphicon glyphicon-save"></span>
-    </td>
-    <td>
-      <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
-    </td>
 
-    <td>
-      <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" value="{{lesson.teach}}" />
-    </td>
-
-    <td>
-      <div *ngIf="lesson.teach==='words'">
-        <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
-        <div *ngIf="editFlag===lIndex">
-          <select>
-            <option>fr</option>
-            <option>ui</option>
-            <option>ts</option>
-          </select>
-        </div>
-      </div>
-
-    </td>
-
-    <td>
-      <a [routerLink]="langWord"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-    </td>
-  </tr>
-  </tbody> -->
   <tbody>
 
-  <tr *ngFor="let lesson of lessons$ | async; let lIndex=index " #lessonRef>
+  <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
 
     <td>
       <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
@@ -57,19 +26,19 @@
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input type="text" name="lesson" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
+      <input *ngIf="editFlag===lIndex" type="text" class="form-control" name="lesson" placeholder="Enter Lesson" [ngModel]="lesson.name" />
     </td>
 
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" name="teach" value="{{lesson.teach}}" />
+      <input type="text" *ngIf="editFlag===lIndex" name="teach" class="form-control" [ngModel]="lesson.teach" />
     </td>
 
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
         <div *ngIf="editFlag===lIndex">
-          <select name="phonetic">
+          <select name="phonetic" class="form-control" ngModel>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
         </div>
@@ -82,11 +51,12 @@
 
   </tr>
   </tbody>
-</table>
 
+</table>
+  </form>
 </div>
 </div>
-<br/>
+
 
 <div class="row" *ngIf="insertFlag">
   <div class="col-xs-12">
@@ -100,14 +70,14 @@
 
           <div class="col-xs-4">
             <label>Teach: </label>
-            <select class="form-control" name="teach" id="lessonTeach" ngModel required>
+            <select class="form-control" name="teach" id="lessonTeach" ngModel required (change)="teachDropDownChanged($event.target.value)">
               <option value="">--Select--</option>
               <option value="alphabets">Alphabets</option>
               <option value="words">Words</option>
             </select>
           </div>
 
-          <div class="col-xs-4">
+          <div *ngIf="teachSelect=== 'words'" class="col-xs-4">
             <label>Phonetics: </label>
             <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
               <option value="">--Select--</option>
@@ -115,13 +85,14 @@
             </select>
           </div>
         </div>
+        <br />
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
   </div>
 </div>
 
-
-<br/>
-
 <button type="button" *ngIf="!insertFlag" class="btn btn-primary" (click)="addLesson()">Add</button>
+<br />
+
 <router-outlet></router-outlet>
+
