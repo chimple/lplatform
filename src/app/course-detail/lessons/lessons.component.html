@@ -59,19 +59,19 @@
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input type="text" name="lesson" *ngIf="editFlag===lIndex" ngModel value="{{lesson.name}}" />
+      <input type="text" name="lesson" *ngIf="editFlag===lIndex" value="{{lesson.name}}" />
     </td>
 
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" name="teach" ngModel value="{{lesson.teach}}" />
+      <input type="text" *ngIf="editFlag===lIndex" name="teach" value="{{lesson.teach}}" />
     </td>
 
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">fr, ui, ts</div>
         <div *ngIf="editFlag===lIndex">
-          <select name="phonetic" ngModel>
+          <select name="phonetic">
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
         </div>
@@ -102,14 +102,14 @@
 
           <div class="col-xs-4">
             <label>Teach: </label>
-            <select class="form-control" name="teach" id="lessonTeach" ngModel required>
+            <select class="form-control" name="teach" id="lessonTeach" ngModel required (change)="teachDropDownChanged($event.target.value)">
               <option value="">--Select--</option>
               <option value="alphabets">Alphabets</option>
               <option value="words">Words</option>
             </select>
           </div>
 
-          <div class="col-xs-4">
+          <div *ngIf="teachSelect=== 'words'" class="col-xs-4">
             <label>Phonetics: </label>
             <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
               <option value="">--Select--</option>

@@ -17,7 +17,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class LessonsComponent implements OnInit {
 
 
-
+  teachSelect:any;
   insertFlag = false;
   editFlag: any;
   lessons$: Observable<Lesson[]>;
@@ -43,6 +43,10 @@ export class LessonsComponent implements OnInit {
     console.log(this.lessonsForm.value);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
   }
+  teachDropDownChanged(param){
+    this.teachSelect = param;
+  }
+  /* -------------------------------------------------- */
 
   editLesson(lIndex) {
     this.editFlag = lIndex;
