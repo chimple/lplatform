@@ -57,7 +57,7 @@
           <span *ngIf="editAlpha!== i "
                 (click)="editAlph(i)"
                 class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
-          <button class="btn btn-default" type="submit"
+          <button class="btn btn-default" type="submit" (click)="editAlphRow(alphabet.value)"
                   *ngIf="editAlpha===i" style="border-radius: 50%">
             <span class="glyphicon glyphicon-save"
                   style="color: green; cursor: pointer"> </span>
@@ -66,14 +66,16 @@
         </td>
         <td class="col-xs-1">
           <p *ngIf="editAlpha!==i">{{alphabet.alphabet}}</p>
-          <input type="text" name="lesson"
-                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}" class="form-control" />
+          <input type="text" name="alphabet"
+                 *ngIf="editAlpha===i" value="{{alphabet.alphabet}}"
+                 class="form-control" #alphabet/>
 
           <!--{{alphabet.alphabet}}-->
         </td>
         <td>
             <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
-              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
+
+            'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-upload-form>
             <app-record-audio [filedata]="{'objectname':alphabet.alphabet,
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}">
