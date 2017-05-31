@@ -16,8 +16,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class LessonsComponent implements OnInit {
 
-  tst:any = "Sharath";
-  teachSelect:any;
+  tst: any = 'Sharath';
+  teachSelect: any;
   insertFlag = false;
   editFlag: any;
   lessons$: Observable<Lesson[]>;
@@ -25,9 +25,11 @@ export class LessonsComponent implements OnInit {
   phoneticsSelection$: Observable<string[]>;
 
   @ViewChild('lf') lessonsForm: NgForm;
-   @ViewChild('lessonEdit') lessonsEditForm: NgForm;
-   @ViewChild('tf') testForms: NgForm;
-  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) { }
+  @ViewChild('lessonEdit') lessonsEditForm: NgForm;
+  @ViewChild('tf') testForms: NgForm;
+
+  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.course$Key = this.route.snapshot.params['lessonId'];
@@ -40,12 +42,15 @@ export class LessonsComponent implements OnInit {
   }
 
   submitLesson() {
-    console.log("Submit Lesson: "+this.lessonsForm.value);
+    console.log(`S
+    ubmit Lesson: ${this.lessonsForm.value}`);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
   }
-  teachDropDownChanged(param){
+
+  teachDropDownChanged(param) {
     this.teachSelect = param;
   }
+
   /* -------------------------------------------------- */
 
 
@@ -54,15 +59,15 @@ export class LessonsComponent implements OnInit {
 
   }
 
-  updateLesson(){
-    //console.log("lessonKey: "+ lessonKey);
-    console.log("Update Lesson: "+this.lessonsEditForm.value);
-    this.editFlag ="";
+  updateLesson() {
+    console.log(`Update Lesson: ${this.lessonsEditForm.value}`);
+    this.lessonService.createLesson(this.course$Key, this.lessonsEditForm.value);
+    this.editFlag = '';
   }
 
 
-  testForm(){
-    console.log("Test Form: "+this.testForms.value);
+  testForm() {
+    console.log('Test Form: ' + this.testForms.value);
   }
 
 

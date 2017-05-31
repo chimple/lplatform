@@ -19,14 +19,13 @@
   <tbody>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
-
     <td>
       <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
       <button type="submit" *ngIf="editFlag===lIndex" class="glyphicon glyphicon-save"></button>
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input *ngIf="editFlag===lIndex" type="text" class="form-control" name="lesson" placeholder="Enter Lesson" [ngModel]="lesson.name" />
+      <input *ngIf="editFlag===lIndex" type="text" class="form-control" name="name" placeholder="Enter Lesson" [ngModel]="lesson.name" />
     </td>
 
     <td>
