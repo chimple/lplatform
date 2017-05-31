@@ -35,8 +35,8 @@ export class AlphabetComponent implements OnInit {
     this.onPlay = true;
   }
 
-  editAlphRow() {
-
+  editAlphRow(alphabetName: string) {
+console.log(alphabetName);
   }
 
   editAlph(i) {
