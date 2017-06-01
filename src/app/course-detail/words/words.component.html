@@ -20,14 +20,16 @@
       </td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
-          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" readonly></p>
+          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word"></p>
+          <p *ngIf="show===i"><input type="hidden"  name="key" formControlName="key"></p>
         </td>
         <td>
           <p *ngIf="show!==i">{{worditem.meaning}}</p>
           <p *ngIf="show===i"><input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" ></p>
           <td>
-            <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
-            <button type="button" class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+            <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
+            <app-record-audio [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-record-audio>
+            <!-- <app-play [filedataplay]="worditem"></app-play> -->
             <button type="button" class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
           </td>
           <td>
@@ -36,7 +38,7 @@
           <td>
             <p *ngIf="show!==i">{{worditem.ref}}</p>
             <p *ngIf="show===i"><textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea></p>
-          </td>
+          <
         </tr>
         <tr *ngIf="show===i">
           <td colspan="5">
