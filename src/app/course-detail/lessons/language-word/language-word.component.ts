@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} fr
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import {ActivatedRoute, Router, Params, UrlSegment} from '@angular/router';
 import {LessonItem} from '../../../shared/model/lesson-item';
 import 'rxjs/Rx';
 import {Word} from '../../../shared/model/word';
@@ -23,17 +23,28 @@ export class LanguageWordComponent implements OnInit {
   lessonWord$Key: string;
   course$key: string;
   lesonWord$: Observable<LessonItem[]>;
-  courid: string;
+  path: Observable<UrlSegment[]>;
+  courKey: string;
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
+  parts: string;
 
   constructor(private lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
+<<<<<<< HEAD
+    //this.course$key = this.route.snapshot.params['lessonId'];
+    //this.courid = this.route.snapshot.params['id'];
+    //this.courKey = this.lessonService.getCourseKey();
+    this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
+    console.log(this.lesonWord$);
+
+=======
     this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
+>>>>>>> refs/remotes/origin/master
   }
 
 
