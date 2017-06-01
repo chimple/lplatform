@@ -104,8 +104,6 @@ export class WordService {
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_words/${courseUrl}/${newKey}`] = wordToSave;
-    const subject = new Subject();
-
     return this.firebaseUpdate(dataToSave);
   }
 
