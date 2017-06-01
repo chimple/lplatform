@@ -16,11 +16,6 @@ export class AuthService {
 
   }
 
-  registerUserWithLoginInformation(user: any): Observable<boolean> {
-    console.log(`user ${JSON.stringify(user)}`);
-    return Observable.of(true);
-  }
-
   loginUsingProvider(provider: string): Observable<any> {
     return this.fromFirebaseGoogleAuthPromise(this.fbAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
   }
@@ -35,13 +30,14 @@ export class AuthService {
   }
 
   fromFirebaseAuthPromise(promise): Observable<any> {
+    const that = this;
     const subject = new Subject<any>();
     promise.then(
       res => {
         const authInfo = new AuthInfo(res.uid, res);
         console.log(res);
         console.log(`res.uid ${res.uid}`);
-        this.authInfo$.next(authInfo);
+        that.authInfo$.next(authInfo);
         subject.next(res);
         subject.complete();
       },
@@ -56,12 +52,13 @@ export class AuthService {
   }
 
   fromFirebaseGoogleAuthPromise(promise): Observable<any> {
+    const that = this;
     const subject = new Subject<any>();
     promise.then(
       res => {
         const authInfo = new AuthInfo(res.user.uid, res.user);
         console.log(`res.uid ${res.user.uid}`);
-        this.authInfo$.next(authInfo);
+        that.authInfo$.next(authInfo);
         subject.next(res.user);
         subject.complete();
       },

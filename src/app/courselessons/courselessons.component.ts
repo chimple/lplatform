@@ -21,6 +21,7 @@ export class CourselessonsComponent implements OnInit {
   	this.activatedRoute.params.subscribe((params) => {
         this.courseId = params['courseId'];
     });
+    localStorage.setItem('courseId', JSON.stringify(this.courseId));
   	this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
   		(data)=>{
   			for(let key in data){
@@ -34,6 +35,10 @@ export class CourselessonsComponent implements OnInit {
           this.authInfo = authInfo
         }
     );
+  }
+
+  takeTheCourse(courseId){
+    console.log(courseId);
   }
 
 }
