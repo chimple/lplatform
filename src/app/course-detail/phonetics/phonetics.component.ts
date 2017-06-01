@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit , ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Phonetic} from '../../shared/model/phonetic';
@@ -16,6 +16,8 @@ export class PhoneticsComponent implements OnInit {
   myPhonetics: boolean = false;
   editPhone: any;
   phonetics$: Observable<Phonetic[]>;
+
+  @ViewChild('editPhonet') phoneticsEditForm: NgForm;
 
   constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
   }
@@ -60,6 +62,13 @@ export class PhoneticsComponent implements OnInit {
     console.log(form.value);
     this.phoneticService.createPhonetic(this.phonetics$key, form.value);
     form.reset();
+  }
+
+  editPhonRow() {
+    console.log(this.phoneticsEditForm.value);
+  }
+  ondeletePhonetics(phonetic: string){
+    console.log(phonetic);
   }
 
 }
