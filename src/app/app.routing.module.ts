@@ -47,7 +47,7 @@ const appRoutes: Routes = [
         ]
       },
       {
-        path: ':language/:courseId',
+        path: 'lesson/:courseId',
         component: CourselessonsComponent
       },
       {
@@ -67,7 +67,16 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: AllcoursesComponent
+    children: [
+      {
+        path: 'lesson/:courseId',
+        component: CourselessonsComponent,
+      },
+      {
+        path: '',
+        component: AllcoursesComponent
+      }
+    ]
   },
   {
     path: 'session/:lessonId',

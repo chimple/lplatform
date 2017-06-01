@@ -6,10 +6,16 @@ import { Component, OnInit , Input} from '@angular/core';
   styleUrls: ['./play.component.css']
 })
 export class PlayComponent implements OnInit {
-@Input() filedataplay: any;
+@Input() filedata: any;
   constructor() { }
 
   ngOnInit() {
+  }
+  playaudio(audiosrc: string){
+  	var audio = new Audio();     
+  	audio.src = audiosrc ;
+    audio.load();
+    audio.play();
   }
 
 }
