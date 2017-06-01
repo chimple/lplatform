@@ -33,33 +33,6 @@ export class LanguageWordComponent implements OnInit {
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
     this.course$key = this.route.snapshot.params['lessonId'];
-    //this.courid = this.route.snapshot.params['id'];
-    console.log(this.lessonWord$Key+"---"+this.course$key+"---"+ this.courid);
-console.log("Sathya id: "+this.route.url);
- this.route.params
-           .subscribe(
-           (params: Params) => {
-           console.log("Latest course id: "+ params);  
-           }
-           )
-           
-
-    /*this.course$key = this.route.snapshot.params.subscribe((params: Params) => {
-<<<<<<< HEAD
-        let paramsURL = params;
-        console.log("Params URL: "+paramsURL);
-      });*/
-      console.log("R1: "+this.route.snapshot.url); // array of states
-    console.log("R2: "+this.route.snapshot.url[0].path); 
-
-    console.log("Course Key: "+this.course$key);
-=======
-     let paramsURL = params;
-     console.log("Params URL: "+paramsURL);
-     });*/
->>>>>>> refs/remotes/origin/master
-    this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
-    console.log(this.lesonWord$);
   }
 
 
@@ -83,13 +56,14 @@ console.log("Sathya id: "+this.route.url);
   submitLW() {
     console.log(this.lwForm.value);
     let existingWordsForCourse = [];
+    const that = this;
+    const updatedForm = this.lwForm.value;
     this.wordService.findWordsByCourse('XX01')
       .subscribe(
         (words) => {
           existingWordsForCourse = words;
-          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(this.lwForm.value.word);
-          this.lessonService.createLessonItem('XX01', this.lessonWord$Key, this.lwForm.value, checkWordExists);
-
+          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(updatedForm.word);
+          that.lessonService.createLessonItem('XX01', that.lessonWord$Key, updatedForm, 'word', checkWordExists);
         });
     this.lwInsertFlag = false;
   }
