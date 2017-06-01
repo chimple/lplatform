@@ -4,6 +4,8 @@ import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import { RecordAudioComponent } from '../../record-audio/record-audio.component';
+// declare var swal: any;
 
 @Component({
   selector: 'app-alphabet',
@@ -17,6 +19,7 @@ export class AlphabetComponent implements OnInit {
   alphabets: Alphabet[];
   myAlphabet: boolean = false;
   editAlpha: any;
+  onPlay = false;
 
   constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
@@ -28,9 +31,12 @@ export class AlphabetComponent implements OnInit {
       alphabets => this.alphabets = alphabets
     );
   }
+  onPlays() {
+    this.onPlay = true;
+  }
 
-  editAlphRow() {
-
+  editAlphRow(alphabetName: string) {
+console.log(alphabetName);
   }
 
   editAlph(i) {
@@ -62,7 +68,26 @@ export class AlphabetComponent implements OnInit {
     );
 
   }
-
+// onRecord() {
+//   swal({
+//     title: 'Are you sure?',
+//     text: ' You wont be able to revert this! ',
+//     type: 'warning',
+//     template: ` <app-record-audio>
+//             </app-record-audio> `,
+//     showCancelButton: true,
+//     confirmButtonColor: '#3085d6',
+//     cancelButtonColor: '#d33',
+//     confirmButtonText: 'Yes, delete it!'
+//   }).then(function () {
+//
+//     swal(
+//       'cleared!',
+//       'Your paper name is cleared.',
+//       'success'
+//     );
+//   });
+// }
 
   save(form: NgForm) {
     console.log(JSON.stringify(form.value));
