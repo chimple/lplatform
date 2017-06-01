@@ -38,6 +38,12 @@ export class AuthService {
     const userInformationToSave = Object.assign({}, {email: email},
       {displayName: displayName}, {photoURL: photoURL});
 
+    const courseId = localStorage.getItem('courseId');
+    if (courseId) {
+      userInformationToSave['currentCourse'] =  courseId;
+      localStorage.removeItem('courseId');
+    }
+
     const updateUser$ = this.db.object(`users/${uid}`);
     return Observable.fromPromise(updateUser$.update(userInformationToSave));
   }
