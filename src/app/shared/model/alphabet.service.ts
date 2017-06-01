@@ -54,7 +54,7 @@ export class AlphabetService {
     }).map(alphabets => alphabets.slice(0, alphabets.length - 1));
   }
 
-  createAlphabet(courseUrl: string, alphabet: any): Observable<any> {
+  createAlphabet(courseUrl: string, alphabet: any, key: any = undefined): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)
       .subscribe(
@@ -71,6 +71,10 @@ export class AlphabetService {
     const newKey = alphabetToSave.alphabet;
     delete(alphabetToSave.alphabet);
 
+    if (key) {
+      this.deleteAlphabet(courseUrl, key);
+    }
+
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
@@ -80,6 +84,26 @@ export class AlphabetService {
   updateSoundLink(courseUrl: string, key: string, soundFileName: string): void {
     const alphabetUpdate$ = this.db.object(`course_alphabets/${courseUrl}/${key}`);
     alphabetUpdate$.update({sound: soundFileName});
+  }
+
+  deleteAlphabet(courseUrl: string, input: any): void {
+    console.log(`input ${JSON.stringify(input)}`);
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    courseDetail.words = courseDetail.words - 1;
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    this.firebaseUpdate(dataToSave);
+
+    const alphabetToDelete$ = this.db.object(`course_alphabets/${courseUrl}/${input}`);
+    alphabetToDelete$.remove();
   }
 
   updatePronunciationLink(courseUrl: string, key: string, pronunciationFileName: string): void {
