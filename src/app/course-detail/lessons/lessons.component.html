@@ -23,6 +23,7 @@
       <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
       <button type="submit" *ngIf="editFlag===lIndex" class="glyphicon glyphicon-save"></button>
       <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
+      {{lesson.lesson}}
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
