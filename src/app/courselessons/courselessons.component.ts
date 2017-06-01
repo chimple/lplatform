@@ -15,6 +15,7 @@ export class CourselessonsComponent implements OnInit {
   courseId: any;
   courseLessons = [];
   authInfo: AuthInfo;
+  isCourseNotTaken:boolean=true;
 
   constructor(private activatedRoute: ActivatedRoute, private courseLessonsService: CourselessonsService, private authService: AuthService) {
   }
@@ -41,6 +42,11 @@ export class CourselessonsComponent implements OnInit {
 
   takeTheCourse(courseId) {
     console.log(courseId);
+  }
+
+  subscribeTheCourse(courseId){
+    console.log(courseId);
+    this.isCourseNotTaken=false;
   }
 
 }
