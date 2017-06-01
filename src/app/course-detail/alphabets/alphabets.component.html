@@ -80,7 +80,7 @@
           <input *ngIf="editAlpha=== i" type="hidden" name="pronunciation" [(ngModel)]="alphab.pronunciation" />
           <td hidden>{{i+1}}</td>
           <td hidden>{{alphab.alphabet}}</td>
-          <td class="col-xs-1">
+          <td class="col-xs-2">
 
             <p *ngIf="editAlpha!== i">{{alphab.alphabet}}</p>
             <input type="text" name="alphabetName" ngModel="{{alphab.alphabet}}"
@@ -97,26 +97,19 @@
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-record-audio>
 
+            <app-play [filedata]="{'indexno': i,'source': alphab.sound,'playfor':'sound'}"></app-play>
+            <!--<button class="btn btn-default" type="button"-->
+                    <!--onclick="document.getElementById('alpha-sounds').play()"-->
 
-            <button class="btn btn-default" type="button"
-                    onclick="document.getElementById('alpha-sounds').play()"
-
-                    style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
-             <span
-               class="glyphicon glyphicon-play" ></span>
-            </button>
-            <audio controls="controls" id="alpha-sounds" hidden >
-              <source src="{{alphab.sound}}" type="audio/mp3">
-            </audio>
+                    <!--style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">-->
+             <!--<span-->
+               <!--class="glyphicon glyphicon-play" ></span>-->
+            <!--</button>-->
+            <!--<audio controls="controls" id="alpha-sounds" hidden >-->
+              <!--<source src="{{alphab.sound}}" type="audio/mp3">-->
+            <!--</audio>-->
             <!--{{alphabet.sound}}-->
           </td>
-
-
-          <!--<td>-->
-          <!--<audio controls="controls">-->
-          <!--<source src="{{alphabet.sound}}" type="audio/mp3">-->
-          <!--</audio>-->
-          <!--</td>-->
 
           <td>
             <!--<label>Sound</label><br>-->
@@ -124,14 +117,13 @@
           'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}">
 
             </app-upload-form>
-            <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
-            <!--Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>-->
-            <!--</button>-->
-            <button class="btn btn-default" type="button">Record <span class="glyphicon glyphicon-record" style="color: red"></span>
-            </button>
-            <button class="btn btn-default" type="button" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span
-              class="glyphicon glyphicon-play"></span></button>
-            {{alphab.pronunciation}}</td>
+
+            <app-record-audio [filedata]="{'objectname':alphab.alphabet,
+              'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}" >
+            </app-record-audio>
+
+            <app-play [filedata]="{'indexno': i,'source': alphab.pronunciation,'playfor':'pronunciation'}"></app-play>
+            </td>
         </tr>
         </tbody>
 

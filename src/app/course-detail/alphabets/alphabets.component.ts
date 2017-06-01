@@ -47,9 +47,6 @@ export class AlphabetComponent implements OnInit {
       console.log(`drag:${e.rowIndex}`);
       this.dragStartIndex = e.rowIndex;
     }
-
-
-    // do something
   }
 
 
