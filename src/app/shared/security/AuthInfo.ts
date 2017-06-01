@@ -11,4 +11,8 @@ export class AuthInfo {
   getUser() {
     return this.user;
   }
+
+  getUserInfo() {
+
+  }
 }

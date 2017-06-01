@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 export class TopmenuComponent implements OnInit {
 
   authInfo: AuthInfo;
-  public isCollapsedContent:boolean = false;
+  public isCollapsedContent: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -21,7 +21,7 @@ export class TopmenuComponent implements OnInit {
       .subscribe(
         authInfo => {
           this.authInfo = authInfo
-          console.log(this.authInfo.getUser())
+          console.log(this.authInfo.getUser());
         }
       );
   }
@@ -30,10 +30,11 @@ export class TopmenuComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
-  showUserInfo(){
-    if(this.isCollapsedContent == false){
+
+  showUserInfo() {
+    if (this.isCollapsedContent === false) {
       this.isCollapsedContent = true;
-    }else if(this.isCollapsedContent == true){
+    } else if (this.isCollapsedContent === true) {
       this.isCollapsedContent = false;
     }
   }
