@@ -6,7 +6,7 @@ import { Component, OnInit , Input} from '@angular/core';
   styleUrls: ['./play.component.css']
 })
 export class PlayComponent implements OnInit {
-@Input() filedata: any;
+@Input() filedataplay: any;
   constructor() { }
 
   ngOnInit() {
