@@ -38,16 +38,15 @@
 
 <div class="row" *ngIf="lwInsertFlag">
   <div class="col-xs-12">
-    <form (ngSubmit)="submitLW()" #lw="ngForm">
-        <input type="hidden" name="lessonWord" [ngModel]="lessonWord.lessonItem" />
+    <form (ngSubmit)="submitLW()" #lw="ngForm">        
         <div class="row">
           <div class="col-xs-4">
             <label>Enter Word:</label>
-            <input class="form-control" type="text" placeholder="Word" ngModel name="item" required #lwd>
-            <input type="hidden" name="lwd" [ngModel]="lwd.lwd" />
+            <input class="form-control" type="text" placeholder="Word" ngModel name="word" required #lessonItem>
           </div>
           <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-primary">Save</button></div>
         </div>
+        <input type="hidden" name="lessonWord" [ngModel]="lessonItem.lessonItem" />
     </form>
   </div>
 </div>
