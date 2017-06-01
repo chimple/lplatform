@@ -31,7 +31,7 @@
           <td>
             <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
             <app-record-audio [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-record-audio>
-            <app-play [filedata]="{'indexno': i,'source': worditem.pronunciation,'playfor':'pronunciation'}"></app-play>
+            <!--<app-play [filedata]="{'indexno': i,'source': worditem.pronunciation,'playfor':'pronunciation'}"></app-play>-->
           </td>
           <td>
           <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>

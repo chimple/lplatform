@@ -8,6 +8,7 @@ import {Subject} from 'rxjs/Subject';
 import * as firebase from 'firebase/app';
 import {CourseDetail} from "./course-detail";
 import {CourseService} from "./course.service";
+import {WordService} from "./word.service";
 
 
 @Injectable()
@@ -65,6 +66,41 @@ export class LessonService {
     dataToSave[`course_lessons/${courseUrl}/${newKey}`] = lessonToSave;
     const subject = new Subject();
 
+    return this.firebaseUpdate(dataToSave);
+  }
+
+  createLessonItem(courseUrl: string, lessonUrl: string, input: any, attributeExists = false): Observable<any> {
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    const order = 1;
+    // const order = courseDetail.lessons + 1;
+    // courseDetail.lessons = order;
+
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+    let lessonItemToSave;
+
+
+    if (input.word) {
+      lessonItemToSave = Object.assign({}, {item: input.word}, {lesson: lessonUrl}, {course: courseUrl}, {order: order});
+    } else if (input.alphabet) {
+      lessonItemToSave = Object.assign({}, {item: input.alphabet}, {lesson: lessonUrl}, {course: courseUrl}, {order: order});
+    }
+
+
+    const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
+
+    const dataToSave = {};
+    // dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
+
+    if(!attributeExists) {
+      console.log(`attributeExists ${attributeExists}`);
+    }
     return this.firebaseUpdate(dataToSave);
   }
 

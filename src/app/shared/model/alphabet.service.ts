@@ -64,7 +64,7 @@ export class AlphabetService {
     const order = courseDetail.alphabets + 1;
     courseDetail.alphabets = order;
 
-    const alphabetToSave = Object.assign({}, alphabet, {course: courseUrl}, {order: order});
+    const alphabetToSave = Object.assign({}, {alphabet: alphabet}, {course: courseUrl}, {order: order});
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
@@ -94,7 +94,7 @@ export class AlphabetService {
         courseInfo => courseDetail = courseInfo
       );
 
-    courseDetail.words = courseDetail.words - 1;
+    courseDetail.alphabets = courseDetail.alphabets - 1;
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
