@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit , ViewChild } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
@@ -25,6 +25,8 @@ export class AlphabetComponent implements OnInit {
   dragStartIndex = -1;
   dropIndex = -1;
   dragElement;
+
+  @ViewChild('editAlphabet') alphabetEditForm: NgForm;
 
   constructor(private route: ActivatedRoute, private alphabetService: AlphabetService, private dragulaService: DragulaService) {
     dragulaService.drag.subscribe((value) => {
@@ -81,8 +83,17 @@ export class AlphabetComponent implements OnInit {
     this.onPlay = true;
   }
 
-  editAlphRow(alphabetName: string) {
+  editAlphRow(alphabetName: string, key: string) {
     console.log(alphabetName);
+    console.log(key);
+
+    this.alphabetService.createAlphabet(this.alphabet$Key, alphabetName , key)
+      .subscribe(
+        () => {
+          alert('success in alphabet creation');
+        },
+        err => alert(`error in creating new alphabet ${err}`)
+      );
   }
 
   editAlph(i) {
