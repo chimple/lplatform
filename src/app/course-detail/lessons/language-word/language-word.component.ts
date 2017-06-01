@@ -33,6 +33,7 @@ export class LanguageWordComponent implements OnInit {
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
     this.course$key = this.route.snapshot.params['lessonId'];
+    this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
   }
 
 
