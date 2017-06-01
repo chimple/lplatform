@@ -61,11 +61,7 @@
 
             </button>
           </td>
-          <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
-          <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
-          <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/>
 
-          <input *ngIf="editPhone=== i" type="hidden" name="pronunciation" [(ngModel)]="phonetic.pronunciation" />
 
           <td class="col-xs-1">
             <p *ngIf="editPhone!==i">{{phonetic.alphabet}}</p>
@@ -73,7 +69,7 @@
                    *ngIf="editPhone===i"  class="form-control"/>
             <!--{{phonetic.alphabet}}-->
           </td>
-          <td class="col-xs-1">
+          <td class="col-xs-2">
             <p *ngIf="editPhone!==i">{{phonetic.writing}}</p>
             <input type="text" name="writing"
                    *ngIf="editPhone===i" ngModel="{{phonetic.writing}}" class="form-control"/>
@@ -85,14 +81,19 @@
           'componentname':'phonetic','courseId':phonetics$key,'uploadFor':'pronunciation'}">
 
             </app-upload-form>
-            <button class="btn btn-default">
-              Record <span class="glyphicon glyphicon-record" style="color: red"></span>
-            </button>
-            <button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
-              <span class="glyphicon glyphicon-play"></span></button>
-            {{phonetic.pronunciation}}
-          </td>
 
+            <app-record-audio [filedata]="{'objectname':phonetic.alphabet,
+              'componentname':'phonetic','courseId':phonetics$key,'uploadFor':'pronunciation'}" >
+            </app-record-audio>
+
+            <app-play [filedata]="{'indexno': i,'source': phonetic.pronunciation,'playfor':'pronunciation'}"></app-play>
+            <!--{{phonetic.pronunciation}}-->
+          </td>
+          <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
+          <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
+          <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/>
+
+          <input *ngIf="editPhone=== i" type="hidden" name="pronunciation" [(ngModel)]="phonetic.pronunciation" />
         </tr>
 
         </tbody>
