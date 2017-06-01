@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} fr
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import {ActivatedRoute, Router, Params, UrlSegment} from '@angular/router';
 import {LessonItem} from '../../../shared/model/lesson-item';
 import 'rxjs/Rx';
 import {Word} from '../../../shared/model/word';
@@ -23,9 +23,11 @@ export class LanguageWordComponent implements OnInit {
   lessonWord$Key: string;
   course$key: string;
   lesonWord$: Observable<LessonItem[]>;
-  courid: string;
+  path: Observable<UrlSegment[]>;
+  courKey: string;
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
+  parts: string;
 
   constructor(private lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute) {
   }

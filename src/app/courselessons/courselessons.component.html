@@ -3,15 +3,15 @@
  		<h4><span style="font-size:16px;">Course Name:</span> English</h4>
  	</div>
  	<div class="col-sm-6 col-xs-12 take_course_button" *ngIf="!authInfo?.isLoggedIn()">
- 		<button class="btn btn-danger" routerLink="/login">Login To Take The Course</button>
+ 		<button class="btn btn-danger" (click)="takeTheCourse(courseId)" routerLink="/login">Login To Take The Course</button>
  	</div>
- 	<div class="col-sm-6 col-xs-12 take_course_button" *ngIf="authInfo?.isLoggedIn() && true">
- 		<button class="btn btn-danger">Take The Course</button>
+ 	<div class="col-sm-6 col-xs-12 take_course_button" *ngIf="authInfo?.isLoggedIn() && isCourseNotTaken">
+ 		<button class="btn btn-danger" (click)="subscribeTheCourse(courseId)">Take The Course</button>
  	</div>
 </div>
 <div class="row courseLesson_container">
 	<div class="col-xs-12 col-sm-6 col-lg-3"  *ngFor="let courseLesson of courseLessons">
-		<div class="list_of_courseLesson" [class.unsubscribed_lessons]="!authInfo?.isLoggedIn() || (authInfo?.isLoggedIn()&& true)">
+		<div class="list_of_courseLesson" [class.unsubscribed_lessons]="!authInfo?.isLoggedIn() || (authInfo?.isLoggedIn()&& isCourseNotTaken)">
 			<a>
 				<img class="img-responsive" [src]="courseLesson.image" />
 			</a>

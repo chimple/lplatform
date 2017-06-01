@@ -5,19 +5,19 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-topmenu',
-  host: {'(document:click)': 'handleClick($event)',},
-  templateUrl: './topmenu.component.html',
+  host: {'(document:click)': 'handleClick($event)'},
+  templateUrl: './topmenu1.component.html',
   styleUrls: ['./topmenu.component.css']
 })
 export class TopmenuComponent implements OnInit {
 
   authInfo: AuthInfo;
-  public isCollapsedContent:boolean = false;
-  public isCollapsedCourses:boolean = false;
+  public isCollapsedContent: boolean = false;
+  public isCollapsedCourses: boolean = false;
   public elementRef;
- 
-    
-  constructor(private authService: AuthService, private router: Router,private myElement: ElementRef) {
+
+
+  constructor(private authService: AuthService, private router: Router, private myElement: ElementRef) {
     this.elementRef = myElement;
   }
 
@@ -26,22 +26,22 @@ export class TopmenuComponent implements OnInit {
       .subscribe(
         authInfo => {
           this.authInfo = authInfo
-          console.log(this.authInfo.getUser())
+          console.log(this.authInfo.getUser());
         }
       );
   }
 
-  handleClick(event){
-    var clickedComponent = event.target;
-    var inside = false;
-    do{
-        if (clickedComponent === this.elementRef.nativeElement) {
-           inside = true;
-        }
-        clickedComponent = clickedComponent.parentNode;
+  handleClick(event) {
+    let clickedComponent = event.target;
+    let inside = false;
+    do {
+      if (clickedComponent === this.elementRef.nativeElement) {
+        inside = true;
+      }
+      clickedComponent = clickedComponent.parentNode;
     } while (clickedComponent);
-    if(!inside){
-       this.isCollapsedContent = false;
+    if (!inside) {
+      this.isCollapsedContent = false;
       this.isCollapsedCourses = false;
     }
   }
@@ -50,19 +50,21 @@ export class TopmenuComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
-  showUserInfo(){
-    if(this.isCollapsedContent == false){
+
+  showUserInfo() {
+    if (this.isCollapsedContent === false) {
       this.isCollapsedContent = true;
       this.isCollapsedCourses = false;
-    }else if(this.isCollapsedContent == true){
+    } else if (this.isCollapsedContent === true) {
       this.isCollapsedContent = false;
     }
   }
-  showUserCourses(){
-    if(this.isCollapsedCourses == false){
+
+  showUserCourses() {
+    if (this.isCollapsedCourses === false) {
       this.isCollapsedCourses = true;
       this.isCollapsedContent = false;
-    }else if(this.isCollapsedCourses == true){
+    } else if (this.isCollapsedCourses === true) {
       this.isCollapsedCourses = false;
     }
   }

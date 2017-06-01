@@ -39,6 +39,7 @@ const appRoutes: Routes = [
           {
             path: 'lessons/:lessonId',
             component: LessonsComponent,
+            //data : {lessonIdVal :'lessonId'},
             children:[
               { path: 'language-alphabet/:lessonAlphaId', component: LanguageAlphabetComponent },
               { path: 'language-word/:lessonWordId', component: LanguageWordComponent }

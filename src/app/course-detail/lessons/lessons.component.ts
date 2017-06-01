@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Lesson} from '../../shared/model/lesson';
 import {PhoneticService} from '../../shared/model/phonetic.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DragulaService} from 'ng2-dragula';
 
 @Component({
   selector: 'app-lessons',
@@ -23,19 +24,59 @@ export class LessonsComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
   course$Key: string;
   phoneticsSelection$: Observable<string[]>;
+   dragStartIndex = -1;
+  dropIndex = -1;
+  dragElement;
 
   @ViewChild('lf') lessonsForm: NgForm;
   @ViewChild('lessonEdit') lessonsEditForm: NgForm;
   @ViewChild('tf') testForms: NgForm;
 
-  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute) {
+  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute, private dragulaService: DragulaService) {
+  dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.course$Key);
+    });
   }
 
   ngOnInit() {
     this.course$Key = this.route.snapshot.params['lessonId'];  // XX01
     this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
+
+    //this.lessonService.setCourseKey(this.course$Key);
   }
+
+    onDrag(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+
+
+    // do something
+  }
+
+
+  onDrop(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+    }
+
+
+    // do something
+  }
+
+
 
   addLesson(): void {
     this.insertFlag = true;

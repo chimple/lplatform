@@ -16,7 +16,7 @@
   </tr>
   </thead>
 
-  <tbody>
+  <tbody [dragula]='"alphabet-drag"'>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
     <td>

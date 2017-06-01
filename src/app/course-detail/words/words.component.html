@@ -53,10 +53,7 @@
                   <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
                 </div>
                 <div class="col-md-3">
-                  <select class='form-control' formControlName="phonetic">
-                    <option value="">---select---</option>
-                    <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-                  </select>
+                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" (keyup.enter)="onEnter($event)" placeholder="type..">
                 </div>
                 <div class="col-md-2">
                   <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
