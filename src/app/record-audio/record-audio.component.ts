@@ -13,9 +13,11 @@ export class RecordAudioComponent implements OnInit {
   @Input() filedata: any;
 
   public isRecording = false;
+  public isTimer = false;
   private chunks: any = [];
   private mediaRecorder: any;
-
+  count : number=4;
+  timer: any;
   constructor(private upSvc: UploadService) {
     const onSuccess = stream => {
       this.mediaRecorder = new MediaRecorder(stream);
@@ -59,16 +61,39 @@ export class RecordAudioComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-  public toggleRecording() {
-    if (this.isRecording) {
-      this.isRecording = false;
-      this.mediaRecorder.stop();
-    } else {
-      this.isRecording = true;
-      this.mediaRecorder.start();
+  
+    
+    public toggleRecording() {
+        if (this.isRecording) {
+            this.isRecording = false;
+            this.mediaRecorder.stop();
+        } else {
+         this.timer= setInterval(() => { this.checktime(); }, 1500 );
+        }
     }
-  }
+checktime() {
+        if (this.count === 1) {
+            clearInterval(this.timer);
+            this.endCountdown();
+        } else {
+          this.isTimer=true;
+            this.count--;
+            console.log(this.count);
+        }
+    }
+   endCountdown(){
+            this.isTimer=false;
+            this.isRecording = true;
+            this.mediaRecorder.start();
+    }
+  // public toggleRecording() {
+  //   if (this.isRecording) {
+  //     this.isRecording = false;
+  //     this.mediaRecorder.stop();
+  //   } else {
+  //     this.isRecording = true;
+  //     this.mediaRecorder.start();
+  //   }
+  // }
 }
 
