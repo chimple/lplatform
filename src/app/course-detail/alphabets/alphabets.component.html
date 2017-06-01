@@ -66,6 +66,12 @@
                   style="color: green; size: 1px; cursor: pointer"> </span>
 
           </button>
+          <button class="btn btn-default" type="submit" (click)="editAlphRow(alphabetName)"
+                  *ngIf="editAlpha=== i" style="border-radius: 60px">
+            <span class="glyphicon glyphicon-delete"
+                  style="color: green; size: 1px; cursor: pointer"> </span>
+
+          </button>
         </td>
         <td class="col-xs-1">
           <p *ngIf="editAlpha!== i">{{alphabet.alphabet}}</p>
