@@ -125,4 +125,10 @@ textarea.ng-invalid.ng-touched{
     text-align: end;
 }
 
+@media only screen and (max-width : 1125px) {
+    .take_course_button,.list_of_courseLesson_headline h4   {
+        text-align: center;
+    }
+}
+
 /* Displaying all courses CSS ends here */
