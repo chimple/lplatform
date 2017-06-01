@@ -22,6 +22,8 @@
           <p *ngIf="show!==i">{{worditem.word}}</p>
           <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word"></p>
           <p *ngIf="show===i"><input type="hidden" name="key" formControlName="key"></p>
+          <p *ngIf="show===i"><input type="hidden" name="pronunciation" formControlName="pronunciation"></p>
+          <p *ngIf="show===i"><input type="hidden" name="image" formControlName="image"></p>
         </td>
         <td>
           <p *ngIf="show!==i">{{worditem.meaning}}</p>
@@ -29,8 +31,7 @@
           <td>
             <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
             <app-record-audio [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-record-audio>
-            <!-- <app-play [filedataplay]="worditem"></app-play> -->
-            <button type="button" class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span class="glyphicon glyphicon-play"></span></button>
+            <app-play [filedata]="{'indexno': i,'source': worditem.pronunciation,'playfor':'pronunciation'}"></app-play>
           </td>
           <td>
           <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>
