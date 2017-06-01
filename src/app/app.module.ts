@@ -45,6 +45,7 @@ import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
 import { BoardDirective } from "app/learn/board/board.directive";
 import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
+import { PlayComponent } from './play/play.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { LanguageAlphabetComponent } from './course-detail/lessons/language-alph
     BoardDirective,
     AlphabetBoardComponent,
     LanguageWordComponent,
-    LanguageAlphabetComponent
+    LanguageAlphabetComponent,
+    PlayComponent
 
   ],
   imports: [
