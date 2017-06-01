@@ -5,6 +5,8 @@ import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LessonItem} from '../../../shared/model/lesson-item';
+import {WordService} from '../../../shared/model/word.service';
+
 
 @Component({
   selector: 'app-language-word',
@@ -22,12 +24,13 @@ export class LanguageWordComponent implements OnInit {
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) {
+  constructor(private lessonService: LessonService, private route: ActivatedRoute, private wordService: WordService) {
   }
 
   ngOnInit() {
-    this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];
+    this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // 
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
+    console.log(this.lesonWord$);
   }
 
 
@@ -52,6 +55,7 @@ export class LanguageWordComponent implements OnInit {
   submitLW() {
     console.log(this.lwForm.value);
     // this.lessonService.createLessonWord(this.lessonWord$Key, this.lwForm.value);
+    this.wordService.createWord(this.lessonWord$Key, this.lwForm.value);
     this.lwInsertFlag = false;
   }
 

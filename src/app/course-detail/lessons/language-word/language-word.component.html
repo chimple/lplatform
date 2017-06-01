@@ -20,7 +20,8 @@
       <td>
         <span *ngIf="lwEditFlag!==lwIndex" (click)="editLessonWord(lwIndex)" class="glyphicon glyphicon-pencil"></span>
         <button type="submit" *ngIf="lwEditFlag===lwIndex" class="glyphicon glyphicon-save"></button>
-        <input *ngIf="lwEditFlag===lwIndex" type="hidden" name="lessonWord" [ngModel]="lessonWord.xyz" />
+        <input *ngIf="lwEditFlag===lwIndex" type="hidden" name="lessonWord" [ngModel]="lessonWord.lessonItem" />
+        {{lessonWord.lessonItem}}
       </td>
       <td>
         <p *ngIf="lwEditFlag!==lwIndex">{{lessonWord.item}}</p>
@@ -38,9 +39,10 @@
 <div class="row" *ngIf="lwInsertFlag">
   <div class="col-xs-12">
     <form (ngSubmit)="submitLW()" #lw="ngForm">
+        <input type="hidden" name="lessonWord" [ngModel]="lessonWord.lessonItem" />
         <div class="row">
           <div class="col-xs-4">
-            <label>Lesson Name:</label>
+            <label>Enter Word:</label>
             <input class="form-control" type="text" placeholder="Word" ngModel name="item" required #lwd>
             <input type="hidden" name="lwd" [ngModel]="lwd.lwd" />
           </div>
@@ -51,3 +53,4 @@
 </div>
 <button type="button" *ngIf="!lwInsertFlag" class="btn btn-primary" (click)="addWord()">Add</button>
 
+<br /><br />

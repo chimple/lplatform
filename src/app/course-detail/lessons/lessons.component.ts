@@ -32,7 +32,7 @@ export class LessonsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.course$Key = this.route.snapshot.params['lessonId'];
+    this.course$Key = this.route.snapshot.params['lessonId'];  // XX01
     this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
   }
@@ -58,7 +58,7 @@ export class LessonsComponent implements OnInit {
   }
   updateLesson() {
     console.log(`Update Lesson: ${this.lessonsEditForm.value}`);
-    this.lessonService.createLesson(this.course$Key, this.lessonsEditForm.value);
+    this.lessonService.createLesson(this.course$Key, this.lessonsEditForm.value);  //  (XX01, form values)
     this.editFlag = '';
   }
 
