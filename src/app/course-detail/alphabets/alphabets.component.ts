@@ -4,7 +4,8 @@ import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import { RecordAudioComponent } from '../../record-audio/record-audio.component';
+import {RecordAudioComponent} from '../../record-audio/record-audio.component';
+import {DragulaService} from "ng2-dragula";
 // declare var swal: any;
 
 @Component({
@@ -20,8 +21,45 @@ export class AlphabetComponent implements OnInit {
   myAlphabet: boolean = false;
   editAlpha: any;
   onPlay = false;
+  dragStartIndex = -1;
+  dropIndex = -1;
+  dragElement;
 
-  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
+  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService, private dragulaService: DragulaService) {
+    dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      this.onDrop(value.slice(1));
+    });
+  }
+
+  onDrag(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+
+    // do something
+  }
+
+  onDrop(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+      this.callReorderEvent();
+    }
+
+
+    // do something
+  }
+
+  callReorderEvent() {
+    console.log(`dragStartIndex ${this.dragStartIndex}`);
+    console.log(`dropIndex ${this.dropIndex}`);
   }
 
   ngOnInit() {
@@ -31,12 +69,13 @@ export class AlphabetComponent implements OnInit {
       alphabets => this.alphabets = alphabets
     );
   }
+
   onPlays() {
     this.onPlay = true;
   }
 
   editAlphRow(alphabetName: string) {
-console.log(alphabetName);
+    console.log(alphabetName);
   }
 
   editAlph(i) {
@@ -68,6 +107,7 @@ console.log(alphabetName);
     );
 
   }
+
 // onRecord() {
 //   swal({
 //     title: 'Are you sure?',
