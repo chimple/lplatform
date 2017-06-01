@@ -15,10 +15,16 @@ import {WordService} from "./word.service";
 export class LessonService {
 
   sdkDb: any;
+  //courseKey:any;
 
   constructor(private db: AngularFireDatabase, private courseService: CourseService) {
     this.sdkDb = firebase.database().ref();
   }
+
+
+    //getCourseKey(){return this.courseKey}
+    //setCourseKey(curseKey){ this.courseKey = curseKey;}
+
 
   getLessonItems(lessonId: string): Observable<LessonItem[]> {
     console.log(lessonId);
