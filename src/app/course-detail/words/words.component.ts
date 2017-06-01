@@ -18,6 +18,7 @@ export class WordsComponent implements OnInit {
   editform: FormGroup;
   show = '';
   word$Key: string;
+  newphonetic: string;
 
   constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
   }
@@ -26,7 +27,7 @@ export class WordsComponent implements OnInit {
     this.word$Key = this.route.snapshot.params['wordId'];
     this.words$ = this.wordService.findWordsByCourse(this.word$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.word$Key);
-    console.log(this.words$);
+    console.log(this.phoneticsSelection$);
     this.initForm();
   }
 
@@ -153,5 +154,11 @@ export class WordsComponent implements OnInit {
         'phonetic': new FormControl(null, Validators.required)
       })
     );
+  }
+  onEnter(event: any){
+    console.log(this.phoneticsSelection$);
+   this.newphonetic = event.target.value; 
+   console.log(this.newphonetic);
+   //this.phoneticService.createPhonetic(this.word$Key,111);
   }
 }

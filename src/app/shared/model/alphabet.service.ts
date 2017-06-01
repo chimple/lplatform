@@ -54,6 +54,19 @@ export class AlphabetService {
     }).map(alphabets => alphabets.slice(0, alphabets.length - 1));
   }
 
+
+  createAlphabetForLessonItem(courseUrl: string, input: any): Observable<any> {
+    const alphabetToSave = Object.assign({}, {key: input.alphabet}, {course: courseUrl});
+    const newKey = input.alphabet;
+
+    delete(alphabetToSave.key);
+
+    const dataToSave = {};
+    dataToSave[`course_alphabets/${courseUrl}/${newKey}`] = alphabetToSave;
+
+    return this.firebaseUpdate(dataToSave);
+  }
+
   createAlphabet(courseUrl: string, alphabet: any, key: any = undefined): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)

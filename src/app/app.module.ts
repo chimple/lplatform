@@ -46,7 +46,9 @@ import { BoardDirective } from "app/learn/board/board.directive";
 import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 import { CourselessonsComponent } from './courselessons/courselessons.component';
+import { PlayComponent } from './play/play.component';
 import {DragulaModule, DragulaService} from 'ng2-dragula';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
   declarations: [
@@ -70,8 +72,8 @@ import {DragulaModule, DragulaService} from 'ng2-dragula';
     AlphabetBoardComponent,
     LanguageWordComponent,
     LanguageAlphabetComponent,
-    CourselessonsComponent
-
+    CourselessonsComponent,
+    PlayComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ import {DragulaModule, DragulaService} from 'ng2-dragula';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    DragulaModule
+    DragulaModule,
+    Ng2AutoCompleteModule
   ],
   providers: [AuthService, AuthGuard, DragulaService ,
     CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
