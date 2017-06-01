@@ -5,6 +5,7 @@ import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LessonItem} from '../../../shared/model/lesson-item';
+import {AlphabetService} from "../../../shared/model/alphabet.service";
 
 @Component({
   selector: 'app-language-alphabet',
@@ -23,7 +24,7 @@ export class LanguageAlphabetComponent implements OnInit {
   @ViewChild('la') laForm: NgForm;
   @ViewChild('laEdit') laEditForm: NgForm;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) {
+  constructor(private lessonService: LessonService, private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class LanguageAlphabetComponent implements OnInit {
 
   updateLessonAlpha() {
     console.log(`Update Lesson Word: ${this.laEditForm.value}`);
-    //this.lessonService.updateLessonAlpha(this.lessonAlpha$Key, this.laEditForm.value);
+    // this.lessonService.updateLessonAlpha(this.lessonAlpha$Key, this.laEditForm.value);
     this.laEditFlag = '';
   }
 
@@ -54,11 +55,18 @@ export class LanguageAlphabetComponent implements OnInit {
   submitLA() {
     console.log(this.laForm.value);
     // this.lessonService.createLessonAlpha(this.lessonAlpha$Key, this.laForm.value);
-    let existingAlphaForCourse = [];
-    console.log(this.laForm.value.word);
-    
 
-
+    let existingAlphabetsForCourse = [];
+    const that = this;
+    const updatedForm = this.laForm.value;
+    updatedForm['alphabet'] = updatedForm.item;
+    this.alphabetService.findAlphabetsByCourse('XX01')
+      .subscribe(
+        (alphabets) => {
+          existingAlphabetsForCourse = alphabets;
+          const checkAlphabetExists = existingAlphabetsForCourse.map(alphabet =>  alphabet.alphabet).includes(updatedForm.item);
+          that.lessonService.createLessonItem('XX01', that.lessonAlpha$Key, updatedForm, 'alphabet', checkAlphabetExists);
+        });
     this.laInsertFlag = false;
   }
 

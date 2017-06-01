@@ -109,6 +109,19 @@ export class WordService {
     return this.firebaseUpdate(dataToSave);
   }
 
+  createWordForLessonItem(courseUrl: string, input: any): Observable<any> {
+    const wordToSave = Object.assign({}, {key: input.word}, {course: courseUrl}, {meaning: input.word}, {ref: input.word});
+    const newKey = input.word;
+
+    delete(wordToSave.key);
+
+    const dataToSave = {};
+    dataToSave[`course_words/${courseUrl}/${newKey}`] = wordToSave;
+    const subject = new Subject();
+
+    return this.firebaseUpdate(dataToSave);
+  }
+
   updateImageLink(courseUrl: string, key: string, imageFileName: string): void {
     const wordUpdate$ = this.db.object(`course_words/${courseUrl}/${key}`);
     wordUpdate$.update({image: imageFileName});

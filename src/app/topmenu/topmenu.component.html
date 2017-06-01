@@ -37,5 +37,20 @@
         </ul>
       </li>
     </ul>
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li class="user_course_image" *ngIf="authInfo?.getUser()">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </li>
+      <li class="user_course_details" *ngIf="authInfo?.getUser()">
+        <span class="header-dropdown-arrow" (click)="showUserCourses()"></span>
+        <ul class="header-user-course-list"[class.is-active]="isCollapsedCourses">
+          <li><span class="glyphicon glyphicon-expand"></span> &nbsp; 
+              <a><b>Spanish</b></a>
+          </li>
+          <li><span class="glyphicon glyphicon-edit"></span> &nbsp; <a routerLink="home">Add course</a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </nav>

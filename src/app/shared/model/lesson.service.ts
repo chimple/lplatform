@@ -9,6 +9,8 @@ import * as firebase from 'firebase/app';
 import {CourseDetail} from "./course-detail";
 import {CourseService} from "./course.service";
 import {WordService} from "./word.service";
+import {Word} from "./word";
+import {AlphabetService} from "./alphabet.service";
 
 
 @Injectable()
@@ -17,7 +19,7 @@ export class LessonService {
   sdkDb: any;
   //courseKey:any;
 
-  constructor(private db: AngularFireDatabase, private courseService: CourseService) {
+  constructor(private db: AngularFireDatabase, private courseService: CourseService, private wordService: WordService, private alphabetService: AlphabetService) {
     this.sdkDb = firebase.database().ref();
   }
 
@@ -75,7 +77,7 @@ export class LessonService {
     return this.firebaseUpdate(dataToSave);
   }
 
-  createLessonItem(courseUrl: string, lessonUrl: string, input: any, attributeExists = false): Observable<any> {
+  createLessonItem(courseUrl: string, lessonUrl: string, input: any, type: string, attributeExists = false): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)
       .subscribe(
@@ -104,8 +106,12 @@ export class LessonService {
     // dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
 
-    if(!attributeExists) {
-      console.log(`attributeExists ${attributeExists}`);
+    if (!attributeExists) {
+      if (type === 'word') {
+        this.wordService.createWordForLessonItem(courseUrl, input);
+      } else if (type === 'alphabet') {
+        this.alphabetService.createAlphabetForLessonItem(courseUrl, input);
+      }
     }
     return this.firebaseUpdate(dataToSave);
   }
