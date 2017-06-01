@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { CourselessonsService } from './courselessons.service';
+import {AuthService} from '../shared/security/auth.service';
+import {AuthInfo} from '../shared/security/AuthInfo';
 
 @Component({
   selector: 'app-courselessons',
@@ -12,11 +14,11 @@ export class CourselessonsComponent implements OnInit {
   language:any;
   courseId:any;
   courseLessons = [];
-  constructor(private activatedRoute:ActivatedRoute,private courseLessonsService:CourselessonsService) { }
+  authInfo: AuthInfo;
+  constructor(private activatedRoute:ActivatedRoute,private courseLessonsService:CourselessonsService,private authService: AuthService) { }
 
   ngOnInit() {
   	this.activatedRoute.params.subscribe((params) => {
-        this.language = params['language'];
         this.courseId = params['courseId'];
     });
   	this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
@@ -26,6 +28,12 @@ export class CourselessonsComponent implements OnInit {
   			}
   		}
   	);
+    this.authService.authInfo$
+      .subscribe(
+        authInfo => {
+          this.authInfo = authInfo
+        }
+    );
   }
 
 }

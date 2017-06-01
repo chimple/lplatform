@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CourseService} from '../shared/model/course.service';
 import {Course} from '../shared/model/course';
 import {Observable} from 'rxjs/Observable';
+import {AuthService} from '../shared/security/auth.service';
+import {AuthInfo} from '../shared/security/AuthInfo';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,9 @@ export class HomeComponent implements OnInit {
   courses$: Observable<Course[]>;
   allCourses: Course[];
   filtered: Course[];
+  authInfo: AuthInfo;
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService,private authService:AuthService) { }
 
   ngOnInit() {
     const receivedCourses = this.courseService.findAllCourses();
@@ -23,9 +26,18 @@ export class HomeComponent implements OnInit {
       .subscribe(
         courses => this.allCourses = this.filtered = courses
       );
+
+   this.authService.authInfo$
+    .subscribe(
+      authInfo => {
+        this.authInfo = authInfo
+        console.log(this.authInfo.getUser())
+      }
+    );
   }
 
   search(search: string) {
     this.filtered = this.allCourses.filter(course => course.name.toLowerCase().includes(search.toLowerCase()));
+    console.log(this.filtered);
   }
 }

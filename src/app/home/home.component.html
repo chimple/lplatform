@@ -1,12 +1,12 @@
-<div class="row">
-	<div class="col-xs-6 list_of_courses_headline">
+<div class="row list_of_courses_headline" *ngIf="authInfo?.isLoggedIn()">
+	<div class="col-xs-6">
  		<h4>Courses by the Chimple Community</h4>
  	</div>
  	<div class="col-xs-4">
  		<input class="search-bar form-control" placeholder="Search a course here" (keyup) = "search(input.value)" #input>
  	</div>
 </div>
-<div class="row course_container">
+<div class="row course_container" *ngIf="authInfo?.isLoggedIn()">
 	<div class="list-group">
   		<app-courses-list [courses]="filtered"></app-courses-list>
 	</div>
