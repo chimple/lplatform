@@ -21,7 +21,7 @@
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
           <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word"></p>
-          <p *ngIf="show===i"><input type="hidden"  name="key" formControlName="key"></p>
+          <p *ngIf="show===i"><input type="hidden" name="key" formControlName="key"></p>
         </td>
         <td>
           <p *ngIf="show!==i">{{worditem.meaning}}</p>
@@ -38,7 +38,6 @@
           <td>
             <p *ngIf="show!==i">{{worditem.ref}}</p>
             <p *ngIf="show===i"><textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea></p>
-          <
         </tr>
         <tr *ngIf="show===i">
           <td colspan="5">
