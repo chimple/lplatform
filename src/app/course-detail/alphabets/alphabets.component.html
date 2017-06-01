@@ -55,7 +55,7 @@
           <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
         </tr>
         <tbody [dragula]='"alphabet-drag"' >
-        <tr *ngFor="let alphabet of alphabets$ | async ; let i = index ">
+        <tr *ngFor="let alphab of alphabets$ | async ; let i = index ">
 
           <td>
             <!--<span hidden>{{i+1}}</span>-->
@@ -77,21 +77,21 @@
           </td>
           <input *ngIf="editAlpha=== i" type="hidden" name="key" [(ngModel)]="alphabet.alphabet" />
           <td hidden>{{i+1}}</td>
-          <td hidden>{{alphabet.alphabet}}</td>
+          <td hidden>{{alphab.alphabet}}</td>
           <td class="col-xs-1">
-            <p *ngIf="editAlpha!== i">{{alphabet.alphabet}}</p>
+            <p *ngIf="editAlpha!== i">{{alphab.alphabet}}</p>
             <input type="text" name="alphabetName"
-                   *ngIf="editAlpha=== i" value="{{alphabet.alphabet}}"
+                   *ngIf="editAlpha=== i" value="{{alphab.alphabet}}"
                    class="form-control" #alphabetName/>
 
             <!--{{alphabet.alphabet}}-->
           </td>
           <td>
-            <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
+            <app-upload-form [filedata]="{'objectname':alphab.alphabet,
 
             'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-upload-form>
-            <app-record-audio [filedata]="{'objectname':alphabet.alphabet,
+            <app-record-audio [filedata]="{'objectname':alphab.alphabet,
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
             </app-record-audio>
 
@@ -118,7 +118,7 @@
 
           <td>
             <!--<label>Sound</label><br>-->
-            <app-upload-form [filedata]="{'objectname':alphabet.alphabet,
+            <app-upload-form [filedata]="{'objectname':alphab.alphabet,
           'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}">
 
             </app-upload-form>
