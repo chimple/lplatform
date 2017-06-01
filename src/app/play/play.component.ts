@@ -1,4 +1,4 @@
-import { Component, OnInit , Input} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-play',
@@ -6,10 +6,19 @@ import { Component, OnInit , Input} from '@angular/core';
   styleUrls: ['./play.component.css']
 })
 export class PlayComponent implements OnInit {
-@Input() filedataplay: any;
-  constructor() { }
+  @Input() filedata: any;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  playaudio(audiosrc: string) {
+    const audio = new Audio();
+    audio.src = audiosrc;
+    audio.load();
+    audio.play();
   }
 
 }

@@ -35,6 +35,8 @@ export class WordsComponent implements OnInit {
     const meaning = '';
     const ref = '';
     const key = '';
+    const image = '';
+    const pronunciation = '';
     const phonetics = new FormArray([]);
     const phoneticdata = new FormArray([]);
     this.wordform = new FormGroup({
@@ -48,7 +50,9 @@ export class WordsComponent implements OnInit {
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
       'phoneticdata': phoneticdata,
-      'key': new FormControl(key, Validators.required)
+      'key': new FormControl(key, Validators.required),
+      'pronunciation': new FormControl(pronunciation),
+      'image': new FormControl(image)
     });
 
   }
@@ -108,12 +112,16 @@ export class WordsComponent implements OnInit {
     let meaning = '';
     let ref = '';
      let key = '';
+     let image = '';
+    let pronunciation = '';
     let phoneticdata = new FormArray([]);
     if (alldata) {
       word = alldata.word;
       key = alldata.word;
       meaning = alldata.meaning;
       ref = alldata.ref;
+      image = alldata.image;
+      pronunciation = alldata.pronunciation;
       for ( let ingredient of alldata.phonetics ) {
         phoneticdata.push(
           new FormGroup({
@@ -128,7 +136,9 @@ export class WordsComponent implements OnInit {
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
       'key': new FormControl(key, Validators.required),
-      'phoneticdata': phoneticdata
+      'phoneticdata': phoneticdata,
+      'pronunciation': new FormControl(pronunciation),
+      'image': new FormControl(image)
     });
   }
 

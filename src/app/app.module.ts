@@ -39,15 +39,14 @@ import {PhoneticService} from './shared/model/phonetic.service';
 import {WordService} from './shared/model/word.service';
 import {LessonService} from './shared/model/lesson.service';
 import { SessionComponent } from './learn/session.component';
-import { DragulaModule , DragulaService} from 'ng2-dragula';
+
 import { AllcoursesComponent } from './allcourses/allcourses.component';
 import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
 import { BoardDirective } from "app/learn/board/board.directive";
 import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
-import { PlayComponent } from './play/play.component';
 import { CourselessonsComponent } from './courselessons/courselessons.component';
-
+import {DragulaModule, DragulaService} from 'ng2-dragula';
 
 @NgModule({
   declarations: [
@@ -71,7 +70,6 @@ import { CourselessonsComponent } from './courselessons/courselessons.component'
     AlphabetBoardComponent,
     LanguageWordComponent,
     LanguageAlphabetComponent,
-    PlayComponent,
     CourselessonsComponent
 
   ],
@@ -87,7 +85,8 @@ import { CourselessonsComponent } from './courselessons/courselessons.component'
     ReactiveFormsModule,
     DragulaModule
   ],
-  providers: [AuthService, AuthGuard, CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService, DragulaService],
+  providers: [AuthService, AuthGuard, DragulaService ,
+    CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
   entryComponents: [AlphabetBoardComponent],
   bootstrap: [AppComponent]
 })

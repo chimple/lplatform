@@ -84,7 +84,7 @@ export class WordService {
     }, phonetics);
 
     const wordToSave = Object.assign({}, {key: input.word}, {phonetics: phonetics},
-      {meaning: input.meaning}, {ref: input.ref}, {course: courseUrl});
+      {meaning: input.meaning}, {ref: input.ref}, {course: courseUrl}, {pronunciation: input.pronunciation});
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
