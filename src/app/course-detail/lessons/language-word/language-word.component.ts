@@ -69,7 +69,7 @@ export class LanguageWordComponent implements OnInit {
       .subscribe(
         (words) => {
           existingWordsForCourse = words;
-          const checkWordExists = existingWordsForCourse.includes(this.lwForm.value.word);
+          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(this.lwForm.value.word);
           this.lessonService.createLessonItem('XX01', this.lessonWord$Key, this.lwForm.value, checkWordExists);
 
         });
