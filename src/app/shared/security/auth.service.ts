@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
 
-  static UNKNOWN_USER = new AuthInfo(null,null);
+  static UNKNOWN_USER = new AuthInfo(null, null);
 
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
 
@@ -16,7 +16,12 @@ export class AuthService {
 
   }
 
-  loginUsingProvider(provider: string) {
+  registerUserWithLoginInformation(user: any): Observable<boolean> {
+    console.log(`user ${JSON.stringify(user)}`);
+    return Observable.of(true);
+  }
+
+  loginUsingProvider(provider: string): Observable<any> {
     return this.fromFirebaseGoogleAuthPromise(this.fbAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
   }
 
@@ -33,7 +38,7 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        const authInfo = new AuthInfo(res.uid,res);
+        const authInfo = new AuthInfo(res.uid, res);
         console.log(res);
         console.log(`res.uid ${res.uid}`);
         this.authInfo$.next(authInfo);
@@ -54,7 +59,7 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        const authInfo = new AuthInfo(res.user.uid,res.user);
+        const authInfo = new AuthInfo(res.user.uid, res.user);
         console.log(`res.uid ${res.user.uid}`);
         this.authInfo$.next(authInfo);
         subject.next(res.user);

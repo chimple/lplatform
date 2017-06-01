@@ -79,9 +79,11 @@
           <td hidden>{{i+1}}</td>
           <td hidden>{{alphab.alphabet}}</td>
           <td class="col-xs-1">
+
             <p *ngIf="editAlpha!== i">{{alphab.alphabet}}</p>
-            <input type="text" name="alphabetName"
+            <input type="text" name="alphabetName" [(ngModel)]="alphab.alphabet"
                    *ngIf="editAlpha=== i" value="{{alphab.alphabet}}"
+
                    class="form-control" #alphabetName/>
 
             <!--{{alphabet.alphabet}}-->

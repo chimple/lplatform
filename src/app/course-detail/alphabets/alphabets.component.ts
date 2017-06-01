@@ -1,4 +1,4 @@
-import {Component, OnInit , ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
@@ -39,7 +39,8 @@ export class AlphabetComponent implements OnInit {
       this.onDrop(value.slice(1));
       console.log(this.alphabet$Key);
     });
-   }
+  }
+
   onDrag(args) {
     let [e] = args;
     if (e) {
@@ -70,7 +71,6 @@ export class AlphabetComponent implements OnInit {
   }
 
 
-
   ngOnInit() {
     this.alphabet$Key = this.route.snapshot.params['alphabetId'];
     this.alphabets$ = this.alphabetService.findAlphabetsByCourse(this.alphabet$Key);
@@ -83,11 +83,8 @@ export class AlphabetComponent implements OnInit {
     this.onPlay = true;
   }
 
-  editAlphRow(alphabetName: string, key: string) {
-    console.log(alphabetName);
-    console.log(key);
-
-    this.alphabetService.createAlphabet(this.alphabet$Key, alphabetName , key)
+  editAlphRow() {
+    this.alphabetService.createAlphabet(this.alphabet$Key, this.alphabetEditForm.value.alphabetName, this.alphabetEditForm.value.key)
       .subscribe(
         () => {
           alert('success in alphabet creation');
@@ -146,6 +143,11 @@ export class AlphabetComponent implements OnInit {
 //     );
 //   });
 // }
+
+  deleteAlphRow(alphabet: string) {
+    this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
+  }
+
 
   save(form: NgForm) {
     console.log(JSON.stringify(form.value));
