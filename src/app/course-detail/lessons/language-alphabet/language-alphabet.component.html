@@ -50,18 +50,16 @@
 
 <div class="row" *ngIf="laInsertFlag">
   <div class="col-xs-12">
-    <form (ngSubmit)="submitLA()" #la="ngForm">
-        <input type="hidden" name="lessonAlpha" [ngModel]="lessonWord.lessonItem" />
+    <form (ngSubmit)="submitLA()" #la="ngForm">        
         <div class="row">
           <div class="col-xs-4">
             <label>Enter Alphabet:</label>
-            <input class="form-control" type="text" placeholder="Alphabet" ngModel name="item" required #lad>
-            <input type="hidden" name="lad" [ngModel]="lad.lad" />
+            <input class="form-control" type="text" placeholder="Alphabet" ngModel name="item" required #lessonItem>
           </div>
           <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-primary">Save</button></div>
         </div>
+        <input type="hidden" name="lessonAlpha" [ngModel]="lessonItem.lessonItem" />
     </form>
   </div>
 </div>
 <button type="button" *ngIf="!laInsertFlag" class="btn btn-primary" (click)="addAlpha()">Add</button>
-
