@@ -84,7 +84,9 @@ export class AlphabetComponent implements OnInit {
   }
 
   editAlphRow() {
-    this.alphabetService.createAlphabet(this.alphabet$Key, this.alphabetEditForm.value.alphabetName, this.alphabetEditForm.value.key)
+   // console.log(form);
+  //  this.alphabetService.createAlphabet(this.alphabet$Key, form)
+     this.alphabetService.createAlphabet(this.alphabet$Key, this.alphabetEditForm.value.alphabetName, this.alphabetEditForm.value.key)
       .subscribe(
         () => {
           alert('success in alphabet creation');
@@ -145,6 +147,7 @@ export class AlphabetComponent implements OnInit {
 // }
 
   deleteAlphRow(alphabet: string) {
+    console.log(alphabet);
     this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
   }
 
@@ -158,6 +161,7 @@ export class AlphabetComponent implements OnInit {
         },
         err => alert(`error in creating new alphabet ${err}`)
       );
+    form.reset();
   }
 
 }
