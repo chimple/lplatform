@@ -18,6 +18,7 @@ export class LanguageAlphabetComponent implements OnInit {
   laEditFlag: any;
   lessonAlpha$Key: string;
   lesonAlpha$: Observable<LessonItem[]>;
+  course$key: string;
 
   @ViewChild('la') laForm: NgForm;
   @ViewChild('laEdit') laEditForm: NgForm;
@@ -27,6 +28,7 @@ export class LanguageAlphabetComponent implements OnInit {
 
   ngOnInit() {
     this.lessonAlpha$Key = this.route.snapshot.params['lessonAlphaId'];
+    this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonAlpha$ = this.lessonService.getLessonItems(this.lessonAlpha$Key);
   }
 
@@ -52,6 +54,11 @@ export class LanguageAlphabetComponent implements OnInit {
   submitLA() {
     console.log(this.laForm.value);
     // this.lessonService.createLessonAlpha(this.lessonAlpha$Key, this.laForm.value);
+    let existingAlphaForCourse = [];
+    console.log(this.laForm.value.word);
+    
+
+
     this.laInsertFlag = false;
   }
 
