@@ -23,7 +23,7 @@ export class LanguageWordComponent implements OnInit {
   lessonWord$Key: string;
   course$key: string;
   lesonWord$: Observable<LessonItem[]>;
-
+  courid: string;
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
 
@@ -33,10 +33,31 @@ export class LanguageWordComponent implements OnInit {
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
     this.course$key = this.route.snapshot.params['lessonId'];
+    //this.courid = this.route.snapshot.params['id'];
+    console.log(this.lessonWord$Key+"---"+this.course$key+"---"+ this.courid);
+console.log("Sathya id: "+this.route.url);
+ this.route.params
+           .subscribe(
+           (params: Params) => {
+           console.log("Latest course id: "+ params);  
+           }
+           )
+           
+
     /*this.course$key = this.route.snapshot.params.subscribe((params: Params) => {
+<<<<<<< HEAD
+        let paramsURL = params;
+        console.log("Params URL: "+paramsURL);
+      });*/
+      console.log("R1: "+this.route.snapshot.url); // array of states
+    console.log("R2: "+this.route.snapshot.url[0].path); 
+
+    console.log("Course Key: "+this.course$key);
+=======
      let paramsURL = params;
      console.log("Params URL: "+paramsURL);
      });*/
+>>>>>>> refs/remotes/origin/master
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
     console.log(this.lesonWord$);
   }
