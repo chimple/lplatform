@@ -34,17 +34,8 @@ export class LanguageWordComponent implements OnInit {
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
-<<<<<<< HEAD
-    //this.course$key = this.route.snapshot.params['lessonId'];
-    //this.courid = this.route.snapshot.params['id'];
-    //this.courKey = this.lessonService.getCourseKey();
-    this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
-    console.log(this.lesonWord$);
-
-=======
     this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
->>>>>>> refs/remotes/origin/master
   }
 
 
