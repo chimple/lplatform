@@ -88,7 +88,14 @@ export class WordService {
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
-    const newKey = wordToSave.key;
+    let newKey = '';
+    if (input.word) {
+      newKey = input.word;
+    } else {
+      newKey = input.key;
+      wordToSave.key = input.key;
+    }
+
     delete(wordToSave.key);
 
     const dataToSave = {};
