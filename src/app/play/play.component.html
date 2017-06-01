@@ -1,4 +1,4 @@
-<span>
+<!-- <span *ngIf="filedata.type==='sound'">
 	<button class="btn btn-default"
 	(click)="document.getElementById('alpha-sounds').play()"
 	style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
@@ -8,8 +8,9 @@
 	<audio controls="controls" id="alpha-sounds" hidden >
 		<source src="{{alphabet.source}}" type="audio/mp3">
 	</audio>
-</span>
-<!-- <span *ngIf="filedata.source=='pronunciation'">
+</span> -->
+{{filedata.objectname.pronunciation}}
+<!-- <span *ngIf="filedata.type==='pronunciation'">
 	<button class="btn btn-default"
 	(click)="document.getElementById('alpha-sounds'+filedata.source).play()"
 	style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">
