@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Alphabet} from '../../shared/model/alphabet';
 import {AlphabetService} from '../../shared/model/alphabet.service';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {RecordAudioComponent} from '../../record-audio/record-audio.component';
-import {DragulaService} from "ng2-dragula";
+import {DragulaService} from 'ng2-dragula';
+
 // declare var swal: any;
 
 @Component({
@@ -25,13 +26,18 @@ export class AlphabetComponent implements OnInit {
   dropIndex = -1;
   dragElement;
 
+  @ViewChild('editAlphabet') alphabetEditForm: NgForm;
+
   constructor(private route: ActivatedRoute, private alphabetService: AlphabetService, private dragulaService: DragulaService) {
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
     });
     dragulaService.drop.subscribe((value) => {
+
+      console.log(`drop: ${value[0]}`);
       this.onDrop(value.slice(1));
+      console.log(this.alphabet$Key);
     });
   }
 
@@ -42,8 +48,10 @@ export class AlphabetComponent implements OnInit {
       this.dragStartIndex = e.rowIndex;
     }
 
+
     // do something
   }
+
 
   onDrop(args) {
     let [e] = args;
@@ -62,6 +70,7 @@ export class AlphabetComponent implements OnInit {
     console.log(`dropIndex ${this.dropIndex}`);
   }
 
+
   ngOnInit() {
     this.alphabet$Key = this.route.snapshot.params['alphabetId'];
     this.alphabets$ = this.alphabetService.findAlphabetsByCourse(this.alphabet$Key);
@@ -74,8 +83,14 @@ export class AlphabetComponent implements OnInit {
     this.onPlay = true;
   }
 
-  editAlphRow(alphabetName: string) {
-    console.log(alphabetName);
+  editAlphRow() {
+    this.alphabetService.createAlphabet(this.alphabet$Key, this.alphabetEditForm.value.alphabetName, this.alphabetEditForm.value.key)
+      .subscribe(
+        () => {
+          alert('success in alphabet creation');
+        },
+        err => alert(`error in creating new alphabet ${err}`)
+      );
   }
 
   editAlph(i) {
@@ -128,6 +143,11 @@ export class AlphabetComponent implements OnInit {
 //     );
 //   });
 // }
+
+  deleteAlphRow(alphabet: string) {
+    this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
+  }
+
 
   save(form: NgForm) {
     console.log(JSON.stringify(form.value));
