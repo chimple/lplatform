@@ -15,7 +15,7 @@ export class CourselessonsComponent implements OnInit {
   courseId: any;
   courseLessons = [];
   authInfo: AuthInfo;
-  isCourseNotTaken:boolean=true;
+  isCourseNotTaken: boolean = true;
 
   constructor(private activatedRoute: ActivatedRoute, private courseLessonsService: CourselessonsService, private authService: AuthService) {
   }
@@ -27,7 +27,7 @@ export class CourselessonsComponent implements OnInit {
     localStorage.setItem('courseId', this.courseId);
     this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
       (data) => {
-        for (const key in data ) {
+        for ( const key in data ) {
           this.courseLessons.push(data[key]);
         }
       }
@@ -44,9 +44,10 @@ export class CourselessonsComponent implements OnInit {
     console.log(courseId);
   }
 
-  subscribeTheCourse(courseId){
+  subscribeTheCourse(courseId) {
     console.log(courseId);
-    this.isCourseNotTaken=false;
+    this.isCourseNotTaken = false;
+    this.authService.updateRegisterCourseInformation(this.authInfo.getUser(), courseId);
   }
 
 }
