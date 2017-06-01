@@ -44,23 +44,26 @@
         <tbody [dragula]='"phonetics-drag"' >
         <tr *ngFor="let phonetic of phonetics$ | async ; let i = index" >
           <td>
-          <span *ngIf="editPhone!== i "
-                (click)="editPhonetic(i)"
-                class="glyphicon glyphicon-pencil"
-                style="color: green; cursor: pointer"></span>
-            <button class="btn btn-default" type="submit"
-                    *ngIf="editPhone===i" style="border-radius: 50%">
-            <span class="glyphicon glyphicon-save"
-                  style="color: green; cursor: pointer"> </span>
-
-            </button>
             <button class="btn btn-default" type="button"
                     style="border-radius: 50%" (click)="ondeletePhonetics(phonetic.alphabet)">
             <span class="glyphicon glyphicon-trash"
                   style="color: red; cursor: pointer"> </span>
 
             </button>
+            <button *ngIf="editPhone!== i "(click)="editPhonetic(i)" class="btn btn-default" type="button"  style="border-radius: 60px">
+          <span class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
+            </button>
+
+            <button class="btn btn-default" type="submit"
+                    *ngIf="editPhone===i" style="border-radius: 50%">
+            <span class="glyphicon glyphicon-save"
+                  style="color: green; cursor: pointer"> </span>
+
+            </button>
           </td>
+
+
+
 
 
           <td class="col-xs-1">
