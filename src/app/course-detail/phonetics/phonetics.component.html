@@ -61,11 +61,7 @@
 
             </button>
           </td>
-          <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
-          <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
-          <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/>
 
-          <input *ngIf="editPhone=== i" type="hidden" name="pronunciation" [(ngModel)]="phonetic.pronunciation" />
 
           <td class="col-xs-1">
             <p *ngIf="editPhone!==i">{{phonetic.alphabet}}</p>
@@ -92,7 +88,11 @@
               <span class="glyphicon glyphicon-play"></span></button>
             {{phonetic.pronunciation}}
           </td>
+          <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
+          <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
+          <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/>
 
+          <input *ngIf="editPhone=== i" type="hidden" name="pronunciation" [(ngModel)]="phonetic.pronunciation" />
         </tr>
 
         </tbody>
