@@ -65,6 +65,7 @@ export class LanguageWordComponent implements OnInit {
   submitLW() {
     console.log(this.lwForm.value);
     let existingWordsForCourse = [];
+    console.log(this.lwForm.value.word);
     this.wordService.findWordsByCourse('XX01')
       .subscribe(
         (words) => {
