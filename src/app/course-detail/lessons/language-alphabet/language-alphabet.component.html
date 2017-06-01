@@ -1,4 +1,65 @@
 <hr />
-<p>
-  language-alphabet works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    Lesson Alphabet
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+  <form (ngSubmit)="updateLessonAlpha()" #laEdit="ngForm">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><span class="glyphicon glyphicon-refresh"></span></th>
+    <th>Alphabet</th>
+    <th>Words</th>
+  </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let lessonAlpha of lesonAlpha$ | async; let laIndex=index ">
+      <td>
+        <span *ngIf="laEditFlag!==laIndex" (click)="editLessonAlpha(laIndex)" class="glyphicon glyphicon-pencil"></span>
+        <button type="submit" *ngIf="laEditFlag===laIndex" class="glyphicon glyphicon-save"></button>
+        <input *ngIf="laEditFlag===laIndex" type="hidden" name="lessonAlpha" [ngModel]="lessonAlpha.xyz" />
+      </td>
+      <td>
+        <p *ngIf="laEditFlag!==laIndex">{{lessonAlpha.item}}</p>
+      <input *ngIf="laEditFlag===laIndex" type="text" class="form-control" name="item" placeholder="Enter Alphabet" [ngModel]="lessonAlpha.item" />
+      </td>
+
+      <td>
+      	<div *ngIf="laEditFlag!==laIndex">
+      		<span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
+      	</div>
+      	<div *ngIf="laEditFlag===laIndex">
+      	<select name="word" class="form-control" ngModel>
+      		<option *ngFor="let words of lessonAlpha.words">{{words}}</option>
+      	</select>
+      	</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</form>
+</div>
+</div>
+
+
+<div class="row" *ngIf="laInsertFlag">
+  <div class="col-xs-12">
+    <form (ngSubmit)="submitLA()" #la="ngForm">
+        <div class="row">
+          <div class="col-xs-4">
+            <label>Lesson Name:</label>
+            <input class="form-control" type="text" placeholder="Alphabet" ngModel name="item" required #lad>
+            <input type="hidden" name="lad" [ngModel]="lad.lad" />
+          </div>
+          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-primary">Save</button></div>
+        </div>
+    </form>
+  </div>
+</div>
+<button type="button" *ngIf="!laInsertFlag" class="btn btn-primary" (click)="addAlpha()">Add</button>
+
