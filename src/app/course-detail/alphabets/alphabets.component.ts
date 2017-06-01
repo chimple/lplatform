@@ -5,6 +5,7 @@ import {AlphabetService} from '../../shared/model/alphabet.service';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import { RecordAudioComponent } from '../../record-audio/record-audio.component';
+import {DragulaService} from 'ng2-dragula';
 // declare var swal: any;
 
 @Component({
@@ -21,8 +22,35 @@ export class AlphabetComponent implements OnInit {
   editAlpha: any;
   onPlay = false;
 
-  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService) {
+  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService, private dragulaService: DragulaService) {
+    dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.alphabet$Key)
+    });
+   }
+
+  private onDrag(args) {
+    let [e, el] = args;
+    console.log(e);
+    console.log(el);
+
+    // do something
   }
+
+  private onDrop(args) {
+    let [e, el] = args;
+    // do something
+    console.log(e);
+    console.log(el);
+    ;
+  }
+
+
 
   ngOnInit() {
     this.alphabet$Key = this.route.snapshot.params['alphabetId'];

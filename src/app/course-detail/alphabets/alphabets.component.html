@@ -53,7 +53,10 @@
       </tr>
       <tbody [dragula]='"alphabet-drag"' >
       <tr *ngFor="let alphabet of alphabets$ | async ; let i = index ">
+        <td hidden>{{alphabet$Key}}</td>
+        <td hidden>{{i+1}}</td>
         <td>
+          <!--<span hidden>{{i+1}}</span>-->
           <span *ngIf="editAlpha!== i "
                 (click)="editAlph(i)"
                 class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
