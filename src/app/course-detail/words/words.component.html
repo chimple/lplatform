@@ -1,5 +1,5 @@
 <form [formGroup]="editform" (ngSubmit)="oneditData(editform.value)">
-  <table class="table table-responsive">
+  <table class="table table-striped table-style table-responsive">
     <thead>
       <tr>
         <th></th>
@@ -10,13 +10,16 @@
         <th>Refer</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody [dragula]='"alphabet-drag"'>
       <ng-container *ngFor="let worditem of words$ | async; let i=index ">
       <tr>
       <td>
-      <button class="btn btn-danger" type="button" (click)="onDelete(worditem.word,i)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
-      <button class="btn btn-primary" type="button" *ngIf="show!==i" (click)="showitem(worditem,i)"><span class="glyphicon glyphicon-pencil" title="Edit"></span></button>
-      <button class="btn btn-primary" type="submit" *ngIf="show===i"><span class="glyphicon glyphicon-saved" title="Save"></span></button>
+      <button class="btn btn-default" type="button"
+              (click)="onDelete(worditem.word,i)" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+      <button class="btn btn-default" type="button" *ngIf="show!==i"
+              (click)="showitem(worditem,i)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil" title="Edit"></span></button>
+      <button class="btn btn-default" type="submit" *ngIf="show===i" style="border-radius: 60px; color: green">
+        <span class="glyphicon glyphicon-saved" title="Save"></span></button>
       </td>
         <td>
           <p *ngIf="show!==i">{{worditem.word}}</p>
@@ -53,7 +56,9 @@
                 <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" (keyup.enter)="onEnter($event)" placeholder="type..">
                 </div>
                 <div class="col-md-2">
-                  <button class="btn btn-danger" type="button" (click)="onDeleteEdit(ip)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+                  <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
+                    <span class="glyphicon glyphicon-trash" title="Delete"></span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -64,7 +69,8 @@
                   </div>
                   <div class="col-md-2">
                     <!-- <button type="submit" class="btn btn-info">Save</button> -->
-                    <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Phonetic"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                    <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Phonetic" style="border-radius: 50%" >
+                      <span class="glyphicon glyphicon-plus-sign"></span></button>
                   </div>
                 </div>
               </div>
@@ -108,7 +114,8 @@
               </select> -->
             </div>
             <div class="col-md-2">
-              <button class="btn btn-danger" type="button" (click)="onDeleteold(ai)"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+              <button class="btn btn-default" type="button" (click)="onDeleteold(ai)" style="border-radius: 60px; color: red">
+                <span class="glyphicon glyphicon-trash" title="Delete"></span></button>
             </div>
           </div>
         </div>

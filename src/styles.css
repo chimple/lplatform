@@ -57,8 +57,9 @@ display: block !important;
 
 .list_of_courses_headline h4,.list_of_courseLesson_headline h4{
 	font-family: initial;
-	font-weight: 600;
 	font-size: 20px;
+    color: #928080;
+    font-weight: 400;
 }
 .list_of_courses_headline,.list_of_courseLesson_headline{
     /*margin-bottom: 70px;*/
@@ -153,6 +154,12 @@ display: block !important;
 }
 .take_course_button{
     text-align: end;
+}
+
+@media only screen and (max-width : 1125px) {
+    .take_course_button,.list_of_courseLesson_headline h4   {
+        text-align: center;
+    }
 }
 
 /* Displaying all courses CSS ends here */

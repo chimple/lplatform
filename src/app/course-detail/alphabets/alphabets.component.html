@@ -9,32 +9,17 @@
     <div *ngIf="myAlphabet">
 
       <form #f="ngForm" (ngSubmit)="save(f)">
+<input type="hidden" name="key" ngModel="{{alphabet$Key}}" >
         <div class="col-xs-2">
           <label>Alphabet</label>
           <input type="text" placeholder="Alphabet" class="form-control" required  name="alphabet" ngModel>
         </div>
-        <!--<div class="col-xs-4">-->
-        <!--<label>Sound</label><br>-->
-        <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
-        <!--Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>-->
-        <!--</button>-->
-        <!--<button class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span>-->
-        <!--</button>-->
-        <!--<button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue "><span-->
-        <!--class="glyphicon glyphicon-play"></span></button>-->
-        <!--</div>-->
-        <!--<div class="col-xs-4">-->
-        <!--<label>Pronunciation</label><br>-->
-        <!--<button class="btn btn-default" style="border-radius:20px 0px 0px 20px  ">-->
-        <!--Upload-->
-        <!--<span class="glyphicon glyphicon-upload" style="color: green"></span></button>-->
-        <!--<button class="btn btn-default">-->
-        <!--Record <span class="glyphicon glyphicon-record" style="color: red"></span>-->
-        <!--</button>-->
-        <!--<button class="btn btn-default" style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">-->
-        <!--<span class="glyphicon glyphicon-play"></span>-->
-        <!--</button>-->
-        <!--</div>-->
+        <div class="col-xs-2">
+          <label></label><br>
+          <button class="btn btn-default" type="submit" style="color:#47A414" >
+            <span class="glyphicon glyphicon-floppy-save"></span></button>
+        </div>
+
 
       </form>
     </div>
@@ -60,20 +45,23 @@
 
           <td>
             <!--<span hidden>{{i+1}}</span>-->
-            <span *ngIf="editAlpha!== i "
-                  (click)="editAlph(i)"
-                  class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
+            <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
+                                                       style="border-radius: 60px">
+            <span class="glyphicon glyphicon-trash"
+                  style="color: red; size: 1px; cursor: pointer"> </span>
+
+          </button>
+
+            <button *ngIf="editAlpha!== i "(click)="editAlph(i)" class="btn btn-default" type="button"  style="border-radius: 60px">
+            <span class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
+            </button>
+
             <button class="btn btn-default" type="submit" *ngIf="editAlpha=== i" style="border-radius: 60px">
             <span class="glyphicon glyphicon-save"
                   style="color: green; size: 1px; cursor: pointer"> </span>
 
             </button>
-            <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
-                     style="border-radius: 60px">
-            <span class="glyphicon glyphicon-trash"
-                  style="color: red; size: 1px; cursor: pointer"> </span>
 
-            </button>
           </td>
           <input *ngIf="editAlpha=== i" type="hidden" name="key" ngModel="{{ alphab.alphabet }}"/>
           <input *ngIf="editAlpha=== i" type="hidden" name="sound" [(ngModel)]="alphab.sound" />

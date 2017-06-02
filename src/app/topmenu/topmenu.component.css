@@ -9,13 +9,12 @@
 .login a:hover,.register a:hover,.logout a:hover{
 	background-color: rgba(78, 78, 84, 0.17);
 }
-.user_image img{
+.user_image img,.user_course_image img{
 	width: 40px;
 	height: 40px;
 }
 .user_course_image{
     color: #f7430b;
-    margin: 10px 4px;
 }
 
 .header-dropdown-arrow {
@@ -85,4 +84,22 @@
 }
 .logout{
 	color: black;
+}
+
+.header .navbar-nav {
+    /* margin: 7.5px -15px; */
+    float: right !important;
+    margin:0px;
+    margin-right: 25px !important;
+}
+
+.header .col-xs-7{
+    padding: 0px !important;
+}
+
+@media only screen and (max-width : 505px) {
+    .header_logo {
+        margin-top: 11px;
+        padding: 0px;
+    }
 }

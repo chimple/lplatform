@@ -3,17 +3,20 @@ import {Observable, Subject, BehaviorSubject} from 'rxjs/Rx';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AuthInfo} from './AuthInfo';
 import * as firebase from 'firebase/app';
+import {UserInformation} from './user-info';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {UserCourse} from './user-course';
 
 
 @Injectable()
 export class AuthService {
 
-  static UNKNOWN_USER = new AuthInfo(null, null);
-
+  static UNKNOWN_USER = new AuthInfo(null);
+  sdkDb: any;
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
 
-  constructor(private fbAuth: AngularFireAuth) {
-
+  constructor(private fbAuth: AngularFireAuth, private db: AngularFireDatabase) {
+    this.sdkDb = firebase.database().ref();
   }
 
   loginUsingProvider(provider: string): Observable<any> {
@@ -21,34 +24,53 @@ export class AuthService {
   }
 
   signUp(email: string, password: string): Observable<any> {
-    return this.fromFirebaseAuthPromise(this.fbAuth.auth.createUserWithEmailAndPassword(email, password));
+    // return this.fromFirebaseAuthPromise(this.fbAuth.auth.createUserWithEmailAndPassword(email, password));
+    return null;
   }
 
 
   login(email: string, password: string): Observable<any> {
-    return this.fromFirebaseAuthPromise(this.fbAuth.auth.signInWithEmailAndPassword(email, password));
+    // return this.fromFirebaseAuthPromise(this.fbAuth.auth.signInWithEmailAndPassword(email, password));
+    return null;
   }
 
-  fromFirebaseAuthPromise(promise): Observable<any> {
-    const that = this;
-    const subject = new Subject<any>();
-    promise.then(
-      res => {
-        const authInfo = new AuthInfo(res.uid, res);
-        console.log(res);
-        console.log(`res.uid ${res.uid}`);
-        that.authInfo$.next(authInfo);
-        subject.next(res);
-        subject.complete();
-      },
-      reject => {
-        this.authInfo$.error(reject);
-        subject.next(reject);
-        subject.complete();
-      }
-    );
+  updateUserInformationAfterLogin(uid: string, email: string, displayName: string, photoURL: string) {
+    const userInformationToSave = Object.assign({}, {email: email},
+      {displayName: displayName}, {photoURL: photoURL});
 
-    return subject.asObservable();
+    const courseId = localStorage.getItem('courseId');
+    if (courseId) {
+      userInformationToSave['currentCourse'] =  courseId;
+      localStorage.removeItem('courseId');
+    }
+
+    const updateUser$ = this.db.object(`users/${uid}`);
+    return Observable.fromPromise(updateUser$.update(userInformationToSave));
+  }
+
+  updateRegisterCourseInformation(user: UserInformation, courseId: string = localStorage.getItem('courseId')): void {
+    if (courseId) {
+      localStorage.removeItem('courseId');
+      const userInformationToSave = Object.assign({}, {currentCourse: courseId});
+
+      const updateUser$ = this.db.object(`users/${user.uid}`);
+      updateUser$.update(userInformationToSave)
+        .then(
+          val => {
+            user.currentCourse = courseId;
+          },
+          err => {
+          }
+        );
+    }
+  }
+
+  getUserInformation(uid: string): Observable<UserInformation> {
+    return this.db.object(`users/${uid}`)
+      .map((user) => {
+        user.uid = uid;
+        return UserInformation.fromJson(user);
+      });
   }
 
   fromFirebaseGoogleAuthPromise(promise): Observable<any> {
@@ -56,11 +78,24 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        const authInfo = new AuthInfo(res.user.uid, res.user);
-        console.log(`res.uid ${res.user.uid}`);
-        that.authInfo$.next(authInfo);
-        subject.next(res.user);
-        subject.complete();
+        that.updateUserInformationAfterLogin(res.user.uid,
+          res.user.email, res.user.displayName, res.user.photoURL).subscribe(
+          () => {
+            that.getUserInformation(res.user.uid)
+              .subscribe(
+                (userInfo) => {
+                  console.log(userInfo);
+                  const authInfo = new AuthInfo(userInfo);
+                  ;
+                  that.authInfo$.next(authInfo);
+                  subject.next(res.user);
+                  subject.complete();
+                }
+              );
+          },
+          err => alert(`error in creating new alphabet ${err}`)
+        );
+
       },
       reject => {
         this.authInfo$.error(reject);
@@ -75,5 +110,23 @@ export class AuthService {
   logout() {
     this.fbAuth.auth.signOut();
     this.authInfo$.next(AuthService.UNKNOWN_USER);
+  }
+
+  firebaseUpdate(dataToSave): Observable<any> {
+    const subject = new Subject();
+
+    this.sdkDb.update(dataToSave)
+      .then(
+        val => {
+          subject.next(val);
+          subject.complete();
+        },
+        err => {
+          subject.error(err);
+          subject.complete();
+        }
+      );
+
+    return subject.asObservable();
   }
 }

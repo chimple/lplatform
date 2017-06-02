@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-topmenu',
   host: {'(document:click)': 'handleClick($event)'},
-  templateUrl: './topmenu.component.html',
+  templateUrl: './topmenu1.component.html',
   styleUrls: ['./topmenu.component.css']
 })
 export class TopmenuComponent implements OnInit {

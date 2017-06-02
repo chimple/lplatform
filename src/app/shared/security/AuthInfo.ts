@@ -3,23 +3,15 @@ import {UserInformation} from './user-info';
 export class AuthInfo {
   private userInfo: UserInformation;
 
-  constructor(private uid: string, private user: any) {
-    console.log(`user ${user}`);
-    if (user) {
-      this.userInfo = new UserInformation(user.email,
-        user.displayName, user.photoURL, null, null, []);
-    }
+  constructor(private user: UserInformation) {
+    this.user = user;
   }
 
   isLoggedIn() {
-    return !!this.uid;
+    return this.user && this.user.uid ? true : false;
   }
 
-  getUser() {
+  getUser(): UserInformation {
     return this.user;
-  }
-
-  getUserInfo(): UserInformation {
-    return this.userInfo;
   }
 }
