@@ -54,10 +54,16 @@ export class PhoneticsComponent implements OnInit {
     if (e) {
       console.log(`drop ${e.rowIndex}`);
       this.dropIndex = e.rowIndex;
-      this.dropvalue = e.cells[2].innerText;
+      this.dropvalue = e.cells[1].innerText;
       console.log(this.dropvalue);
+      this.callReorderEvent();
       console.log('alphabet');
     }
+  }
+  callReorderEvent() {
+    console.log(`Phonetics : ${this.dropvalue}`)
+    console.log(`dragStartIndex : ${this.dragStartIndex}`);
+    console.log(`dropIndex : ${this.dropIndex}`);
   }
 
   ngOnInit() {
