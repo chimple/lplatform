@@ -41,6 +41,9 @@ export class LanguageWordComponent implements OnInit {
   /* -------------------------------------- */
 
   navigateToParent(){
+    this.lessonService.courseKey=1;
+    //this.router.navigate(['../../'], { relativeTo: this.route });
+    //reload();
   }
 
   editLessonWord(lwIndex) {
@@ -52,19 +55,8 @@ export class LanguageWordComponent implements OnInit {
     // this.lessonService.updateLessonWord(this.lessonWord$Key, this.lwEditForm.value);
     // this.wordService.updateLessonWord(this.lessonWord$Key, this.lwForm.value);
     /* ------------------------------------------ */
-    let existingWordsForCourse = [];
-    const that = this;
-    const updatedForm = this.lwForm.value;
-    this.lwEditFlag = '';
-    this.wordService.findWordsByCourse('XX01')
-      .subscribe(
-        (words) => {
-          existingWordsForCourse = words;
-          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(updatedForm.word);
-          that.lessonService.createLessonItem('XX01', that.lessonWord$Key, updatedForm, 'word', checkWordExists);
-        });
+
       /* ------------------------------------------ */
-    
   }
 
   addWord() {

@@ -17,7 +17,7 @@ import {DragulaService} from 'ng2-dragula';
 
 export class LessonsComponent implements OnInit {
 
-  showLesson:boolean = true;
+  showLesson=1;
   tst: any = 'Sharath';
   teachSelect: any;
   insertFlag = false;
@@ -50,7 +50,11 @@ export class LessonsComponent implements OnInit {
     this.course$Key = this.route.snapshot.params['lessonId'];  // XX01
     this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
-    this.showLesson = this.lessonService.courseKey;
+    console.log("Before: "+this.showLesson);
+/*    if(this.lessonService.courseKey !== undefined || this.lessonService.courseKey !== 'undefined' ){
+      this.showLesson = this.lessonService.courseKey;
+      console.log("After: "+this.showLesson);
+    }*/
     //this.lessonService.setCourseKey(this.course$Key);
   }
 
@@ -89,8 +93,8 @@ export class LessonsComponent implements OnInit {
   }*/
 
   callChildRoutes(){
-    this.showLesson = false;
-    //this.lessonService.courseKey = "Show";
+    this.showLesson = 2;
+    this.lessonService.courseKey = this.showLesson;
   }
 
   addLesson(): void {

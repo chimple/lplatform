@@ -27,6 +27,11 @@ export class LanguageAlphabetComponent implements OnInit {
   constructor(private lessonService: LessonService, private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
 
+  navigateToParent(){
+    this.lessonService.courseKey=1;
+    //this.router.navigate(['../../'], { relativeTo: this.route });
+    //reload();
+  }
 
   ngOnInit() {
     this.lessonAlpha$Key = this.route.snapshot.params['lessonAlphaId'];
