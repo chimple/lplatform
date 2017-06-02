@@ -5,18 +5,17 @@ export class UserInformation {
     return array.map(UserCourse.fromJson);
   }
 
-  static fromJson({email, displayName, photoURL, currentCourse, courseAfterLogin, userCourses}): UserInformation {
-    return new UserInformation(email, displayName, photoURL, currentCourse, courseAfterLogin,
-      UserCourse.fromJsonList(userCourses));
+  static fromJson({uid, email, displayName, photoURL, currentCourse, courses}): UserInformation {
+    return new UserInformation(uid, email, displayName, photoURL, currentCourse, UserCourse.fromJsonList(courses));
   }
 
 
-  constructor(public email: string,
+  constructor(public uid: string,
+              public email: string,
               public displayName: string,
               public photoURL: string,
-              public currentCourse,
-              public courseAfterLogin: string,
-              public UserCourses: UserCourse[]) {
+              public currentCourse: string = '',
+              public courses: UserCourse[] = []) {
 
   }
 }

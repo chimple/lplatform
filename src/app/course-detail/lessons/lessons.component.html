@@ -1,29 +1,33 @@
 
-
-
-<div class="row">
+<div class="row" *ngIf="showLesson">
+<!-- ************************ Lesson Table Block ********************** -->
   <div class="col-xs-12">
 <form (ngSubmit)="updateLesson()" #lessonEdit="ngForm">
 <!-- <form [formGroup]="editform" (ngSubmit)="updateLesson(editform.value)"> -->
 <table class="table table-striped table-responsive">
   <thead>
   <tr>
-    <th><span class="glyphicon glyphicon-refresh"></span></th>
+    <th class="textCenter">Delete</th>
+    <th class="textCenter">Edit</th>
     <th>Name</th>
     <th>Teach</th>
     <th>Focus</th>
-    <th>Select</th>
+    <th class="textCenter">Select</th>
   </tr>
   </thead>
 
   <tbody [dragula]='"alphabet-drag"'>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
-    <td>
-      <span *ngIf="editFlag!==lIndex" (click)="editLesson(lIndex)" class="glyphicon glyphicon-pencil"></span>
-      <button type="submit" *ngIf="editFlag===lIndex" class="glyphicon glyphicon-save"></button>
+    <td align="center"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+    <td align="center">
+      <div *ngIf="editFlag!==lIndex">
+      <button type="button" class="btn btn-primary" (click)="editLesson(lIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
+      </div>
+      <div *ngIf="editFlag===lIndex">
+      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+      </div>
       <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
-      {{lesson.lesson}}
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
@@ -48,7 +52,7 @@
       </div>
     </td>
 
-    <td>
+    <td align="center">
       <!-- <div *ngIf="lesson.teach==='words'">
       <a [routerLink]="['language-word',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
       </div>
@@ -59,12 +63,21 @@
      <!-- <a *ngIf="lesson.teach==='words'; then [routerLink]='["language-word",lesson.lesson]'; else [routerLink]='["language-alphabet",lesson.lesson]'" ><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a> -->
 
     <div *ngIf="lesson.teach==='words'">
-     <a [routerLink]="['language-word',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     <a [routerLink]="['language-word',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
      </div>
 
      <div *ngIf="lesson.teach!=='words'">
-     <a [routerLink]="['language-alphabet',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     <a [routerLink]="['language-alphabet',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
      </div>
+
+     <!-- <div *ngIf="lesson.teach==='words'">
+     <a (click)="callChildRoutes(language-word, lesson.lesson)"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     </div>    
+
+     <div *ngIf="lesson.teach!=='words'">
+     <a (click)="callChildRoutes(language-alphabet, lesson.lesson)"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+     </div> -->
+
     </td>
 
   </tr>
@@ -73,11 +86,8 @@
 </table>
   </form>
 </div>
-</div>
-
-
-<div class="row" *ngIf="insertFlag">
-  <div class="col-xs-12">
+<!-- ************************ Add Lesson Block ********************** -->
+  <div class="col-xs-12" *ngIf="insertFlag">
     <form id="lessonForm" (ngSubmit)="submitLesson()" #lf="ngForm">
         <div class="row">
           <div class="col-xs-4">
@@ -105,13 +115,14 @@
           </div>
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
     </form>
   </div>
+  <div class="col-xs-12" *ngIf="!insertFlag"><button type="button" class="btn btn-default" (click)="addLesson()">Add Lesson <span class="glyphicon glyphicon-plus greenColor"></span></button><br /></div>
 </div>
 
-<button type="button" *ngIf="!insertFlag" class="btn btn-primary" (click)="addLesson()">Add</button>
-<br />
+
+
 
 <router-outlet></router-outlet>
 

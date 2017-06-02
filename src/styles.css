@@ -9,7 +9,38 @@ textarea.ng-invalid.ng-touched{
   /*background-size: 100% 150%;*/
   /*background-repeat: no-repeat;*/
 /*}*/
+.greenColor{
+    color:green;
+}
+.textCenter{
+    text-align:center;
+}
+.fontSize24{
+    font-size:24px;
+}
+.fontSize18{
+    font-size:18px;
+}
+p.customHeading1{
+        margin-bottom: 0;
+    line-height: 34px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #8c8989;
+}
+.displayBlock{
+    display: block;
+}
+.displayBlockImp{
+display: block !important;
+}
 
+.customPaddingForLessonWord{
+    padding-left: 10% !important;
+}
+.width8percent{
+    width: 8%;
+}
 .gu-mirror{position:fixed!important;margin:0!important;z-index:9999!important;
   opacity:.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80)}
 .gu-hide{display:none!important}.gu-unselectable{-webkit-user-select:none!important;

@@ -5,5 +5,5 @@
  <button type="button" (click)="toggleRecording()" class="btn btn-default rec">Recording..<span class="glyphicon glyphicon-record" style="color: red"></span></button>
  </span>
  <span *ngIf="isTimer">
- <button type="button" (click)="toggleRecording()" class="btn btn-default">Starts In : <span class="glyphicon glyphicon-time" style="color: red">{{count}}</span></button>
+ <button type="button" (click)="toggleRecording()" class="btn btn-default"><b>Starts In : <span class="numberCircle">{{count}}</span></b></button>
  </span>

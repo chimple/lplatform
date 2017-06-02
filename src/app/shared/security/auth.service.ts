@@ -5,12 +5,13 @@ import {AuthInfo} from './AuthInfo';
 import * as firebase from 'firebase/app';
 import {UserInformation} from './user-info';
 import {AngularFireDatabase} from 'angularfire2/database';
+import {UserCourse} from './user-course';
 
 
 @Injectable()
 export class AuthService {
 
-  static UNKNOWN_USER = new AuthInfo(null, null);
+  static UNKNOWN_USER = new AuthInfo(null);
   sdkDb: any;
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
 
@@ -23,57 +24,51 @@ export class AuthService {
   }
 
   signUp(email: string, password: string): Observable<any> {
-    return this.fromFirebaseAuthPromise(this.fbAuth.auth.createUserWithEmailAndPassword(email, password));
+    // return this.fromFirebaseAuthPromise(this.fbAuth.auth.createUserWithEmailAndPassword(email, password));
+    return null;
   }
 
 
   login(email: string, password: string): Observable<any> {
-    return this.fromFirebaseAuthPromise(this.fbAuth.auth.signInWithEmailAndPassword(email, password));
-  }
-
-  fromFirebaseAuthPromise(promise): Observable<any> {
-    const that = this;
-    const subject = new Subject<any>();
-    promise.then(
-      res => {
-        const authInfo = new AuthInfo(res.uid, res);
-        console.log(res);
-        console.log(`res.uid ${res.uid}`);
-        that.authInfo$.next(authInfo);
-        subject.next(res);
-        subject.complete();
-      },
-      reject => {
-        this.authInfo$.error(reject);
-        subject.next(reject);
-        subject.complete();
-      }
-    );
-
-    return subject.asObservable();
+    // return this.fromFirebaseAuthPromise(this.fbAuth.auth.signInWithEmailAndPassword(email, password));
+    return null;
   }
 
   updateUserInformationAfterLogin(uid: string, email: string, displayName: string, photoURL: string) {
-    const userInformationToSave = Object.assign({}, {uid: uid}, {email: email},
+    const userInformationToSave = Object.assign({}, {email: email},
       {displayName: displayName}, {photoURL: photoURL});
 
-    const preLoginCourseUrl = localStorage.getItem('courseId');
-    if (preLoginCourseUrl) {
-      userInformationToSave['currentCourse'] = preLoginCourseUrl;
-    }
-    const dataToSave = {};
-    dataToSave[`users/${uid}`] = userInformationToSave;
-    return this.firebaseUpdate(dataToSave);
+    const updateUser$ = this.db.object(`users/${uid}`);
+    return Observable.fromPromise(updateUser$.update(userInformationToSave));
+  }
 
+  updateRegisterCourseInformation(user: UserInformation, courseId: string = localStorage.getItem('courseId')): void {
+    if (courseId) {
+      const courses: UserCourse[] = user.courses;
+      courses.push(new UserCourse(courseId));
+      user.courses = courses;
+      user.currentCourse = courseId;
+      localStorage.removeItem('courseId');
+      const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses});
+
+      const updateUser$ = this.db.object(`users/${user.uid}`);
+      updateUser$.update(userInformationToSave)
+        .then(
+          val => {
+            user.currentCourse = courseId;
+          },
+          err => {
+          }
+        );
+    }
   }
 
   getUserInformation(uid: string): Observable<UserInformation> {
-    console.log(uid);
-
     return this.db.object(`users/${uid}`)
-      .do(console.log)
-      .map(UserInformation.fromJson);
-
+      .map((user) => {
+        user.uid = uid;
+        return UserInformation.fromJson(user);
+      });
   }
 
   fromFirebaseGoogleAuthPromise(promise): Observable<any> {
@@ -81,22 +76,24 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        this.updateUserInformationAfterLogin(res.user.uid,
-          res.user.email, res.user.displayName, res.user.photoURL
-        ).subscribe(
+        that.updateUserInformationAfterLogin(res.user.uid,
+          res.user.email, res.user.displayName, res.user.photoURL).subscribe(
           () => {
-            const authInfo = new AuthInfo(res.user.uid, res.user);
-            const preLoginCourseUrl = localStorage.getItem('courseId');
-            if (preLoginCourseUrl) {
-              authInfo.getUserInfo().currentCourse = preLoginCourseUrl;
-              localStorage.removeItem('courseId');
-            };
-            that.authInfo$.next(authInfo);
-            subject.next(res.user);
-            subject.complete();
+            that.getUserInformation(res.user.uid)
+              .subscribe(
+                (userInfo) => {
+                  that.updateRegisterCourseInformation(userInfo);
+                  const authInfo = new AuthInfo(userInfo);
+                  ;
+                  that.authInfo$.next(authInfo);
+                  subject.next(res.user);
+                  subject.complete();
+                }
+              );
           },
           err => alert(`error in creating new alphabet ${err}`)
         );
+
       },
       reject => {
         this.authInfo$.error(reject);

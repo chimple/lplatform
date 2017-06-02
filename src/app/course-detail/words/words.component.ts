@@ -155,10 +155,4 @@ export class WordsComponent implements OnInit {
       })
     );
   }
-  onEnter(event: any){
-    console.log(this.phoneticsSelection$);
-   this.newphonetic = event.target.value; 
-   console.log(this.newphonetic);
-   //this.phoneticService.createPhonetic(this.word$Key,111);
-  }
 }
