@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import {CourseService} from "../shared/model/course.service";
 import {Observable} from "rxjs/Observable";
 import {Course} from "../shared/model/course";
+import {Lesson} from "../shared/model/lesson";
 
 @Component({
   selector: 'app-courselessons',
@@ -17,7 +18,7 @@ import {Course} from "../shared/model/course";
 export class CourselessonsComponent implements OnInit {
   language: any;
   courseId: any;
-  courseLessons = [];
+  courseLessons$: Observable<Lesson[]>;
   authInfo: AuthInfo;
   isCourseNotTaken: boolean = true;
   currentCourse$: Observable<Course>;
@@ -30,13 +31,7 @@ export class CourselessonsComponent implements OnInit {
       this.courseId = params['courseId'];
     });
     this.currentCourse$ = this.courseService.getCourseInformation(this.courseId);
-    this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
-      (data) => {
-        for ( const key in data ) {
-          this.courseLessons.push(data[key]);
-        }
-      }
-    );
+    this.courseLessons$ = this.courseLessonsService.getCourseLessons(this.courseId);
     this.authService.authInfo$
       .subscribe(
         authInfo => {

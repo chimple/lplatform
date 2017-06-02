@@ -1,37 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { AllcoursesService } from './allcourses.service';
-// import {Course} from '../shared/model/course';
-
-// @Component({
-//   selector: 'app-allcourses',
-//   templateUrl: './allcourses.component.html',
-//   styleUrls: ['./allcourses.component.css'],
-//   providers:[AllcoursesService]
-// })
-// export class AllcoursesComponent implements OnInit {
-// totalCourses:any;
-// totalCoursesArray = [];
-// //allCourses: Course[];
-// filtered: Course[];
-//   constructor(private allCourses:AllcoursesService) { }
-
-//   ngOnInit() {
-//   	this.allCourses.getCourses().subscribe(
-//   		(data)=>{
-//   			this.totalCourses = data;
-//   			for(let key in data){
-//   				this.totalCoursesArray.push(data[key]);
-//   			}
-//   		}
-//   	);	
-//   }
-//   search(search: string) {
-//     this.filtered = this.totalCourses.filter(course => course.name.toLowerCase().includes(search.toLowerCase()));
-//   }
-
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import {CourseService} from '../shared/model/course.service';
 import {Course} from '../shared/model/course';
