@@ -28,11 +28,11 @@
             </li>
           </ul>
 
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" *ngIf="authInfo?.isLoggedIn() && authInfo?.getUser() && authInfo?.getUser().currentCourse ">
             <li *ngIf="(currentCourse$ | async) as currentCourse" class="user_course_image">
-              <img class="img-circle" [src]="currentCourse.image" />
+              <img class="img-circle" [src]="currentCourse?.image" />
             </li>
-            <li class="user_course_details" *ngIf="authInfo?.getUser()">
+            <li class="user_course_details" *ngIf="authInfo?.isLoggedIn() && authInfo?.getUser()">
               <span class="header-dropdown-arrow" (click)="showUserCourses()"></span>
               <ul class="header-user-course-list"[class.is-active]="isCollapsedCourses">
                 <li *ngFor="let course of (subscribedCourses$ | async)"><span class="glyphicon glyphicon-expand"></span> &nbsp;

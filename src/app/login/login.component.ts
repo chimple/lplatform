@@ -11,6 +11,8 @@ import {AuthInfo} from "../shared/security/AuthInfo";
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  authInfo: AuthInfo;
+  currentCourse:any;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.form = this.fb.group({
@@ -20,6 +22,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.authInfo$
+      .subscribe(
+        authInfo => {
+          this.authInfo = authInfo
+          if(this.authInfo.getUser()){
+            this.currentCourse =  this.authInfo.getUser().currentCourse;
+          }
+        }
+    );
 
   }
 
@@ -27,8 +38,13 @@ export class LoginComponent implements OnInit {
   loginUsingGoogle(provider: string) {
     this.authService.loginUsingProvider(provider)
       .subscribe(
-        () => this.router.navigate(['/home']),
-        alert
+        () => {
+          if(this.currentCourse){
+            this.router.navigate(['/home/lesson/'+this.currentCourse]);
+          }else{
+            this.router.navigate(['/home']);
+          }
+        }
       );
   }
 

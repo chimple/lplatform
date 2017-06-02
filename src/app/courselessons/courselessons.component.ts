@@ -30,7 +30,6 @@ export class CourselessonsComponent implements OnInit {
       this.courseId = params['courseId'];
     });
     this.currentCourse$ = this.courseService.getCourseInformation(this.courseId);
-    localStorage.setItem('courseId', this.courseId);
     this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
       (data) => {
         for ( const key in data ) {
@@ -52,7 +51,7 @@ export class CourselessonsComponent implements OnInit {
   }
 
   takeTheCourse(courseId) {
-
+    localStorage.setItem('courseId', courseId);
   }
 
   subscribeTheCourse(courseId) {

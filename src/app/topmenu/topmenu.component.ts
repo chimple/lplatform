@@ -70,14 +70,12 @@ export class TopmenuComponent implements OnInit {
       this.currentCourse$ = this.courseService.getCourseInformation(this.authInfo.getUser().currentCourse);
     }
 
-
     const allSubscribedCourses = _.map(this.authInfo.getUser().courses, 'courseUrl');
     this.subscribedCourses$ = this.courseService.findAllCourses()
       .do(console.log)
       .map((courses) => {
         return courses.filter((course) => allSubscribedCourses.includes(course.$key));
-      })
-    ;
+      });
 
     if (this.isCollapsedCourses === false) {
       this.isCollapsedCourses = true;
