@@ -21,25 +21,33 @@ export class LanguageWordComponent implements OnInit {
   lwInsertFlag = false;
   lwEditFlag: any;
   lessonWord$Key: string;
-  course$key: string;
+  course$key: any;
   lesonWord$: Observable<LessonItem[]>;
   path: Observable<UrlSegment[]>;
-  courKey: string;
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
   parts: string;
 
-  constructor(private lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute) {
+  constructor(public lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute, public router: Router) {
   }
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
-    this.course$key = this.route.snapshot.params['lessonId'];
+    // this.course$key = this.route.snapshot.params['lessonId'];
+    this.course$key = this.lessonService.courseKey;
+    console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
   }
 
 
   /* -------------------------------------- */
+
+  navigateToParent(){
+    var objType = "XX01";
+    //this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../lessons', objType]);
+    
+  }
 
   editLessonWord(lwIndex) {
     this.lwEditFlag = lwIndex;

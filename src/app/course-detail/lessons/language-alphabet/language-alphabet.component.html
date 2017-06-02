@@ -1,43 +1,57 @@
-<hr />
-<div class="row">
-  <div class="col-xs-12">
-    Lesson Alphabet
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-1">
+            <!-- <button type="button" [routerLink]="['../', { relativeTo: this.route }]" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
+        <!-- <button type="button" href="javascript:void(0);" (click)="navigateToParent()" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
+        <button type="button" href="javascript:void(0);" [routerLink]="['../../parent']" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
+        </div>
+        <div class="col-xs-11">
+          <p class="customHeading1">Lesson Alphabet</p> 
+        </div>
+    </div>
   </div>
-</div>
+
+  <div class="panel-body">
 <div class="row">
   <div class="col-xs-12">
   <form (ngSubmit)="updateLessonAlpha()" #laEdit="ngForm">
 <table class="table table-striped">
   <thead>
   <tr>
-    <th><span class="glyphicon glyphicon-refresh"></span></th>
-    <th>Alphabet</th>
+    <th class="textCenter">Delete</th>
+    <th class="textCenter">Edit</th>
+    <th class="customPaddingForLessonWord">Alphabet</th>
     <th>Words</th>
   </tr>
   </thead>
   <tbody>
 
     <tr *ngFor="let lessonAlpha of lesonAlpha$ | async; let laIndex=index ">
-      <td>
-        <span *ngIf="laEditFlag!==laIndex" (click)="editLessonAlpha(laIndex)" class="glyphicon glyphicon-pencil"></span>
-        <button type="submit" *ngIf="laEditFlag===laIndex" class="glyphicon glyphicon-save"></button>
+      <td align="center" class="width8percent"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+      <td align="center" class="width8percent">
+        <div *ngIf="laEditFlag!==laIndex">
+          <button type="button" class="btn btn-primary" (click)="editLessonAlpha(laIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
+        </div>
+        <div *ngIf="laEditFlag===laIndex">
+          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+        </div>
         <input *ngIf="laEditFlag===laIndex" type="hidden" name="lessonAlpha" [ngModel]="lessonAlpha.lessonItem" />
-        {{lessonAlpha.lessonItem}}
       </td>
-      <td>
-        <p *ngIf="laEditFlag!==laIndex">{{lessonAlpha.item}}</p>
+      <td class="customPaddingForLessonWord">
+        <span *ngIf="laEditFlag!==laIndex">{{lessonAlpha.item}}</span>
       <input *ngIf="laEditFlag===laIndex" type="text" class="form-control" name="item" placeholder="Enter Alphabet" [ngModel]="lessonAlpha.item" />
       </td>
 
       <td>
-      	<div *ngIf="laEditFlag!==laIndex">
-      		<span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
-      	</div>
-      	<div *ngIf="laEditFlag===laIndex">
-      	<select name="word" class="form-control" ngModel>
-      		<option *ngFor="let words of lessonAlpha.words">{{words}}</option>
-      	</select>
-      	</div>
+        <div *ngIf="laEditFlag!==laIndex">
+          <span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
+        </div>
+        <div *ngIf="laEditFlag===laIndex">
+        <select name="word" class="form-control" ngModel>
+          <option *ngFor="let words of lessonAlpha.words">{{words}}</option>
+        </select>
+        </div>
       </td>
     </tr>
 
@@ -46,6 +60,12 @@
 </form>
 </div>
 </div>
+  </div>
+</div>
+
+
+
+
 
 
 <div class="row" *ngIf="laInsertFlag">
@@ -56,7 +76,7 @@
             <label>Enter Alphabet:</label>
             <input class="form-control" type="text" placeholder="Alphabet" ngModel name="item" required #lessonItem>
           </div>
-          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-primary">Save</button></div>
+          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-success displayBlockImp">Save</button></div>
         </div>
         <input type="hidden" name="lessonAlpha" [ngModel]="lessonItem.lessonItem" />
     </form>
