@@ -54,6 +54,8 @@ export class TopmenuComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+    this.isCollapsedCourses = false;
+    this.isCollapsedContent = false;
   }
 
   showUserInfo() {
@@ -83,5 +85,9 @@ export class TopmenuComponent implements OnInit {
     } else if (this.isCollapsedCourses === true) {
       this.isCollapsedCourses = false;
     }
+  }
+  closePopUp(){
+    this.isCollapsedCourses = false;
+    this.isCollapsedContent = false;
   }
 }
