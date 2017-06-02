@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {LessonService} from '../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
@@ -13,16 +13,16 @@ import {DragulaService} from 'ng2-dragula';
   templateUrl: './lessons.component.html',
   styleUrls: ['./lessons.component.css'],
   providers: [LessonService]
-})
+  })
 
-export class LessonsComponent implements OnInit {
+export class LessonsComponent implements OnInit, OnDestroy {
 
+  showLesson:boolean = true;
   tst: any = 'Sharath';
   teachSelect: any;
   insertFlag = false;
   editFlag: any;
   lessons$: Observable<Lesson[]>;
-  course$Key: string;
   phoneticsSelection$: Observable<string[]>;
    dragStartIndex = -1;
   dropIndex = -1;
@@ -32,7 +32,7 @@ export class LessonsComponent implements OnInit {
   @ViewChild('lessonEdit') lessonsEditForm: NgForm;
   @ViewChild('tf') testForms: NgForm;
 
-  constructor(private phoneticService: PhoneticService, private lessonService: LessonService, private route: ActivatedRoute, private dragulaService: DragulaService) {
+  constructor(private phoneticService: PhoneticService, public lessonService: LessonService, private route: ActivatedRoute, public router: Router, private dragulaService: DragulaService) {
   dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
@@ -44,13 +44,18 @@ export class LessonsComponent implements OnInit {
       console.log(this.course$Key);
     });
   }
-
+ course$Key: any;
+ 
   ngOnInit() {
     this.course$Key = this.route.snapshot.params['lessonId'];  // XX01
     this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
 
     //this.lessonService.setCourseKey(this.course$Key);
+  }
+
+  ngOnDestroy(){
+    this.lessonService.courseKey = this.course$Key;
   }
 
     onDrag(args) {
@@ -76,7 +81,21 @@ export class LessonsComponent implements OnInit {
     // do something
   }
 
+/*  callChildRoutes(languageWordAlpha, lessonWordAlphaKey){
+    this.showLesson = false;
+    if(languageWordAlpha === "language-word"){
+      this.router.navigate([''+languageWordAlpha+'', lessonWordAlphaKey]);
+      this.router.navigate(['../../viewcategory'], { relativeTo: this.route });
+    }else if(languageWordAlpha === "language-alphabet"){
+      this.router.navigate([''+languageWordAlpha+'', lessonWordAlphaKey]);
+      this.router.navigate(['../../viewcategory'], { relativeTo: this.route });
+    }
+  }*/
 
+  callChildRoutes(){
+    this.lessonService.courseKey = this.course$Key;
+    this.showLesson = false;
+  }
 
   addLesson(): void {
     this.insertFlag = true;

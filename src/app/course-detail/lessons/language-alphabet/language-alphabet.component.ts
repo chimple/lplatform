@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
@@ -27,13 +27,12 @@ export class LanguageAlphabetComponent implements OnInit {
   constructor(private lessonService: LessonService, private route: ActivatedRoute, private alphabetService: AlphabetService) {
   }
 
+
   ngOnInit() {
     this.lessonAlpha$Key = this.route.snapshot.params['lessonAlphaId'];
-    this.course$key = this.route.snapshot.params['lessonId'];
+    //this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonAlpha$ = this.lessonService.getLessonItems(this.lessonAlpha$Key);
   }
-
-
 
 
   /* -------------------------------------- */
