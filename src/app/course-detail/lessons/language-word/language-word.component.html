@@ -5,7 +5,8 @@
       <div class="col-xs-1">
             <!-- <button type="button" [routerLink]="['../', { relativeTo: this.route }]" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
         <!-- <button type="button" href="javascript:void(0);" (click)="navigateToParent()" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
-        <button type="button" href="javascript:void(0);" [routerLink]="['../../parent']" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
+        <!-- <button type="button" href="javascript:void(0);" [routerLink]="['../../parent']" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button> -->
+        <button type="button" [routerLink]="['../../']" (click)="navigateToParent()" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
         </div>
         <div class="col-xs-11">
           <p class="customHeading1">Lesson Words</p> 
@@ -34,13 +35,13 @@
           <button type="button" class="btn btn-primary" (click)="editLessonWord(lwIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
         </div>
         <div *ngIf="lwEditFlag===lwIndex">
-          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+          <button type="submit" [disabled]="!lwEdit.valid" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
         </div>
         <input *ngIf="lwEditFlag===lwIndex" type="hidden" name="lessonWord" [ngModel]="lessonWord.lessonItem" />
       </td>
       <td class="customPaddingForLessonWord">
         <p *ngIf="lwEditFlag!==lwIndex">{{lessonWord.item}}</p>
-      <input *ngIf="lwEditFlag===lwIndex" type="text" class="form-control" name="item" placeholder="Enter Word" [ngModel]="lessonWord.item" />
+      <input *ngIf="lwEditFlag===lwIndex" type="text" required class="form-control" name="item" placeholder="Enter Word" [ngModel]="lessonWord.item" />
       </td>
     </tr>
 
@@ -63,7 +64,7 @@
             <label>Enter Word:</label>
             <input class="form-control" type="text" placeholder="Word" ngModel name="word" required #lessonItem>
           </div>
-          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" class="btn btn-success displayBlockImp">Save</button></div>
+          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" [disabled]="!lw.valid" class="btn btn-success displayBlockImp">Save</button></div>
         </div>
     </form>
   </div>
