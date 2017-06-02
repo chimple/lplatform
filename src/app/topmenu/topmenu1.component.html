@@ -8,7 +8,7 @@
       </div>
       <div class="col-xs-7">
         <div class="navbar-collapse">
-          <ul class="nav navbar-nav navbar-right user_navbar"> 
+          <ul class="nav navbar-nav navbar-right user_navbar">
             <li class="login">
               <a routerLink="login" routerLinkActive="active" *ngIf="!authInfo?.isLoggedIn()">LOGIN</a>
             </li>
@@ -18,25 +18,25 @@
             <li class="user_details" *ngIf="authInfo?.getUser()">
               <span class="header-dropdown-arrow" (click)="showUserInfo()"></span>
               <ul class="header-user-profile"[class.is-active]="isCollapsedContent">
-                <li><span class="glyphicon glyphicon-user"></span> &nbsp; Hi, 
+                <li><span class="glyphicon glyphicon-user"></span> &nbsp; Hi,
                     <b>{{authInfo?.getUser()?.displayName}}</b>
                 </li>
                 <li><span class="glyphicon glyphicon-edit"></span> &nbsp; Create a course</li>
-                <li><span class="glyphicon glyphicon-log-out"></span> &nbsp; 
+                <li><span class="glyphicon glyphicon-log-out"></span> &nbsp;
                     <a (click)="logout()" class="logout">Logout</a></li>
               </ul>
             </li>
           </ul>
-    
+
           <ul class="nav navbar-nav navbar-right">
-            <li class="user_course_image" *ngIf="authInfo?.getUser()">
-              <img class="img-circle" [src]="authInfo?.getUser()?.photoURL" />
+            <li *ngIf="(currentCourse$ | async) as currentCourse" class="user_course_image">
+              <img class="img-circle" [src]="currentCourse.image" />
             </li>
             <li class="user_course_details" *ngIf="authInfo?.getUser()">
               <span class="header-dropdown-arrow" (click)="showUserCourses()"></span>
               <ul class="header-user-course-list"[class.is-active]="isCollapsedCourses">
-                <li><span class="glyphicon glyphicon-expand"></span> &nbsp; 
-                    <a routerLink="/home/lesson/XX02"><b>English</b></a>
+                <li *ngFor="let course of (subscribedCourses$ | async)"><span class="glyphicon glyphicon-expand"></span> &nbsp;
+                    <a routerLink="/home/lesson/{{course.$key}}"><b>{{course.lang}}</b></a>
                 </li>
                 <li><span class="glyphicon glyphicon-edit"></span> &nbsp; <a routerLink="home">Add course</a></li>
               </ul>

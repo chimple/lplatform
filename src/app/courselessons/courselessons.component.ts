@@ -3,6 +3,7 @@ import {Route, ActivatedRoute} from '@angular/router';
 import {CourselessonsService} from './courselessons.service';
 import {AuthService} from '../shared/security/auth.service';
 import {AuthInfo} from '../shared/security/AuthInfo';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-courselessons',
@@ -35,17 +36,21 @@ export class CourselessonsComponent implements OnInit {
     this.authService.authInfo$
       .subscribe(
         authInfo => {
-          this.authInfo = authInfo
+          this.authInfo = authInfo;
+          if (this.authInfo && this.authInfo.getUser() && this.authInfo.getUser().courses) {
+
+            const allSubscribedCourses = _.map(this.authInfo.getUser().courses, 'courseUrl');
+            this.isCourseNotTaken = !allSubscribedCourses.includes(this.courseId);
+          }
         }
       );
   }
 
   takeTheCourse(courseId) {
-    console.log(courseId);
+
   }
 
   subscribeTheCourse(courseId) {
-    console.log(courseId);
     this.isCourseNotTaken = false;
     this.authService.updateRegisterCourseInformation(this.authInfo.getUser(), courseId);
   }
