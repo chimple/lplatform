@@ -21,10 +21,7 @@ export class LessonService {
   constructor(private db: AngularFireDatabase, private courseService: CourseService, private wordService: WordService, private alphabetService: AlphabetService) {
     this.sdkDb = firebase.database().ref();
   }
-  courseKey:any;
-
-    //getCourseKey(){return this.courseKey}
-    //setCourseKey(curseKey){ this.courseKey = curseKey;}
+  courseKey:boolean = true;
 
 
   getLessonItems(lessonId: string): Observable<LessonItem[]> {

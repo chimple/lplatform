@@ -25,18 +25,18 @@
       <button type="button" class="btn btn-primary" (click)="editLesson(lIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
       </div>
       <div *ngIf="editFlag===lIndex">
-      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+      <button type="submit" [disabled]="!lessonEdit.valid" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
       </div>
       <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
     </td>
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input *ngIf="editFlag===lIndex" type="text" class="form-control" name="name" placeholder="Enter Lesson" [ngModel]="lesson.name" />
+      <input *ngIf="editFlag===lIndex" type="text" class="form-control" required name="name" placeholder="Enter Lesson" [ngModel]="lesson.name" />
     </td>
 
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" name="teach" class="form-control" [ngModel]="lesson.teach" />
+      <input type="text" *ngIf="editFlag===lIndex" required name="teach" class="form-control" [ngModel]="lesson.teach" />
     </td>
 
     <td>
@@ -45,7 +45,7 @@
           <span *ngFor="let category of (phoneticsSelection$ | async)">{{category}}, </span>
         </div>
         <div *ngIf="editFlag===lIndex">
-          <select name="phonetic" class="form-control" ngModel>
+          <select name="phonetic" class="form-control" ngModel required>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
         </div>
@@ -115,7 +115,7 @@
           </div>
         </div>
         <br />
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success" [disabled]="!lf.valid">Save</button>
     </form>
   </div>
   <div class="col-xs-12" *ngIf="!insertFlag"><button type="button" class="btn btn-default" (click)="addLesson()">Add Lesson <span class="glyphicon glyphicon-plus greenColor"></span></button><br /></div>

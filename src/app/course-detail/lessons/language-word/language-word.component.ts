@@ -33,8 +33,6 @@ export class LanguageWordComponent implements OnInit {
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
-    // this.course$key = this.route.snapshot.params['lessonId'];
-    this.course$key = this.lessonService.courseKey;
     console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
   }
@@ -43,10 +41,6 @@ export class LanguageWordComponent implements OnInit {
   /* -------------------------------------- */
 
   navigateToParent(){
-    var objType = "XX01";
-    //this.router.navigate(['../'], { relativeTo: this.route });
-    this.router.navigate(['../../lessons', objType]);
-    
   }
 
   editLessonWord(lwIndex) {
@@ -57,7 +51,20 @@ export class LanguageWordComponent implements OnInit {
     console.log(`Update Lesson Word: ${this.lwEditForm.value}`);
     // this.lessonService.updateLessonWord(this.lessonWord$Key, this.lwEditForm.value);
     // this.wordService.updateLessonWord(this.lessonWord$Key, this.lwForm.value);
+    /* ------------------------------------------ */
+    let existingWordsForCourse = [];
+    const that = this;
+    const updatedForm = this.lwForm.value;
     this.lwEditFlag = '';
+    this.wordService.findWordsByCourse('XX01')
+      .subscribe(
+        (words) => {
+          existingWordsForCourse = words;
+          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(updatedForm.word);
+          that.lessonService.createLessonItem('XX01', that.lessonWord$Key, updatedForm, 'word', checkWordExists);
+        });
+      /* ------------------------------------------ */
+    
   }
 
   addWord() {
