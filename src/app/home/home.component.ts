@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../shared/model/course.service';
 import {Course} from '../shared/model/course';
 import {Observable} from 'rxjs/Observable';
@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
   filtered: Course[];
   authInfo: AuthInfo;
 
-  constructor(private courseService: CourseService,private authService:AuthService) { }
+  constructor(private courseService: CourseService, private authService: AuthService) {
+  }
 
   ngOnInit() {
     const receivedCourses = this.courseService.findAllCourses();
@@ -27,13 +28,13 @@ export class HomeComponent implements OnInit {
         courses => this.allCourses = this.filtered = courses
       );
 
-   this.authService.authInfo$
-    .subscribe(
-      authInfo => {
-        this.authInfo = authInfo
-        console.log(this.authInfo.getUser())
-      }
-    );
+    this.authService.authInfo$
+      .subscribe(
+        authInfo => {
+          this.authInfo = authInfo
+          console.log(this.authInfo.getUser());
+        }
+      );
   }
 
   search(search: string) {

@@ -16,6 +16,14 @@ export class CourseService {
       .map(Course.fromJsonList);
   }
 
+  getCourseInformation(courseUrl: string): Observable<Course> {
+    console.log(courseUrl);
+
+    return this.db.object(`courses/${courseUrl}`)
+      .do(console.log)
+      .map(Course.fromJson);
+  }
+
 
   getCourseDetail(courseUrl: string): Observable<CourseDetail> {
     console.log(courseUrl);

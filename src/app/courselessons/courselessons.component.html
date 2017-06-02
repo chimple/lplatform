@@ -1,6 +1,6 @@
 <div class="row list_of_courseLesson_headline">
 	<div class="col-sm-6 col-xs-12">
- 		<h4><span style="font-size:16px;">Course Name:</span> English</h4>
+ 		<h4 *ngIf="(currentCourse$ | async) as currentCourse"><span style="font-size:16px;">Course Name:</span>{{currentCourse.name}}</h4>
  	</div>
  	<div class="col-sm-6 col-xs-12 take_course_button" *ngIf="!authInfo?.isLoggedIn()">
  		<button class="btn btn-danger" (click)="takeTheCourse(courseId)" routerLink="/login">Login To Take The Course</button>
@@ -21,4 +21,4 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>

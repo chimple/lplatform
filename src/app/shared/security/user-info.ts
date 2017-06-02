@@ -5,9 +5,8 @@ export class UserInformation {
     return array.map(UserCourse.fromJson);
   }
 
-  static fromJson({uid, email, displayName, photoURL, currentCourse, courseAfterLogin, courses}): UserInformation {
-    return new UserInformation(uid, email, displayName, photoURL, currentCourse, courseAfterLogin,
-      UserCourse.fromJsonList(courses));
+  static fromJson({uid, email, displayName, photoURL, currentCourse, courses}): UserInformation {
+    return new UserInformation(uid, email, displayName, photoURL, currentCourse, UserCourse.fromJsonList(courses));
   }
 
 
@@ -16,7 +15,6 @@ export class UserInformation {
               public displayName: string,
               public photoURL: string,
               public currentCourse: string = '',
-              public courseAfterLogin: string = '',
               public courses: UserCourse[] = []) {
 
   }

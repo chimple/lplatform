@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../shared/security/auth.service';
 import {Router} from '@angular/router';
+import {AuthInfo} from "../shared/security/AuthInfo";
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 

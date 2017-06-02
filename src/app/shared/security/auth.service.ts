@@ -38,20 +38,18 @@ export class AuthService {
     const userInformationToSave = Object.assign({}, {email: email},
       {displayName: displayName}, {photoURL: photoURL});
 
-    const courseId = localStorage.getItem('courseId');
-    if (courseId) {
-      userInformationToSave['currentCourse'] =  courseId;
-      localStorage.removeItem('courseId');
-    }
-
     const updateUser$ = this.db.object(`users/${uid}`);
     return Observable.fromPromise(updateUser$.update(userInformationToSave));
   }
 
   updateRegisterCourseInformation(user: UserInformation, courseId: string = localStorage.getItem('courseId')): void {
     if (courseId) {
+      const courses: UserCourse[] = user.courses;
+      courses.push(new UserCourse(courseId));
+      user.courses = courses;
+      user.currentCourse = courseId;
       localStorage.removeItem('courseId');
-      const userInformationToSave = Object.assign({}, {currentCourse: courseId});
+      const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses});
 
       const updateUser$ = this.db.object(`users/${user.uid}`);
       updateUser$.update(userInformationToSave)
@@ -84,7 +82,7 @@ export class AuthService {
             that.getUserInformation(res.user.uid)
               .subscribe(
                 (userInfo) => {
-                  console.log(userInfo);
+                  that.updateRegisterCourseInformation(userInfo);
                   const authInfo = new AuthInfo(userInfo);
                   ;
                   that.authInfo$.next(authInfo);
