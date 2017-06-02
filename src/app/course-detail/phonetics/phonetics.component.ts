@@ -4,7 +4,9 @@ import {Observable} from 'rxjs/Observable';
 import {Phonetic} from '../../shared/model/phonetic';
 import {PhoneticService} from '../../shared/model/phonetic.service';
 import {NgForm} from '@angular/forms';
+import {DragulaService} from 'ng2-dragula';
 declare var swal: any;
+
 
 @Component({
   selector: 'app-phonetics',
@@ -17,9 +19,51 @@ export class PhoneticsComponent implements OnInit {
   editPhone: any;
   phonetics$: Observable<Phonetic[]>;
 
+  dragStartIndex = -1;
+  dropIndex = -1;
+  dropvalue= '';
+  dragElement;
+
   @ViewChild('editPhonet') phoneticsEditForm: NgForm;
 
-  constructor(private route: ActivatedRoute, private phoneticService: PhoneticService) {
+  constructor(private route: ActivatedRoute, private phoneticService: PhoneticService, private dragulaService: DragulaService) {
+    dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+
+    dragulaService.drop.subscribe((value) => {
+
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.phonetics$key);
+    });
+  }
+
+  onDrag(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+  }
+
+
+  onDrop(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+      this.dropvalue = e.cells[1].innerText;
+      console.log(this.dropvalue);
+      this.callReorderEvent();
+      console.log('alphabet');
+    }
+  }
+  callReorderEvent() {
+    console.log(`Phonetics : ${this.dropvalue}`)
+    console.log(`dragStartIndex : ${this.dragStartIndex}`);
+    console.log(`dropIndex : ${this.dropIndex}`);
   }
 
   ngOnInit() {
