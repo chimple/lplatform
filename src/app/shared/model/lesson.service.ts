@@ -23,9 +23,6 @@ export class LessonService {
   }
   courseKey:any;
 
-    //getCourseKey(){return this.courseKey}
-    //setCourseKey(curseKey){ this.courseKey = curseKey;}
-
 
   getLessonItems(lessonId: string): Observable<LessonItem[]> {
     console.log(lessonId);

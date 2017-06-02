@@ -33,8 +33,6 @@ export class LanguageWordComponent implements OnInit {
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
-    // this.course$key = this.route.snapshot.params['lessonId'];
-    this.course$key = this.lessonService.courseKey;
     console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
   }
@@ -43,10 +41,9 @@ export class LanguageWordComponent implements OnInit {
   /* -------------------------------------- */
 
   navigateToParent(){
-    var objType = "XX01";
-    //this.router.navigate(['../'], { relativeTo: this.route });
-    this.router.navigate(['../../lessons', objType]);
-    
+    this.lessonService.courseKey=1;
+    //this.router.navigate(['../../'], { relativeTo: this.route });
+    //reload();
   }
 
   editLessonWord(lwIndex) {
@@ -57,7 +54,9 @@ export class LanguageWordComponent implements OnInit {
     console.log(`Update Lesson Word: ${this.lwEditForm.value}`);
     // this.lessonService.updateLessonWord(this.lessonWord$Key, this.lwEditForm.value);
     // this.wordService.updateLessonWord(this.lessonWord$Key, this.lwForm.value);
-    this.lwEditFlag = '';
+    /* ------------------------------------------ */
+
+      /* ------------------------------------------ */
   }
 
   addWord() {

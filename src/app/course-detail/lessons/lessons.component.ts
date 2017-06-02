@@ -15,9 +15,9 @@ import {DragulaService} from 'ng2-dragula';
   providers: [LessonService]
   })
 
-export class LessonsComponent implements OnInit, OnDestroy {
+export class LessonsComponent implements OnInit {
 
-  showLesson:boolean = true;
+  showLesson=1;
   tst: any = 'Sharath';
   teachSelect: any;
   insertFlag = false;
@@ -50,12 +50,12 @@ export class LessonsComponent implements OnInit, OnDestroy {
     this.course$Key = this.route.snapshot.params['lessonId'];  // XX01
     this.lessons$ = this.lessonService.findAllLessonByCourse(this.course$Key);
     this.phoneticsSelection$ = this.phoneticService.findPhoneticsPropertyByCourse(this.course$Key);
-
+    console.log("Before: "+this.showLesson);
+/*    if(this.lessonService.courseKey !== undefined || this.lessonService.courseKey !== 'undefined' ){
+      this.showLesson = this.lessonService.courseKey;
+      console.log("After: "+this.showLesson);
+    }*/
     //this.lessonService.setCourseKey(this.course$Key);
-  }
-
-  ngOnDestroy(){
-    this.lessonService.courseKey = this.course$Key;
   }
 
     onDrag(args) {
@@ -93,8 +93,8 @@ export class LessonsComponent implements OnInit, OnDestroy {
   }*/
 
   callChildRoutes(){
-    this.lessonService.courseKey = this.course$Key;
-    this.showLesson = false;
+    this.showLesson = 2;
+    this.lessonService.courseKey = this.showLesson;
   }
 
   addLesson(): void {
@@ -103,7 +103,7 @@ export class LessonsComponent implements OnInit, OnDestroy {
   submitLesson() {
     console.log(`Submit Lesson: ${this.lessonsForm.value}`);
     this.lessonService.createLesson(this.course$Key, this.lessonsForm.value);
-
+    this.insertFlag = false;
   }
 
   teachDropDownChanged(param) {
