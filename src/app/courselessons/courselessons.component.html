@@ -10,7 +10,7 @@
  	</div>
 </div>
 <div class="row courseLesson_container">
-	<div class="col-xs-12 col-sm-6 col-lg-3"  *ngFor="let courseLesson of courseLessons">
+	<div class="col-xs-12 col-sm-6 col-lg-3"  *ngFor="let courseLesson of (courseLessons$ | async)">
 		<div class="list_of_courseLesson" [class.unsubscribed_lessons]="!authInfo?.isLoggedIn() || (authInfo?.isLoggedIn()&& isCourseNotTaken)">
 			<a>
 				<img class="img-responsive" [src]="courseLesson.image" />
