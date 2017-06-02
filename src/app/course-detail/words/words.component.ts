@@ -44,7 +44,9 @@ export class WordsComponent implements OnInit {
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
-      'phonetics': phonetics
+      'phonetics': phonetics,
+      'pronunciation': new FormControl(pronunciation),
+      'image': new FormControl(image)
     });
     this.editform = new FormGroup({
       'word': new FormControl(word, Validators.required),
@@ -90,6 +92,7 @@ export class WordsComponent implements OnInit {
   onSubmitData(data) {
     console.log(data);
     this.wordService.createWord(this.word$Key, data);
+    this.chkflag = false;
     this.wordform.reset();
   }
 
