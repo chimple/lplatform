@@ -4,6 +4,9 @@ import {CourselessonsService} from './courselessons.service';
 import {AuthService} from '../shared/security/auth.service';
 import {AuthInfo} from '../shared/security/AuthInfo';
 import * as _ from 'lodash';
+import {CourseService} from "../shared/model/course.service";
+import {Observable} from "rxjs/Observable";
+import {Course} from "../shared/model/course";
 
 @Component({
   selector: 'app-courselessons',
@@ -17,14 +20,16 @@ export class CourselessonsComponent implements OnInit {
   courseLessons = [];
   authInfo: AuthInfo;
   isCourseNotTaken: boolean = true;
+  currentCourse$: Observable<Course>;
 
-  constructor(private activatedRoute: ActivatedRoute, private courseLessonsService: CourselessonsService, private authService: AuthService) {
+  constructor(private activatedRoute: ActivatedRoute, private courseLessonsService: CourselessonsService, private authService: AuthService, private courseService: CourseService) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.courseId = params['courseId'];
     });
+    this.currentCourse$ = this.courseService.getCourseInformation(this.courseId);
     localStorage.setItem('courseId', this.courseId);
     this.courseLessonsService.getCourseLessons(this.courseId).subscribe(
       (data) => {
