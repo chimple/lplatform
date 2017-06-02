@@ -18,7 +18,7 @@
               (click)="onDelete(worditem.word,i)" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
       <button class="btn btn-default" type="button" *ngIf="show!==i"
               (click)="showitem(worditem,i)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil" title="Edit"></span></button>
-      <button class="btn btn-default" type="submit" *ngIf="show===i" style="border-radius: 60px; color: green">
+      <button class="btn btn-default" type="submit" *ngIf="show===i" style="border-radius: 60px; color: green" [disabled]="!editform.valid">
         <span class="glyphicon glyphicon-saved" title="Save"></span></button>
       </td>
         <td>
@@ -53,7 +53,7 @@
                   <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
                 </div>
                 <div class="col-md-3">
-                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" (keyup.enter)="onEnter($event)" placeholder="type..">
+                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async"  placeholder="type..">
                 </div>
                 <div class="col-md-2">
                   <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
@@ -107,11 +107,7 @@
               <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
             </div>
             <div class="col-md-3">
-            <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" (keyup.enter)="onEnter($event)" placeholder="type..">
-              <!-- <select class='form-control' ngModel formControlName="phonetic">
-                <option value="">---select---</option>
-                <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-              </select> -->
+            <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" placeholder="type..">
             </div>
             <div class="col-md-2">
               <button class="btn btn-default" type="button" (click)="onDeleteold(ai)" style="border-radius: 60px; color: red">
@@ -125,7 +121,7 @@
           <div>
             <div class="col-md-10"></div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()" title="Add Phonetics"><span class="glyphicon glyphicon-plus-sign"></span></button>
+              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()" title="Add Phonetics" style="border-radius: 50%"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
           </div>
         </div>
