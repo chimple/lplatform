@@ -25,6 +25,7 @@ export class RegisterCourseComponent implements OnInit {
 
   courseReg(registerForm: NgForm) {
     console.log(registerForm.value);
+    registerForm.reset();
   }
 
 }
