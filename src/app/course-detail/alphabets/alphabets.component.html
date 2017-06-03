@@ -31,11 +31,11 @@
   <div class="col-xs-12">
 
     <!--<form (ngSubmit)="editAlphRow(editAlphabet.value)" #editAlphabet="ngForm">-->
-    <form (ngSubmit)="editAlphRow()" #editAlphabet="ngForm">
+    <form (ngSubmit)="editAlphRow(editAlphabet)" #editAlphabet="ngForm">
 
       <table class="table table-striped table-style table-responsive">
         <tr>
-          <th><span class="glyphicon glyphicon-flash" style="color: #ff36ed"></span></th>
+          <th></th>
           <th>Alphabet </th>
           <th>Sound <span class="glyphicon glyphicon-volume-up" style="color: #ff36ed"></span></th>
           <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
@@ -44,8 +44,8 @@
         <tr *ngFor="let alphab of alphabets$ | async ; let i = index ">
 
           <td>
-            <!--<span hidden>{{i+1}}</span>-->
-            <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
+            <!--<span hidden>{{i+1}}</span> (click)="deleteAlphRow(alphab.alphabet)"-->
+            <button class="btn btn-default" type="button"
                                                        style="border-radius: 60px">
             <span class="glyphicon glyphicon-trash"
                   style="color: red; size: 1px; cursor: pointer"> </span>
@@ -57,7 +57,7 @@
             </button>
 
             <button class="btn btn-default" type="submit" *ngIf="editAlpha=== i" style="border-radius: 60px">
-            <span class="glyphicon glyphicon-save"
+            <span class="glyphicon glyphicon-ok"
                   style="color: green; size: 1px; cursor: pointer"> </span>
 
             </button>
@@ -115,7 +115,7 @@
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}" >
             </app-record-audio>
 
-            <app-play [filedata]="{'indexno': i,'source': alphab.pronunciation,'playfor':'pronunciation'}"></app-play>
+            <app-play [filedata]="{'indexno': i,'source': alphab.pronunciation, 'playfor':'pronunciation'}"></app-play>
             </td>
         </tr>
         </tbody>

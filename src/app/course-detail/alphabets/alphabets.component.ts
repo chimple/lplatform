@@ -27,9 +27,12 @@ export class AlphabetComponent implements OnInit {
   dropvalue= '';
   dragElement;
 
-  @ViewChild('editAlphabet') alphabetEditForm: NgForm;
+   @ViewChild('editAlphabet') editAlphabetData: NgForm;
 
-  constructor(private route: ActivatedRoute, private alphabetService: AlphabetService, private dragulaService: DragulaService) {
+  constructor(private route: ActivatedRoute,
+              private alphabetService: AlphabetService,
+              private dragulaService: DragulaService,
+  ) {
 
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
@@ -83,13 +86,13 @@ export class AlphabetComponent implements OnInit {
     this.onPlay = true;
   }
 
-  editAlphRow() {
-   // console.log(form);
-  //  this.alphabetService.createAlphabet(this.alphabet$Key, form)
-     this.alphabetService.createAlphabet(this.alphabet$Key, this.alphabetEditForm.value.alphabetName, this.alphabetEditForm.value.key)
+  editAlphRow(editAlphabetData: NgForm) {
+   this.alphabetService.createAlphabet(this.alphabet$Key, this.editAlphabetData.value
+     )
       .subscribe(
         () => {
           alert('success in alphabet creation');
+          this.editAlpha = '';
         },
         err => alert(`error in creating new alphabet ${err}`)
       );
@@ -155,7 +158,7 @@ export class AlphabetComponent implements OnInit {
   save(form: NgForm) {
     console.log(JSON.stringify(form.value));
     console.log('Key Key: ', this.alphabet$Key);
-    this.alphabetService.createAlphabet(this.alphabet$Key, form.value.alphabet)
+    this.alphabetService.createAlphabet(this.alphabet$Key, form.value)
       .subscribe(
         () => {
           alert('success in alphabet creation');

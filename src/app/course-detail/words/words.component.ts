@@ -97,14 +97,14 @@ export class WordsComponent implements OnInit {
   }
 
   onDelete(data) {
-    console.log(data); 
-    if(confirm('Are you sure to delete ?')){
+    console.log(data);
+    if (confirm('Are you sure to delete ?')){
     this.wordService.deleteWord(this.word$Key, data);
   }
   }
 
   oneditData(editdata) {
-    editdata.phonetics=editdata.phoneticdata;
+    editdata.phonetics = editdata.phoneticdata;
     delete editdata.phoneticdata;
     console.log(editdata);
     this.wordService.createWord(this.word$Key, editdata);
