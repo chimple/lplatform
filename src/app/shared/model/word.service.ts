@@ -60,21 +60,13 @@ export class WordService {
 
   createWord(courseUrl: string, input: any): Observable<any> {
     let courseDetail: CourseDetail;
-    this.courseService.getCourseDetail(courseUrl)
-      .subscribe(
-        courseInfo => courseDetail = courseInfo
-      );
-
-    courseDetail.words = courseDetail.words + 1;
-
-
+    let courseDetailToSave;
+    const isEditWord: boolean = input.key !== undefined;
     let i = 1;
     let phonetics = {};
     phonetics = _.reduce(input.phonetics, (result, item) => {
       const key = item['alphabet'];
       const val = item['phonetic'];
-      console.log(`key in reduce ${key}`);
-      console.log(`value in reduce ${val}`);
       const p = {};
       p['order'] = i;
       p[key] = val;
@@ -85,24 +77,36 @@ export class WordService {
 
     const wordToSave = Object.assign({}, {key: input.word}, {phonetics: phonetics},
       {meaning: input.meaning}, {ref: input.ref}, {course: courseUrl}, {pronunciation: input.pronunciation}, {image: input.image});
-    const courseDetailToSave = Object.assign({}, courseDetail);
-    delete(courseDetailToSave.$key);
 
-    let oldKey = '';
+    if (isEditWord) {
+      const wordToDelete$ = this.db.object(`course_words/${courseUrl}/${input.key}`);
+      wordToDelete$.remove();
+      wordToSave['order'] = input.order;
+    } else {
+
+      this.courseService.getCourseDetail(courseUrl)
+        .subscribe(
+          courseInfo => courseDetail = courseInfo
+        );
+
+      courseDetail.words = courseDetail.words + 1;
+      wordToSave['order'] = courseDetail.words;
+      courseDetailToSave = Object.assign({}, courseDetail);
+      delete(courseDetailToSave.$key);
+    }
+
+    delete(wordToSave.key);
     let newKey = '';
     if (input.word) {
       newKey = input.word;
     }
 
-    if (input.key) {
-      oldKey = input.key;
-      this.deleteWord(courseUrl, oldKey);
-    }
-
-    delete(wordToSave.key);
 
     const dataToSave = {};
-    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    if (courseDetailToSave) {
+      dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    }
+
     dataToSave[`course_words/${courseUrl}/${newKey}`] = wordToSave;
     return this.firebaseUpdate(dataToSave);
   }
