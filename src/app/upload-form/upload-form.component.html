@@ -19,7 +19,7 @@
 <!--</button>-->
 <span *ngIf="filedata.uploadFor!=='image'">
       <span class="fileselector">
-        <label class="btn btn-default" for="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" style="border-radius:20px 0px 0px 20px">
+        <label class="btn btn-default" [ngClass]="(uploading)?'rec':''" for="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" style="border-radius:20px 0px 0px 20px">
           <input id="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" class="upload-file-selector" type="file" (change)="detectFiles($event,filedata)">
           Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
         </label>
@@ -27,7 +27,7 @@
 </span>
 <span *ngIf="filedata.uploadFor==='image'">
       <span class="fileselector">
-        <label class="btn btn-default" for="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" style="border-radius:20px 20px 20px 20px">
+        <label class="btn btn-default" [ngClass]="(uploading)?'rec':''" for="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" style="border-radius:20px 20px 20px 20px">
           <input id="upload-file-selector{{filedata.objectname}}{{filedata.uploadFor}}" class="upload-file-selector" type="file" (change)="detectFiles($event,filedata)">
           Upload <span class="glyphicon glyphicon-upload" style="color: green"></span>
         </label>

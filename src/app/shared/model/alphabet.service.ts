@@ -67,7 +67,10 @@ export class AlphabetService {
     return this.firebaseUpdate(dataToSave);
   }
 
-  createAlphabet(courseUrl: string, alphabet: any, key: any = undefined): Observable<any> {
+  // createAlphabet(courseUrl: string, alphabet: any, key: any = undefined,
+  //                pronunciation: any , sound: any ): Observable<any> {
+  createAlphabet(courseUrl: string, input: any, key: any = undefined,
+                ): Observable<any> {
     let courseDetail: CourseDetail;
     this.courseService.getCourseDetail(courseUrl)
       .subscribe(
@@ -77,7 +80,9 @@ export class AlphabetService {
     const order = courseDetail.alphabets + 1;
     courseDetail.alphabets = order;
 
-    const alphabetToSave = Object.assign({}, {alphabet: alphabet}, {course: courseUrl}, {order: order});
+    const alphabetToSave = Object.assign({},
+      {alphabet: input.alphabet},
+      {course: courseUrl}, {order: order}, {pronunciation: input.pronunciation},  {sound: input.sound});
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 

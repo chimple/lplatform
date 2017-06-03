@@ -44,7 +44,9 @@ export class WordsComponent implements OnInit {
       'word': new FormControl(word, Validators.required),
       'meaning': new FormControl(meaning, Validators.required),
       'ref': new FormControl(ref, Validators.required),
-      'phonetics': phonetics
+      'phonetics': phonetics,
+      'pronunciation': new FormControl(pronunciation),
+      'image': new FormControl(image)
     });
     this.editform = new FormGroup({
       'word': new FormControl(word, Validators.required),
@@ -90,18 +92,19 @@ export class WordsComponent implements OnInit {
   onSubmitData(data) {
     console.log(data);
     this.wordService.createWord(this.word$Key, data);
+    this.chkflag = false;
     this.wordform.reset();
   }
 
   onDelete(data) {
-    console.log(data); 
-    if(confirm('Are you sure to delete ?')){
+    console.log(data);
+    if (confirm('Are you sure to delete ?')){
     this.wordService.deleteWord(this.word$Key, data);
   }
   }
 
   oneditData(editdata) {
-    editdata.phonetics=editdata.phoneticdata;
+    editdata.phonetics = editdata.phoneticdata;
     delete editdata.phoneticdata;
     console.log(editdata);
     this.wordService.createWord(this.word$Key, editdata);

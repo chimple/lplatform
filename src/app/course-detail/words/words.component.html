@@ -50,10 +50,10 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
+                  <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter Alphabet">
                 </div>
                 <div class="col-md-3">
-                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async"  placeholder="type..">
+                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async"  placeholder="Type phonetics..">
                 </div>
                 <div class="col-md-2">
                   <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
@@ -99,15 +99,17 @@
             <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
           </div>
         </div>
+        <input type="hidden" name="pronunciation" formControlName="pronunciation">
+        <input type="hidden" name="image" formControlName="image">
         <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
           <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let ai=index" [formGroupName]="ai" style="margin-bottom: 10px;">
             <div class="col-md-2">
             </div>
             <div class="col-md-3">
-              <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter phonetics">
+              <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter Alphabet">
             </div>
             <div class="col-md-3">
-            <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" placeholder="type..">
+            <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" placeholder="Type phonetics..">
             </div>
             <div class="col-md-2">
               <button class="btn btn-default" type="button" (click)="onDeleteold(ai)" style="border-radius: 60px; color: red">

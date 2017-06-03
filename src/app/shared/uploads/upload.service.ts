@@ -56,7 +56,7 @@ export class UploadService {
         // upload success
         upload.url = this.uploadTask.snapshot.downloadURL;
         upload.name = upload.file.name;
-        this.saveFileData(upload);
+        return this.saveFileData(upload);
       }
     );
   }
@@ -106,12 +106,12 @@ export class UploadService {
     this.db.list(`${this.basePath}/`).push(upload)
       .then(
         success => {
-          alert('success');
+          //alert('success');
           // update related links
           this.updateReferenceForUpload(upload.fileData, upload.url);
         },
         fail => {
-          alert('failure');
+          //alert('failure');
         }
       );
   }

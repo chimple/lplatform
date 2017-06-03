@@ -12,7 +12,7 @@ export class UploadFormComponent implements OnInit {
   @Input() filedata: any;
   selectedFiles: FileList;
   currentUpload: Upload;
-
+  uploading= false;;
   constructor(private upSvc: UploadService) {
   }
 
@@ -22,9 +22,13 @@ export class UploadFormComponent implements OnInit {
 
   detectFiles(event, filedata) {
     console.log(filedata);
+    this.uploading=true;
     this.selectedFiles = event.target.files;
     const file = this.selectedFiles.item(0);
     this.currentUpload = new Upload(file, filedata);
-    this.upSvc.pushUpload(this.currentUpload);
+    var promise=this.upSvc.pushUpload(this.currentUpload);
+    if(promise){
+      this.uploading=false;
+    }
   }
 }
