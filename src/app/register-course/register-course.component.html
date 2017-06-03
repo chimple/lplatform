@@ -13,7 +13,9 @@
         <input type="text" class="form-control" name="courseLanguage" ngModel required/>
         <label> Description: </label>
         <textarea class="form-control" name="courseDescription" ngModel required></textarea>
-        <input type="hidden" name="uid" ngModel="zdBURmI15fQSh7PzK2doPDACIqz2"/>
+        <input type="hidden" name="uid"  ngModel="{{authInfo?.getUser()?.uid}}"/>
+
+        <!--<input type="hidden" name="uid" ngModel="zdBURmI15fQSh7PzK2doPDACIqz2"/>-->
         <hr>
         <button type="submit" [disabled]="!registerCourse.valid" class="btn btn-success">Create</button>
         <div class="col-xs-12">

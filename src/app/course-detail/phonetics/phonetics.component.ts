@@ -120,7 +120,8 @@ export class PhoneticsComponent implements OnInit {
     );
    }
   ondeletePhonetics(phonetic: string) {
-    console.log(phonetic);
+    if (confirm('Are you sure to delete ?')){
+    this.phoneticService.deletePhonetic(this.phonetics$key, phonetic);
   }
-
+}
 }
