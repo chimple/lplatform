@@ -120,12 +120,14 @@ export class UploadService {
     this.db.list(`${this.basePath}/`).push(upload)
       .then(
         success => {
-          alert('success');
+          //alert('success');
           // update related links
           this.updateReferenceForUpload(upload.fileData, upload.url);
+          return true;
         },
         fail => {
-          alert('failure');
+         // alert('failure');
+         return false;
         }
       );
     ;

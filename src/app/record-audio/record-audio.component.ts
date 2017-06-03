@@ -16,6 +16,7 @@ export class RecordAudioComponent implements OnInit {
   public isTimer = false;
   private chunks: any = [];
   private mediaRecorder: any;
+  uploading= false;
   count : number=4;
   timer: any;
   constructor(private upSvc: UploadService) {
@@ -46,6 +47,7 @@ export class RecordAudioComponent implements OnInit {
         console.log(`file data ${this.filedata}`);
         const blobUpload = new BlobUpload(blob, this.filedata);
         this.upSvc.pushBlobUpload(blobUpload);
+        this.uploading=false;
       };
 
       this.mediaRecorder.ondataavailable = e => this.chunks.push(e.data);
@@ -65,6 +67,7 @@ export class RecordAudioComponent implements OnInit {
     
     public toggleRecording() {
         if (this.isRecording) {
+            this.uploading=true;
             this.isRecording = false;
             this.mediaRecorder.stop();
         } else {

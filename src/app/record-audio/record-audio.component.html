@@ -1,5 +1,5 @@
  <span *ngIf="!isRecording && !isTimer">
- <button type="button" (click)="toggleRecording()" class="btn btn-default">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
+ <button type="button" (click)="toggleRecording()" class="btn btn-default" [ngClass]="(uploading)?'rec':''">Record <span class="glyphicon glyphicon-record" style="color: red"></span></button>
  </span>
  <span *ngIf="isRecording && !isTimer">
  <button type="button" (click)="toggleRecording()" class="btn btn-default rec">Recording..<span class="glyphicon glyphicon-record" style="color: red"></span></button>
