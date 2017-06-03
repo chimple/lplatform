@@ -1,3 +1,28 @@
-<p>
-  register-course works!
-</p>
+
+<div class="row" style="padding-top: 100px">
+  <div class="col-xs-12">
+    <div class="col-xs-3"></div>
+    <div class="col-xs-6" style="border: 1px solid #68680A; border-radius: 10px; padding: 60px">
+      <hr>
+      <h4>Create A New Course</h4>
+      <hr>
+      <form  (ngSubmit)="courseReg(registerCourse)" #registerCourse="ngForm">
+        <label> Course Name: </label>
+        <input type="text" class="form-control" name="courseName" ngModel required/>
+        <label> Language: </label>
+        <input type="text" class="form-control" name="courseLanguage" ngModel required/>
+        <label> Description: </label>
+        <textarea class="form-control" name="courseDescription" ngModel required></textarea>
+        <input type="hidden" name="uid" ngModel="zdBURmI15fQSh7PzK2doPDACIqz2"/>
+        <hr>
+        <button type="submit" [disabled]="!registerCourse.valid" class="btn btn-success">Create</button>
+        <div class="col-xs-12">
+
+        </div>
+
+      </form>
+
+    </div>
+    <div class="col-xs-3"></div>
+  </div>
+</div>
