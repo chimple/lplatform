@@ -65,7 +65,8 @@ export class AlphabetComponent implements OnInit {
       this.callReorderEvent();
       console.log(this.dropvalue);
       console.log('alphabet');
-     }
+      this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+    }
     }
 
   callReorderEvent() {
