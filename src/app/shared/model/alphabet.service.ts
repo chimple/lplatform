@@ -67,31 +67,47 @@ export class AlphabetService {
     return this.firebaseUpdate(dataToSave);
   }
 
-  // createAlphabet(courseUrl: string, alphabet: any, key: any = undefined,
-  //                pronunciation: any , sound: any ): Observable<any> {
-  createAlphabet(courseUrl: string, input: any, key: any = undefined,
-                ): Observable<any> {
+  createAlphabet(courseUrl: string, input: any): Observable<any> {
     let courseDetail: CourseDetail;
+    let totalAlphabets;
     this.courseService.getCourseDetail(courseUrl)
       .subscribe(
-        courseInfo => courseDetail = courseInfo
+        courseInfo => {
+          courseDetail = courseInfo;
+          totalAlphabets = courseDetail.alphabets;
+        }
       );
 
-    const order = courseDetail.alphabets + 1;
-    courseDetail.alphabets = order;
+    // create case
+    let alphabetToSave;
+    let newKey;
+    if (input.alphabet && (!input.pronunciation || !input.sound)) {
+      totalAlphabets = courseDetail.alphabets + 1;
+      courseDetail.alphabets = totalAlphabets;
+      alphabetToSave = Object.assign({}, {alphabet: input.alphabet}, {course: courseUrl}, {order: totalAlphabets});
+      newKey = alphabetToSave.alphabet;
+      delete(alphabetToSave.alphabet);
+    } else {
+      if (input.key) {
+        const alphabetToDelete$ = this.db.object(`course_alphabets/${courseUrl}/${input.key}`);
+        alphabetToDelete$.remove();
+      }
+      alphabetToSave = Object.assign({}, {alphabet: input.alphabetName}, {course: courseUrl}, {order: input.order});
+      if (input.pronunciation) {
+        alphabetToSave['pronunciation'] = input.pronunciation;
+      }
+      if (input.sound) {
+        alphabetToSave['sound'] = input.sound;
+      }
 
-    const alphabetToSave = Object.assign({},
-      {alphabet: input.alphabet},
-      {course: courseUrl}, {order: order}, {pronunciation: input.pronunciation},  {sound: input.sound});
+      newKey = alphabetToSave.alphabet;
+      delete(alphabetToSave.alphabet);
+    }
+
+
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
-    const newKey = alphabetToSave.alphabet;
-    delete(alphabetToSave.alphabet);
-
-    if (key) {
-      this.deleteAlphabet(courseUrl, key);
-    }
 
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
@@ -145,5 +161,46 @@ export class AlphabetService {
       );
 
     return subject.asObservable();
+  }
+
+  updateDragOrder(courseUrl: string, startIndex: number, endIndex: number, alphabet: string): void {
+    //
+    // const userInformationToSave = Object.assign({}, {email: email},
+    //   {displayName: displayName}, {photoURL: photoURL});
+    //
+    // const updateUser$ = this.db.object(`users/${uid}`);
+    // return Observable.fromPromise(updateUser$.update(userInformationToSave));
+    const indexes = [];
+    if (startIndex > endIndex) {
+      // drop up
+      for ( let i = endIndex; i <= startIndex; i++ ) {
+        console.log(i);
+        indexes.push(i);
+      }
+      // const updateUser$ = this.db.object(`course_alphabets/${courseUrl}`);
+      // updateUser$.update(userInformationToSave);
+    } else {
+      // drop down
+      for ( let i = startIndex; i <= endIndex; i++ ) {
+        console.log(i);
+        indexes.push(i);
+      }
+    }
+
+    const $result = this.db.list(`course_alphabets/${courseUrl}`,
+      {
+        query: {
+          orderByChild: 'order'
+        }
+      })
+      .map(results => {
+        return results.filter((alphabets) => indexes.includes(alphabets.order));
+      });
+
+    $result.subscribe(
+      (alphabetOrder) => {
+        console.log(alphabetOrder);
+      }
+    );
   }
 }

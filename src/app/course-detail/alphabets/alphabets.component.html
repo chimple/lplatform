@@ -63,6 +63,7 @@
             </button>
 
           </td>
+          <input *ngIf="editAlpha=== i" type="hidden" name="order" ngModel="{{ alphab.order }}"/>
           <input *ngIf="editAlpha=== i" type="hidden" name="key" ngModel="{{ alphab.alphabet }}"/>
           <input *ngIf="editAlpha=== i" type="hidden" name="sound" [(ngModel)]="alphab.sound" />
           <input *ngIf="editAlpha=== i" type="hidden" name="pronunciation" [(ngModel)]="alphab.pronunciation" />
