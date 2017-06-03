@@ -16,6 +16,7 @@
         <div class="col-xs-2">
           <label>Written</label>
           <input type="text" placeholder="Written" class="form-control" required ngModel  name="written">
+          <input type="hidden" ngModel  name="pronunciation">
         </div>
         <label></label><br>
         <button type="submit" class="btn btn-success" [disabled]="!f.valid">Add</button>
@@ -94,7 +95,7 @@
           </td>
           <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
           <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
-          <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/>
+          <!-- <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/> -->
 
           <input *ngIf="editPhone=== i" type="hidden" name="pronunciation" [(ngModel)]="phonetic.pronunciation" />
         </tr>
