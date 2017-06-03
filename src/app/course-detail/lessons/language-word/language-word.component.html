@@ -26,7 +26,7 @@
     <th class="customPaddingForLessonWord">Words</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody [dragula]='"alphabet-drag"'>
 
     <tr *ngFor="let lessonWord of lesonWord$ | async; let lwIndex=index ">
       <td align="center" class="width8percent"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>

@@ -19,7 +19,7 @@
   <tbody [dragula]='"alphabet-drag"'>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
-    <td align="center"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+    <td align="center"><button type="button" (click)="deleteLesson(lesson.lesson)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
     <td align="center">
       <div *ngIf="editFlag!==lIndex">
       <button type="button" class="btn btn-primary" (click)="editLesson(lIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -49,6 +49,7 @@
           <select name="phonetic" class="form-control" ngModel required>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
+          <!-- <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
         </div>
       </div>
     </td>
@@ -95,7 +96,7 @@
             <label>Lesson Name:</label>
             <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
             <input class="form-control" type="text" id="lessonName" placeholder="Name" ngModel name="name" required #lesson>
-            <input type="hidden" name="lesson" [ngModel]="lesson.lesson" />
+            <!-- <input type="hidden" name="lesson" [ngModel]="lesson.lesson" /> -->
           </div>
 
           <div class="col-xs-4">
@@ -113,6 +114,7 @@
               <option value="">--Select--</option>
               <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
             </select>
+            <!-- <input type="text" name="phonetic" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
           </div>
         </div>
         <br />

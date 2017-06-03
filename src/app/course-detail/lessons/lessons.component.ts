@@ -89,6 +89,11 @@ export class LessonsComponent implements OnInit {
     this.insertFlag = false;
   }
 
+  deleteLesson(lesson: string) {
+    console.log(lesson);
+    this.lessonService.deleteLesson(this.course$Key, lesson);
+  }
+
   teachDropDownChanged(param) {
     this.teachSelect = param;
   }
