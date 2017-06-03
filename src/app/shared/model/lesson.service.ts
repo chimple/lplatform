@@ -21,7 +21,8 @@ export class LessonService {
   constructor(private db: AngularFireDatabase, private courseService: CourseService, private wordService: WordService, private alphabetService: AlphabetService) {
     this.sdkDb = firebase.database().ref();
   }
-  courseKey:any;
+
+  courseKey: any;
 
 
   getLessonItems(lessonId: string): Observable<LessonItem[]> {
@@ -39,17 +40,28 @@ export class LessonService {
   }
 
   createLesson(courseUrl: string, input: any): Observable<any> {
-    let courseDetail: CourseDetail;
-    this.courseService.getCourseDetail(courseUrl)
-      .subscribe(
-        courseInfo => courseDetail = courseInfo
-      );
+    const editLesson: boolean = input.lesson !== undefined;
+    let order;
+    let courseDetailToSave;
+    let newKey;
+    if (editLesson) {
+      order = input.order;
+      newKey = input.lesson;
+    } else {
+      let courseDetail: CourseDetail;
+      this.courseService.getCourseDetail(courseUrl)
+        .subscribe(
+          courseInfo => courseDetail = courseInfo
+        );
+      order = courseDetail.lessons + 1;
+      courseDetail.lessons = order;
 
-    const order = courseDetail.lessons + 1;
-    courseDetail.lessons = order;
+      courseDetailToSave = Object.assign({}, courseDetail);
+      delete(courseDetailToSave.$key);
+      newKey = this.sdkDb.child(`course_lessons`).push().key;
+    }
 
-    const courseDetailToSave = Object.assign({}, courseDetail);
-    delete(courseDetailToSave.$key);
+
     let lessonToSave;
     if (input.phonetic) {
       lessonToSave = Object.assign({}, {phonetic: input.phonetic}, {name: input.name}, {teach: input.teach}, {course: courseUrl}, {order: order});
@@ -57,35 +69,37 @@ export class LessonService {
       lessonToSave = Object.assign({}, {name: input.name}, {teach: input.teach}, {course: courseUrl}, {order: order});
     }
 
-
-    let newKey;
-    if (input.lesson) {
-      newKey = input.lesson;
-    } else {
-      newKey = this.sdkDb.child(`course_lessons`).push().key;
+    const dataToSave = {};
+    if (courseDetailToSave) {
+      dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     }
 
-    const dataToSave = {};
-    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_lessons/${courseUrl}/${newKey}`] = lessonToSave;
-    const subject = new Subject();
-
     return this.firebaseUpdate(dataToSave);
   }
 
   createLessonItem(courseUrl: string, lessonUrl: string, input: any, type: string, attributeExists = false): Observable<any> {
+    const editLesson: boolean = input.lesson !== undefined;
     let courseDetail: CourseDetail;
-    this.courseService.getCourseDetail(courseUrl)
-      .subscribe(
-        courseInfo => courseDetail = courseInfo
-      );
+    let order;
+    let courseDetailToSave;
 
-    const order = 1;
-    // const order = courseDetail.lessons + 1;
-    // courseDetail.lessons = order;
+    if (editLesson) {
+      order = input.order;
+    } else {
+      this.courseService.getCourseDetail(courseUrl)
+        .subscribe(
+          courseInfo => courseDetail = courseInfo
+        );
 
-    const courseDetailToSave = Object.assign({}, courseDetail);
-    delete(courseDetailToSave.$key);
+      order = courseDetail.lessons;
+      courseDetail.lessons = order;
+      courseDetailToSave = Object.assign({}, courseDetail);
+      delete(courseDetailToSave.$key);
+
+    }
+
+
     let lessonItemToSave;
 
 
@@ -95,11 +109,12 @@ export class LessonService {
       lessonItemToSave = Object.assign({}, {item: input.alphabet}, {lesson: lessonUrl}, {course: courseUrl}, {order: order});
     }
 
-
     const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
 
     const dataToSave = {};
-    // dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    if (courseDetailToSave) {
+      dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    }
     dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
 
     if (!attributeExists) {

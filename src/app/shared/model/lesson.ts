@@ -4,8 +4,8 @@ export class Lesson {
     return array.map(Lesson.fromJson);
   }
 
-  static fromJson({$key, name, order, teach,image}): Lesson {
-    return new Lesson($key, name, order, teach,image);
+  static fromJson({$key, name, order, teach, image}): Lesson {
+    return new Lesson($key, name, order, teach, image);
   }
 
   constructor(public lesson: string,
