@@ -49,6 +49,7 @@ import { CourselessonsComponent } from './courselessons/courselessons.component'
 import { PlayComponent } from './play/play.component';
 import {DragulaModule, DragulaService} from 'ng2-dragula';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { RegisterCourseComponent } from './register-course/register-course.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     LanguageWordComponent,
     LanguageAlphabetComponent,
     CourselessonsComponent,
-    PlayComponent
+    PlayComponent,
+    RegisterCourseComponent
   ],
   imports: [
     BrowserModule,
