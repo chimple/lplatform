@@ -110,8 +110,16 @@ export class PhoneticsComponent implements OnInit {
 
   editPhonRow() {
     console.log(this.phoneticsEditForm.value);
-  }
-  ondeletePhonetics(phonetic: string){
+    this.phoneticService.createPhonetic(this.phonetics$key, this.phoneticsEditForm.value)
+      .subscribe(
+      () => {
+        alert('success in Phonetic creation');
+        this.editPhone = '';
+      },
+      err => alert(`error in creating new alphabet ${err}`)
+    );
+   }
+  ondeletePhonetics(phonetic: string) {
     console.log(phonetic);
   }
 
