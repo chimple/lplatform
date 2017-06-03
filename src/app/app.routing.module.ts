@@ -68,7 +68,7 @@ const appRoutes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'registerCource', component: RegisterCourseComponent
+    path: 'registerCourse', component: RegisterCourseComponent
   },
   {
     path: '',
