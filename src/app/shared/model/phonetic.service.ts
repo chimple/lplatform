@@ -57,7 +57,10 @@ export class PhoneticService {
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
 
-    const phoneticToSave = Object.assign({}, {phonetic: input.phonetics}, {writing: input.written}, {course: courseUrl}, {order: order});
+    const phoneticToSave = Object.assign({},
+      {phonetic: input.alphabet},
+      {pronunciation: input.pronunciation},
+      {writing: input.written}, {course: courseUrl}, {order: order});
 
     const newKey = phoneticToSave.phonetic;
     delete(phoneticToSave.phonetic);

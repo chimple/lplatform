@@ -44,8 +44,8 @@
         <tr *ngFor="let alphab of alphabets$ | async ; let i = index ">
 
           <td>
-            <!--<span hidden>{{i+1}}</span> (click)="deleteAlphRow(alphab.alphabet)"-->
-            <button class="btn btn-default" type="button"
+            <!--<span hidden>{{i+1}}</span> -->
+            <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
                                                        style="border-radius: 60px">
             <span class="glyphicon glyphicon-trash"
                   style="color: red; size: 1px; cursor: pointer"> </span>
