@@ -7,9 +7,9 @@ export class Word {
     return array.map(Word.fromJson);
   }
 
-  static fromJson({$key, image, meaning, phonetics, pronunciation, ref}): Word {
+  static fromJson({$key, image, meaning, phonetics, pronunciation, ref, order}): Word {
     phonetics = _.without(phonetics, undefined);
-    return new Word($key, image, meaning, WordPhonetic.fromJsonList(phonetics), pronunciation, ref);
+    return new Word($key, image, meaning, WordPhonetic.fromJsonList(phonetics), pronunciation, ref, order);
   }
 
   constructor(public word: string,
@@ -17,7 +17,8 @@ export class Word {
               public meaning: string,
               public phonetics: Object[],
               public pronunciation: string,
-              public ref: string) {
+              public ref: string,
+              public order: number) {
 
   }
 }
