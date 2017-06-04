@@ -10,12 +10,13 @@ import {UserCourse} from './user-course';
 
 @Injectable()
 export class AuthService {
-
   static UNKNOWN_USER = new AuthInfo(null);
+
+  private authInfoSubject$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
   sdkDb: any;
-  authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
-  currentCourseImage:any;
-  courseList:any;
+  currentCourseImage: any;
+  courseList: any;
+  authInfo$: Observable<AuthInfo> = this.authInfoSubject$.asObservable();
 
   constructor(private fbAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.sdkDb = firebase.database().ref();
@@ -48,14 +49,15 @@ export class AuthService {
     this.courseList = this.db.object(`courses/${courseId}`);
     this.courseList.forEach(element => {
       this.currentCourseImage = element.image;
-      if (courseId&&this.currentCourseImage) {
+      if (courseId && this.currentCourseImage) {
         const courses: UserCourse[] = user.courses;
         courses.push(new UserCourse(courseId));
         user.courses = courses;
         user.currentCourse = courseId;
         user.currentCourseImage = this.currentCourseImage;
         localStorage.removeItem('courseId');
-        const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses},{currentCourseImage: this.currentCourseImage});
+        const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses},
+          {currentCourseImage: this.currentCourseImage});
         const updateUser$ = this.db.object(`users/${user.uid}`);
         updateUser$.update(userInformationToSave)
           .then(
@@ -91,7 +93,7 @@ export class AuthService {
                   that.updateRegisterCourseInformation(userInfo);
                   const authInfo = new AuthInfo(userInfo);
                   ;
-                  that.authInfo$.next(authInfo);
+                  that.authInfoSubject$.next(authInfo);
                   subject.next(res.user);
                   subject.complete();
                 }
@@ -102,7 +104,7 @@ export class AuthService {
 
       },
       reject => {
-        this.authInfo$.error(reject);
+        this.authInfoSubject$.error(reject);
         subject.next(reject);
         subject.complete();
       }
@@ -113,7 +115,7 @@ export class AuthService {
 
   logout() {
     this.fbAuth.auth.signOut();
-    this.authInfo$.next(AuthService.UNKNOWN_USER);
+    this.authInfoSubject$.next(AuthService.UNKNOWN_USER);
   }
 
   firebaseUpdate(dataToSave): Observable<any> {

@@ -4,7 +4,7 @@ import {Course} from '../shared/model/course';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from '../shared/security/auth.service';
 import {AuthInfo} from '../shared/security/AuthInfo';
-import { Router } from'@angular/router';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -18,9 +18,9 @@ export class HomeComponent implements OnInit {
   allCourses: Course[];
   filtered: Course[];
   authInfo: AuthInfo;
-  currentCourse:any;
+  currentCourse: any;
 
-  constructor(private courseService: CourseService, private authService: AuthService,private router:Router) {
+  constructor(private courseService: CourseService, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -34,19 +34,18 @@ export class HomeComponent implements OnInit {
     this.authService.authInfo$
       .subscribe(
         authInfo => {
-          this.authInfo = authInfo
-          console.log(this.authInfo.getUser());
-          if(this.authInfo.getUser()){
-           this.currentCourse =  this.authInfo.getUser().currentCourse;
+          this.authInfo = authInfo;
+          if (this.authInfo.getUser()) {
+            this.currentCourse = this.authInfo.getUser().currentCourse;
           }
         }
       );
 
-      if(this.currentCourse){
-        this.router.navigate(['/home/lesson/'+this.currentCourse]);
-      }else{
-        this.router.navigate(['/home']);
-      }
+    if (this.currentCourse) {
+      this.router.navigate(['/home/lesson/' + this.currentCourse]);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   search(search: string) {
