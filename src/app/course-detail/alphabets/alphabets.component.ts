@@ -6,14 +6,52 @@ import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {RecordAudioComponent} from '../../record-audio/record-audio.component';
 import {DragulaService} from 'ng2-dragula';
+import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 // declare var swal: any;
 
 @Component({
   selector: 'app-alphabet',
   templateUrl: './alphabets.component.html',
-  styleUrls: ['./alphabets.component.css']
+  styleUrls: ['./alphabets.component.css'],
+  animations: [
+    trigger('AnimatedStyle', [
+
+      state('in', style({ opacity: 1, transform: 'translateX(0)' })),
+
+      transition('void => *', [
+        animate(1000, keyframes([
+
+          style({
+            transform: 'translateX(-100px)', opacity: 0 , offset: 0
+          }),
+          style({
+            transform: 'translateX(-50px)', opacity: 0.5 , offset: 0.3
+          }),
+          style({
+            transform: 'translateX(-20px)', opacity: 1, offset: 0.8
+          }),
+          style({
+            transform: 'translateX(0px)', opacity: 1, offset: 1
+          })
+        ]))
+      ]),
+
+      transition('* => void', [
+        group([
+          animate(300, style({
+            color: 'red'
+          })),
+          animate(600, style({
+            transform: 'translateX(100px)', opacity: 0
+          }))])
+
+
+      ])
+  ])
+  ]
 })
+
 export class AlphabetComponent implements OnInit {
 
   alphabets$: Observable<Alphabet[]>;
@@ -92,7 +130,7 @@ export class AlphabetComponent implements OnInit {
      )
       .subscribe(
         () => {
-          alert('success in alphabet creation');
+         // alert('success in alphabet creation');
           this.editAlpha = '';
         },
         err => alert(`error in creating new alphabet ${err}`)
@@ -162,11 +200,15 @@ export class AlphabetComponent implements OnInit {
     this.alphabetService.createAlphabet(this.alphabet$Key, form.value)
       .subscribe(
         () => {
-          alert('success in alphabet creation');
+        //  alert('success in alphabet creation');
           form.reset();
         },
         err => alert(`error in creating new alphabet ${err}`)
       );
     }
+
+  private trackEntryItems(i, item): number {
+    return item.id;
+  }
 
 }

@@ -16,7 +16,7 @@
         </div>
         <div class="col-xs-2">
           <label></label><br>
-          <button class="btn btn-default" type="submit" style="color:#47A414" >
+          <button class="btn btn-default" type="submit" [disabled]="!f.valid" style="color:#47A414" >
             <span class="glyphicon glyphicon-floppy-save"></span></button>
         </div>
 
@@ -33,7 +33,7 @@
     <!--<form (ngSubmit)="editAlphRow(editAlphabet.value)" #editAlphabet="ngForm">-->
     <form (ngSubmit)="editAlphRow(editAlphabet)" #editAlphabet="ngForm">
 
-      <table class="table table-striped table-style table-responsive">
+      <table class="table table-striped table-style table-responsive" style="border: 3px solid #e4e4e4">
         <tr>
           <th></th>
           <th>Alphabet </th>
@@ -41,9 +41,9 @@
           <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
         </tr>
         <tbody [dragula]='"alphabet-drag"'  >
-        <tr *ngFor="let alphab of alphabets$ | async ; let i = index ">
+        <tr [@AnimatedStyle]="'in'" *ngFor="let alphab of (alphabets$ | async);trackBy:trackEntryItems ; let i = index " >
 
-          <td>
+          <td >
             <!--<span hidden>{{i+1}}</span> -->
             <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
                                                        style="border-radius: 60px">
@@ -92,17 +92,7 @@
             </app-record-audio>
 
             <app-play [filedata]="{'indexno': i,'source': alphab.sound,'playfor':'sound'}"></app-play>
-            <!--<button class="btn btn-default" type="button"-->
-                    <!--onclick="document.getElementById('alpha-sounds').play()"-->
 
-                    <!--style="border-radius:0px 20px 20px 0px ;cursor:pointer;color:deepskyblue ">-->
-             <!--<span-->
-               <!--class="glyphicon glyphicon-play" ></span>-->
-            <!--</button>-->
-            <!--<audio controls="controls" id="alpha-sounds" hidden >-->
-              <!--<source src="{{alphab.sound}}" type="audio/mp3">-->
-            <!--</audio>-->
-            <!--{{alphabet.sound}}-->
           </td>
 
           <td>
