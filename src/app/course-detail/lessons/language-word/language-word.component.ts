@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
@@ -10,6 +10,7 @@ import {Word} from '../../../shared/model/word';
 import {WordService} from '../../../shared/model/word.service';
 import * as _ from 'lodash';
 import {DragulaService} from 'ng2-dragula';
+
 
 @Component({
   selector: 'app-language-word',
@@ -49,7 +50,14 @@ export class LanguageWordComponent implements OnInit {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
     console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
+    window.document.getElementById("showLesson").style.display = "none";
   }
+
+/*  ngOnDestroy(){
+    window.document.getElementById("showLesson").style.display = "block";
+  }*/
+
+
 
   onDrag(args) {
     const [e] = args;
@@ -73,9 +81,10 @@ export class LanguageWordComponent implements OnInit {
   /* -------------------------------------- */
 
   navigateToParent(){
-    this.lessonService.courseKey=1;
+    //this.lessonService.courseKey=1;
     //this.router.navigate(['../../'], { relativeTo: this.route });
     //reload();
+    window.document.getElementById("showLesson").style.display = "block";
   }
 
   editLessonWord(lwIndex) {

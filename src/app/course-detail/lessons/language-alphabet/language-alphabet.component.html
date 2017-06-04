@@ -27,16 +27,16 @@
     <th>Words</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody [dragula]='"alphabet-drag"'>
 
     <tr *ngFor="let lessonAlpha of lesonAlpha$ | async; let laIndex=index ">
-      <td align="center" class="width8percent"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+      <td align="center" class="width8percent"><button type="button" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
       <td align="center" class="width8percent">
         <div *ngIf="laEditFlag!==laIndex">
-          <button type="button" class="btn btn-primary" (click)="editLessonAlpha(laIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button type="button" class="btn btn-default" style="border-radius: 60px; color: green" (click)="editLessonAlpha(laIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
         </div>
         <div *ngIf="laEditFlag===laIndex">
-          <button type="submit" [disabled]="!laEdit.valid" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+          <button type="submit" [disabled]="!laEdit.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
         </div>
         <input *ngIf="laEditFlag===laIndex" type="hidden" name="lessonAlpha" [ngModel]="lessonAlpha.lessonItem" />
       </td>
