@@ -40,8 +40,12 @@ export class HomeComponent implements OnInit {
           }
         }
       );
-
-    if (this.currentCourse) {
+      
+    var goToHomePage = localStorage.getItem('goToHomePage');
+    if(goToHomePage){
+      this.router.navigate(['/home']);
+      localStorage.removeItem('goToHomePage');
+    }else if (this.currentCourse) {
       this.router.navigate(['/home/lesson/' + this.currentCourse]);
     } else {
       this.router.navigate(['/home']);
