@@ -9,13 +9,15 @@
     width: 15px;
     height: 8px;
     padding: 4px;
-    
+
     background: #fff;
-    border: 2px solid #666;
-    color: #666;
+    /*border: 2px solid #666;*/
+    /*color: #666;*/
+  border: 2px solid #e4e4e4;
+    color: #4ED22B;
     text-align: center;
-    
-    font: 20px Arial, sans-serif;
+
+    font: 15px Arial, sans-serif;
 }
 @keyframes pulse{
 	0%{
