@@ -6,6 +6,8 @@ import * as firebase from 'firebase/app';
 import {UserInformation} from './user-info';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {UserCourse} from './user-course';
+import {UtilHelper} from '../model/util-helper';
+import {fn} from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable()
@@ -20,6 +22,19 @@ export class AuthService {
 
   constructor(private fbAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.sdkDb = firebase.database().ref();
+    const $userInfo: Observable<UserInformation> = this.fbAuth.authState
+      .switchMap((authState) => {
+        if (authState && authState.uid) {
+         return this.getUserInformation(authState.uid);
+        }
+      });
+
+    $userInfo.subscribe(
+      userInfo => {
+        this.updateRegisterCourseInformation(userInfo);
+        const authInfo = new AuthInfo(userInfo);
+        this.authInfoSubject$.next(authInfo);
+      });
   }
 
   loginUsingProvider(provider: string): Observable<any> {
@@ -84,24 +99,25 @@ export class AuthService {
     const subject = new Subject<any>();
     promise.then(
       res => {
-        that.updateUserInformationAfterLogin(res.user.uid,
-          res.user.email, res.user.displayName, res.user.photoURL).subscribe(
-          () => {
-            that.getUserInformation(res.user.uid)
-              .subscribe(
-                (userInfo) => {
-                  that.updateRegisterCourseInformation(userInfo);
-                  const authInfo = new AuthInfo(userInfo);
-                  ;
-                  that.authInfoSubject$.next(authInfo);
-                  subject.next(res.user);
-                  subject.complete();
-                }
-              );
+        const $updatedInfo = UtilHelper.waterfall([
+          function() {
+            return that.updateUserInformationAfterLogin(res.user.uid,
+              res.user.email, res.user.displayName, res.user.photoURL);
           },
-          err => alert(`error in creating new alphabet ${err}`)
-        );
+          function () {
+            return that.getUserInformation(res.user.uid);
+          },
+        ]);
 
+        $updatedInfo.subscribe(
+          (userInfo: UserInformation) => {
+            that.updateRegisterCourseInformation(userInfo);
+            const authInfo = new AuthInfo(userInfo);
+            that.authInfoSubject$.next(authInfo);
+            subject.next(res.user);
+            subject.complete();
+          }
+        );
       },
       reject => {
         this.authInfoSubject$.error(reject);
