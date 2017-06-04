@@ -164,42 +164,48 @@ export class AlphabetService {
   }
 
   updateDragOrder(courseUrl: string, startIndex: number, endIndex: number, alphabet: string): void {
-    //
-    // const userInformationToSave = Object.assign({}, {email: email},
-    //   {displayName: displayName}, {photoURL: photoURL});
-    //
-    // const updateUser$ = this.db.object(`users/${uid}`);
-    // return Observable.fromPromise(updateUser$.update(userInformationToSave));
     const indexes = [];
+    let isDraggedUp = false;
     if (startIndex > endIndex) {
-      // drop up
+      isDraggedUp = true;
       for ( let i = endIndex; i <= startIndex; i++ ) {
-        console.log(i);
         indexes.push(i);
       }
-      // const updateUser$ = this.db.object(`course_alphabets/${courseUrl}`);
-      // updateUser$.update(userInformationToSave);
     } else {
       // drop down
+      isDraggedUp = false;
       for ( let i = startIndex; i <= endIndex; i++ ) {
-        console.log(i);
         indexes.push(i);
       }
     }
 
-    const $result = this.db.list(`course_alphabets/${courseUrl}`,
-      {
-        query: {
-          orderByChild: 'order'
-        }
-      })
-      .map(results => {
-        return results.filter((alphabets) => indexes.includes(alphabets.order));
+    const $result = this.findAlphabetsByCourse(courseUrl, {
+      query: {
+        orderByChild: 'order'
+      }
+    }).map(results => {
+        return results.filter((alphabetValue) => indexes.includes(alphabetValue.order));
       });
-
     $result.subscribe(
       (alphabetOrder) => {
-        console.log(alphabetOrder);
+
+        alphabetOrder.forEach((alphabetO) => {
+          if (isDraggedUp) {
+            const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
+            const updateOrder = Object.assign({}, {order: newOrder});
+            console.log(`alphabetO ${JSON.stringify(alphabetO)}`);
+            console.log(`updateOrder ${JSON.stringify(updateOrder)}`);
+            const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
+            updateAlphabet$.update(updateOrder);
+          } else {
+            const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
+            const updateOrder = Object.assign({}, {order: newOrder});
+            console.log(`alphabetO ${JSON.stringify(alphabetO)}`);
+            console.log(`updateOrder ${JSON.stringify(updateOrder)}`);
+            const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
+            updateAlphabet$.update(updateOrder);
+          }
+        });
       }
     );
   }
