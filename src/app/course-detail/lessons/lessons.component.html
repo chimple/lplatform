@@ -11,6 +11,7 @@
     <th class="textCenter">Edit</th>
     <th>Name</th>
     <th>Teach</th>
+    <th>Picture</th>
     <th>Focus</th>
     <th class="textCenter">Select</th>
   </tr>
@@ -39,7 +40,9 @@
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
       <input type="text" *ngIf="editFlag===lIndex" required name="teach" class="form-control" [ngModel]="lesson.teach" />
     </td>
-
+    <td>
+    <app-upload-form [filedata]="{'objectname': lesson.name,'componentname':'lession','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
+    </td>
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">
