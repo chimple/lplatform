@@ -90,4 +90,10 @@ export class TopmenuComponent implements OnInit {
     this.isCollapsedCourses = false;
     this.isCollapsedContent = false;
   }
+  goToHomePage(){
+    this.isCollapsedCourses = false;
+    this.isCollapsedContent = false;
+    localStorage.setItem('goToHomePage', 'true');
+    this.router.navigate(['home']);
+  }
 }
