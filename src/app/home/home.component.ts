@@ -43,6 +43,10 @@ export class HomeComponent implements OnInit {
       );
 
       if(this.currentCourse){
+        this.router.navigate(['/home/lesson/'+this.currentCourse]);
+      }else{
+        this.router.navigate(['/home']);
+      }
   }
 
   search(search: string) {
