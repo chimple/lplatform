@@ -41,6 +41,9 @@ display: block !important;
 .width8percent{
     width: 8%;
 }
+
+/*Dragula Style*/
+
 .gu-mirror{position:fixed!important;margin:0!important;z-index:9999!important;
   opacity:.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80);
   border:2px dashed #8EFFFA; border-radius: 2px}
@@ -56,6 +59,11 @@ display: block !important;
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   user-select: none !important;
+}
+
+/*Dragula Stle Ends Here*/
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  text-align: center;
 }
 /* Displaying all courses CSS starts here */
 
