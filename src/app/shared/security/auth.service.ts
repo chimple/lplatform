@@ -14,6 +14,8 @@ export class AuthService {
   static UNKNOWN_USER = new AuthInfo(null);
   sdkDb: any;
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
+  currentCourseImage:any;
+  courseList:any;
 
   constructor(private fbAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.sdkDb = firebase.database().ref();
@@ -43,24 +45,28 @@ export class AuthService {
   }
 
   updateRegisterCourseInformation(user: UserInformation, courseId: string = localStorage.getItem('courseId')): void {
-    if (courseId) {
-      const courses: UserCourse[] = user.courses;
-      courses.push(new UserCourse(courseId));
-      user.courses = courses;
-      user.currentCourse = courseId;
-      localStorage.removeItem('courseId');
-      const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses});
-
-      const updateUser$ = this.db.object(`users/${user.uid}`);
-      updateUser$.update(userInformationToSave)
-        .then(
-          val => {
-            user.currentCourse = courseId;
-          },
-          err => {
-          }
-        );
-    }
+    this.courseList = this.db.object(`courses/${courseId}`);
+    this.courseList.forEach(element => {
+      this.currentCourseImage = element.image;
+      if (courseId&&this.currentCourseImage) {
+        const courses: UserCourse[] = user.courses;
+        courses.push(new UserCourse(courseId));
+        user.courses = courses;
+        user.currentCourse = courseId;
+        user.currentCourseImage = this.currentCourseImage;
+        localStorage.removeItem('courseId');
+        const userInformationToSave = Object.assign({}, {currentCourse: courseId}, {courses: courses},{currentCourseImage: this.currentCourseImage});
+        const updateUser$ = this.db.object(`users/${user.uid}`);
+        updateUser$.update(userInformationToSave)
+          .then(
+            val => {
+              user.currentCourse = courseId;
+            },
+            err => {
+            }
+          );
+      }
+    });
   }
 
   getUserInformation(uid: string): Observable<UserInformation> {

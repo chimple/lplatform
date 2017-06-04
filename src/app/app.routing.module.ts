@@ -16,6 +16,7 @@ import { LanguageWordComponent } from './course-detail/lessons/language-word/lan
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 import { CourselessonsComponent } from './courselessons/courselessons.component';
 import { RegisterCourseComponent } from './register-course/register-course.component';
+import { UsercreatedcoursesComponent } from './usercreatedcourses/usercreatedcourses.component';
 
 const appRoutes: Routes = [
   {
@@ -53,6 +54,12 @@ const appRoutes: Routes = [
         component: CourselessonsComponent
       },
       {
+        path: 'course/createcourse', component: RegisterCourseComponent
+      },
+      {
+        path: 'course/mycourses', component: UsercreatedcoursesComponent
+      },
+      {
         path: '',
         component: HomeComponent
       }
@@ -66,9 +73,6 @@ const appRoutes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
-  },
-  {
-    path: 'registerCourse', component: RegisterCourseComponent
   },
   {
     path: '',
