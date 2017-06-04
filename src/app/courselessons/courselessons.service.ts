@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core"
+import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CourselessonsService {
-  constructor(private _http: Http,private db: AngularFireDatabase) {
+  constructor(private _http: Http, private db: AngularFireDatabase) {
   }
 
   getCourseLessons(courseId: string): Observable<Lesson[]> {
