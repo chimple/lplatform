@@ -1,0 +1,13 @@
+<div class="row list_of_courses_headline" *ngIf="authInfo?.getUser()">
+	<div class="col-xs-12 col-md-6 co-sm-6 col-lg-6">
+ 		<h4>Courses created by you</h4>
+ 	</div>
+ 	<div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+ 		<input class="search-bar form-control" placeholder="Search your course here" (keyup) = "search(input.value)" #input>
+ 	</div>
+</div>
+<div class="row course_container" *ngIf="authInfo?.getUser()">
+	<div class="list-group">
+  		<app-courses-list [courses]="filtered"></app-courses-list>
+	</div>
+</div>	
