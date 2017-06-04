@@ -29,8 +29,16 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right" *ngIf="authInfo?.isLoggedIn() && authInfo?.getUser() && authInfo?.getUser().currentCourse ">
-            <li *ngIf="(currentCourse$ | async) as currentCourse" class="user_course_image">
+            <ng-template #elseTemplate>
+              <li class="user_course_image">
+                <img class="img-circle" [src]="authInfo?.getUser()?.photoURL" />
+              </li>
+            </ng-template>
+            <!-- <li *ngIf="(currentCourse$ | async) as currentCourse else elseTemplate" class="user_course_image">
               <img class="img-circle" [src]="currentCourse?.image" />
+            </li> -->
+            <li *ngIf="authInfo?.getUser().currentCourseImage else elseTemplate" class="user_course_image">
+              <img class="img-circle" [src]="authInfo?.getUser().currentCourseImage" />
             </li>
             <li class="user_course_details" *ngIf="authInfo?.isLoggedIn() && authInfo?.getUser()">
               <span class="header-dropdown-arrow" (click)="showUserCourses()"></span>

@@ -68,9 +68,9 @@ export class TopmenuComponent implements OnInit {
   }
 
   showUserCourses() {
-    if (this.authInfo && this.authInfo.getUser() && this.authInfo.getUser().currentCourse) {
-      this.currentCourse$ = this.courseService.getCourseInformation(this.authInfo.getUser().currentCourse);
-    }
+    // if (this.authInfo && this.authInfo.getUser() && this.authInfo.getUser().currentCourse) {
+    //   this.currentCourse$ = this.courseService.getCourseInformation(this.authInfo.getUser().currentCourse);
+    // }
 
     const allSubscribedCourses = _.map(this.authInfo.getUser().courses, 'courseUrl');
     this.subscribedCourses$ = this.courseService.findAllCourses()
