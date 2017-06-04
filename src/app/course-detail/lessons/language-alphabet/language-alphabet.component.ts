@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LessonItem} from '../../../shared/model/lesson-item';
 import {AlphabetService} from "../../../shared/model/alphabet.service";
+import {DragulaService} from 'ng2-dragula';
 
 @Component({
   selector: 'app-language-alphabet',
@@ -20,25 +21,59 @@ export class LanguageAlphabetComponent implements OnInit {
   lessonAlpha$Key: string;
   lesonAlpha$: Observable<LessonItem[]>;
   course$key: string;
+  dragStartIndex = -1;
+  dropIndex = -1;
+  dropvalue= '';
+  dragElement;
 
   @ViewChild('la') laForm: NgForm;
   @ViewChild('laEdit') laEditForm: NgForm;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute, private alphabetService: AlphabetService) {
+  constructor(public dragulaService: DragulaService, private lessonService: LessonService, private route: ActivatedRoute, private alphabetService: AlphabetService) {
+    dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.lessonAlpha$Key);
+    });
   }
 
   navigateToParent(){
-    this.lessonService.courseKey=1;
+    //this.lessonService.courseKey=1;
     //this.router.navigate(['../../'], { relativeTo: this.route });
     //reload();
+        window.document.getElementById("showLesson").style.display = "block";
   }
 
   ngOnInit() {
     this.lessonAlpha$Key = this.route.snapshot.params['lessonAlphaId'];
     //this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonAlpha$ = this.lessonService.getLessonItems(this.lessonAlpha$Key);
+    window.document.getElementById("showLesson").style.display = "none";
   }
 
+onDrag(args) {
+    const [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+
+
+    // do something
+  }
+
+
+  onDrop(args) {
+    const [e] = args;
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+    }
+  }
 
   /* -------------------------------------- */
 

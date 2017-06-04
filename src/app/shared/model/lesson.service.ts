@@ -39,6 +39,26 @@ export class LessonService {
       .map(Lesson.fromJsonList);
   }
 
+  deleteLesson(courseUrl: string, input: any): void {
+    console.log(`input ${JSON.stringify(input)}`);
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    courseDetail.lessons = courseDetail.lessons - 1;
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    this.firebaseUpdate(dataToSave);
+
+    const lessonToDelete$ = this.db.object(`course_lessons/${courseUrl}/${input}`);
+    lessonToDelete$.remove();
+  }
+
   createLesson(courseUrl: string, input: any): Observable<any> {
     const editLesson: boolean = input.lesson !== undefined;
     let order;

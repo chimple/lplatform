@@ -1,5 +1,48 @@
 
-<div class="row" *ngIf="showLesson===1">
+<div class="row" id="showLesson">
+<!-- ************************ Add Lesson Block ********************** -->
+  <div class="col-xs-12" *ngIf="insertFlag">
+    <form id="lessonForm" (ngSubmit)="submitLesson()" #lf="ngForm">
+        <div class="row">
+          <div class="col-xs-4">
+            <label>Lesson Name:</label>
+            <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
+            <input class="form-control" type="text" id="lessonName" placeholder="Name" ngModel name="name" required #lesson>
+            <!-- <input type="hidden" name="lesson" [ngModel]="lesson.lesson" /> -->
+          </div>
+
+          <div class="col-xs-4">
+            <label>Teach: </label>
+            <select class="form-control" name="teach" id="lessonTeach" ngModel required (change)="teachDropDownChanged($event.target.value)">
+              <option value="">--Select--</option>
+              <option value="alphabets">Alphabets</option>
+              <option value="words">Words</option>
+            </select>
+          </div>
+
+          <div *ngIf="teachSelect=== 'words'" class="col-xs-4">
+            <label>Phonetics: </label>
+            <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
+              <option value="">--Select--</option>
+              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+            </select>
+            <!-- <input type="text" name="phonetic" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
+          </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success" [disabled]="!lf.valid">Save</button>
+        <br />
+        <hr />
+    </form>
+  </div>
+  <div class="col-xs-12" *ngIf="!insertFlag">
+  <div class="row">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-default" (click)="addLesson()">Add Lesson <span class="glyphicon glyphicon-plus greenColor"></span></button>
+    </div>
+  </div>
+  <hr />
+  <br /></div>
 <!-- ************************ Lesson Table Block ********************** -->
   <div class="col-xs-12">
 <form (ngSubmit)="updateLesson()" #lessonEdit="ngForm">
@@ -11,6 +54,7 @@
     <th class="textCenter">Edit</th>
     <th>Name</th>
     <th>Teach</th>
+    <th>Picture</th>
     <th>Focus</th>
     <th class="textCenter">Select</th>
   </tr>
@@ -19,13 +63,13 @@
   <tbody [dragula]='"alphabet-drag"'>
 
   <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
-    <td align="center"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+    <td align="center"><button type="button" (click)="deleteLesson(lesson.lesson)" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
     <td align="center">
       <div *ngIf="editFlag!==lIndex">
-      <button type="button" class="btn btn-primary" (click)="editLesson(lIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
+      <button type="button" class="btn btn-default" (click)="editLesson(lIndex)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil"></span></button>
       </div>
       <div *ngIf="editFlag===lIndex">
-      <button type="submit" [disabled]="!lessonEdit.valid" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button>
+      <button type="submit" [disabled]="!lessonEdit.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
       </div>
       <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
       <input *ngIf="editFlag===lIndex" type="hidden" name="order" [ngModel]="lesson.order" />
@@ -37,9 +81,11 @@
 
     <td>
       <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" required name="teach" class="form-control" [ngModel]="lesson.teach" />
+      <input type="text" *ngIf="editFlag===lIndex" readonly required name="teach" class="form-control" [ngModel]="lesson.teach" />
     </td>
-
+    <td>
+    <app-upload-form [filedata]="{'objectname': lesson.name,'componentname':'lession','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
+    </td>
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">
@@ -49,6 +95,7 @@
           <select name="phonetic" class="form-control" ngModel required>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
+          <!-- <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
         </div>
       </div>
     </td>
@@ -87,39 +134,7 @@
 </table>
   </form>
 </div>
-<!-- ************************ Add Lesson Block ********************** -->
-  <div class="col-xs-12" *ngIf="insertFlag">
-    <form id="lessonForm" (ngSubmit)="submitLesson()" #lf="ngForm">
-        <div class="row">
-          <div class="col-xs-4">
-            <label>Lesson Name:</label>
-            <!-- Rather than set an ngModel, we use the formControl directive to sync our input to the complexForm object. Notice that we are also setting the attribute we wish the corresponding input to sync with. We no longer need the name attribute, but can optionally add it. -->
-            <input class="form-control" type="text" id="lessonName" placeholder="Name" ngModel name="name" required #lesson>
-            <input type="hidden" name="lesson" [ngModel]="lesson.lesson" />
-          </div>
 
-          <div class="col-xs-4">
-            <label>Teach: </label>
-            <select class="form-control" name="teach" id="lessonTeach" ngModel required (change)="teachDropDownChanged($event.target.value)">
-              <option value="">--Select--</option>
-              <option value="alphabets">Alphabets</option>
-              <option value="words">Words</option>
-            </select>
-          </div>
-
-          <div *ngIf="teachSelect=== 'words'" class="col-xs-4">
-            <label>Phonetics: </label>
-            <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
-              <option value="">--Select--</option>
-              <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-            </select>
-          </div>
-        </div>
-        <br />
-        <button type="submit" class="btn btn-success" [disabled]="!lf.valid">Save</button>
-    </form>
-  </div>
-  <div class="col-xs-12" *ngIf="!insertFlag"><button type="button" class="btn btn-default" (click)="addLesson()">Add Lesson <span class="glyphicon glyphicon-plus greenColor"></span></button><br /></div>
 </div>
 
 

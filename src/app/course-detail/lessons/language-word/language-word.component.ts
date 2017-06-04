@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl, Validators, FormsModule, NgForm} from '@angular/forms';
 import {LessonService} from '../../../shared/model/lesson.service';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
@@ -9,6 +9,8 @@ import 'rxjs/Rx';
 import {Word} from '../../../shared/model/word';
 import {WordService} from '../../../shared/model/word.service';
 import * as _ from 'lodash';
+import {DragulaService} from 'ng2-dragula';
+
 
 @Component({
   selector: 'app-language-word',
@@ -27,23 +29,62 @@ export class LanguageWordComponent implements OnInit {
   @ViewChild('lw') lwForm: NgForm;
   @ViewChild('lwEdit') lwEditForm: NgForm;
   parts: string;
+  dragStartIndex = -1;
+  dropIndex = -1;
+  dropvalue= '';
+  dragElement;
 
-  constructor(public lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute, public router: Router) {
+  constructor(public dragulaService: DragulaService, public lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute, public router: Router) {
+      dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.lessonWord$Key);
+    });
   }
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
     console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
+    window.document.getElementById("showLesson").style.display = "none";
+  }
+
+/*  ngOnDestroy(){
+    window.document.getElementById("showLesson").style.display = "block";
+  }*/
+
+
+
+  onDrag(args) {
+    const [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+
+
+    // do something
   }
 
 
+  onDrop(args) {
+    const [e] = args;
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+    }
+  }
   /* -------------------------------------- */
 
   navigateToParent(){
-    this.lessonService.courseKey=1;
+    //this.lessonService.courseKey=1;
     //this.router.navigate(['../../'], { relativeTo: this.route });
     //reload();
+    window.document.getElementById("showLesson").style.display = "block";
   }
 
   editLessonWord(lwIndex) {

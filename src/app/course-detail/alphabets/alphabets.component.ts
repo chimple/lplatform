@@ -17,16 +17,16 @@ import {animate, group, keyframes, state, style, transition, trigger} from '@ang
   animations: [
     trigger('AnimatedStyle', [
 
-      state('in', style({ opacity: 1, transform: 'translateX(0)' })),
+      state('in', style({opacity: 1, transform: 'translateX(0)'})),
 
       transition('void => *', [
         animate(1000, keyframes([
 
           style({
-            transform: 'translateX(-100px)', opacity: 0 , offset: 0
+            transform: 'translateX(-100px)', opacity: 0, offset: 0
           }),
           style({
-            transform: 'translateX(-50px)', opacity: 0.5 , offset: 0.3
+            transform: 'translateX(-50px)', opacity: 0.5, offset: 0.3
           }),
           style({
             transform: 'translateX(-20px)', opacity: 1, offset: 0.8
@@ -48,7 +48,7 @@ import {animate, group, keyframes, state, style, transition, trigger} from '@ang
 
 
       ])
-  ])
+    ])
   ]
 })
 
@@ -62,15 +62,14 @@ export class AlphabetComponent implements OnInit {
   onPlay = false;
   dragStartIndex = -1;
   dropIndex = -1;
-  dropvalue= '';
+  dropvalue = '';
   dragElement;
 
-   @ViewChild('editAlphabet') editAlphabetData: NgForm;
+  @ViewChild('editAlphabet') editAlphabetData: NgForm;
 
   constructor(private route: ActivatedRoute,
               private alphabetService: AlphabetService,
-              private dragulaService: DragulaService,
-  ) {
+              private dragulaService: DragulaService,) {
 
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
@@ -82,7 +81,7 @@ export class AlphabetComponent implements OnInit {
       console.log(`drop: ${value[0]}`);
       this.onDrop(value.slice(1));
       console.log(this.alphabet$Key);
-      });
+    });
   }
 
   onDrag(args) {
@@ -90,12 +89,12 @@ export class AlphabetComponent implements OnInit {
     if (e) {
       console.log(`drag:${e.rowIndex}`);
       this.dragStartIndex = e.rowIndex;
-     }
+    }
   }
 
 
   onDrop(args) {
-    let [e] = args;
+    const [e] = args;
     if (e) {
       console.log(`drop ${e.rowIndex}`);
       this.dropIndex = e.rowIndex;
@@ -105,7 +104,7 @@ export class AlphabetComponent implements OnInit {
       console.log('alphabet');
       this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
     }
-    }
+  }
 
   callReorderEvent() {
     console.log(`dragStartIndex ${this.dragStartIndex}`);
@@ -126,11 +125,11 @@ export class AlphabetComponent implements OnInit {
   }
 
   editAlphRow(editAlphabetData: NgForm) {
-   this.alphabetService.createAlphabet(this.alphabet$Key, this.editAlphabetData.value
-     )
+    this.alphabetService.createAlphabet(this.alphabet$Key, this.editAlphabetData.value
+    )
       .subscribe(
         () => {
-         // alert('success in alphabet creation');
+          // alert('success in alphabet creation');
           this.editAlpha = '';
         },
         err => alert(`error in creating new alphabet ${err}`)
@@ -200,12 +199,12 @@ export class AlphabetComponent implements OnInit {
     this.alphabetService.createAlphabet(this.alphabet$Key, form.value)
       .subscribe(
         () => {
-        //  alert('success in alphabet creation');
+          //  alert('success in alphabet creation');
           form.reset();
         },
         err => alert(`error in creating new alphabet ${err}`)
       );
-    }
+  }
 
   private trackEntryItems(i, item): number {
     return item.id;

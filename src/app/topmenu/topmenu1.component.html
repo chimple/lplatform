@@ -47,7 +47,7 @@
                 <li *ngFor="let course of (subscribedCourses$ | async)"><span class="glyphicon glyphicon-expand"></span> &nbsp;
                     <a routerLink="/home/lesson/{{course.$key}}" (click)="closePopUp()"><b>{{course.lang}}</b></a>
                 </li>
-                <li><span class="glyphicon glyphicon-edit"></span> &nbsp; <a routerLink="home" (click)="closePopUp()">Add course</a></li>
+                <li><span class="glyphicon glyphicon-edit"></span> &nbsp; <a (click)="goToHomePage()">Add course</a></li>
               </ul>
             </li>
           </ul>
