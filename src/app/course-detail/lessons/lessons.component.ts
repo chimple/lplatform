@@ -17,7 +17,7 @@ import {DragulaService} from 'ng2-dragula';
 
 export class LessonsComponent implements OnInit {
 
-  showLesson = 1;
+  //showLesson = 1;
   tst: any = 'Sharath';
   teachSelect: any;
   insertFlag = false;
@@ -75,8 +75,8 @@ export class LessonsComponent implements OnInit {
   }
 
   callChildRoutes() {
-    this.showLesson = 2;
-    this.lessonService.courseKey = this.showLesson;
+    //this.showLesson = 2;
+    //this.lessonService.courseKey = this.showLesson;
   }
 
   addLesson(): void {
