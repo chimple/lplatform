@@ -95,4 +95,23 @@ export class PhoneticService {
 
     return subject.asObservable();
   }
+  deletePhonetic(courseUrl: string, input: any): void {
+    console.log(`input ${JSON.stringify(input)}`);
+    let courseDetail: CourseDetail;
+    this.courseService.getCourseDetail(courseUrl)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+
+    courseDetail.phonetics = courseDetail.phonetics - 1;
+    const courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
+    this.firebaseUpdate(dataToSave);
+
+    const phoneticToDelete$ = this.db.object(`course_phonetics/${courseUrl}/${input}`);
+    phoneticToDelete$.remove();
+  }
 }

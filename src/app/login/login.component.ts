@@ -39,11 +39,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUsingProvider(provider)
       .subscribe(
         () => {
-          if(this.currentCourse){
-            this.router.navigate(['/home/lesson/'+this.currentCourse]);
-          }else{
-            this.router.navigate(['/home']);
-          }
+           this.router.navigate(['/home']);
         }
       );
   }

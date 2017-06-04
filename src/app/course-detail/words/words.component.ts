@@ -5,10 +5,47 @@ import {FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {Word} from '../../shared/model/word';
 import {PhoneticService} from '../../shared/model/phonetic.service';
+import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
-  styleUrls: ['./words.component.css']
+  styleUrls: ['./words.component.css'],
+  animations: [
+    trigger('AnimatedStyle', [
+
+      state('in', style({ opacity: 1, transform: 'translateX(0)' })),
+
+      transition('void => *', [
+        animate(1000, keyframes([
+
+          style({
+            transform: 'translateX(-100px)', opacity: 0 , offset: 0
+          }),
+          style({
+            transform: 'translateX(-50px)', opacity: 0.5 , offset: 0.3
+          }),
+          style({
+            transform: 'translateX(-20px)', opacity: 1, offset: 0.8
+          }),
+          style({
+            transform: 'translateX(0px)', opacity: 1, offset: 1
+          })
+        ]))
+      ]),
+
+      transition('* => void', [
+        group([
+          animate(100, style({
+            color: 'red'
+          })),
+          animate(800, style({
+            transform: 'translateX(100px)', opacity: 0
+          }))])
+
+
+      ])
+    ])
+  ]
 })
 export class WordsComponent implements OnInit {
   words$: Observable<Word[]>;
@@ -162,5 +199,8 @@ export class WordsComponent implements OnInit {
         'phonetic': new FormControl(null, Validators.required)
       })
     );
+  }
+  private trackEntryItems(i, item): number {
+    return item.id;
   }
 }
