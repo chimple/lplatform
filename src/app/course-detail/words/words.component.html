@@ -1,5 +1,6 @@
 <form [formGroup]="editform" (ngSubmit)="oneditData(editform.value)">
-  <table class="table table-striped table-style table-responsive" style="border: 3px solid #e4e4e4">
+<div class="table-responsive">
+  <table class="table table-striped table-style" style="border: 3px solid #e4e4e4">
     <thead>
       <tr>
         <th></th>
@@ -45,7 +46,7 @@
             <p *ngIf="show===i"><textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea></p>
         </tr>
         <tr *ngIf="show===i">
-          <td colspan="5">
+          <td colspan="6">
             <div class="col-md-12 col-md-offset-1" formArrayName="phoneticdata" style="margin-top: 10px;">
               <div class="row" *ngFor="let editctrl of editform.get('phoneticdata').controls; let ip=index " [formGroupName]="ip" style="margin-bottom: 10px;">
                 <div class="col-md-2">
@@ -81,6 +82,7 @@
         </ng-container>
       </tbody>
     </table>
+    </div>
   </form>
   <div *ngIf="chkflag">
     <hr>
