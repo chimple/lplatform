@@ -6,7 +6,6 @@ export class LessonScore {
   }
 
   static fromJsonList(array): LessonScore[] {
-    console.log(array);
     const result: LessonScore[] = [];
     _.each(_.keys(array), (key) => {
       result.push(LessonScore.fromJson(key, array[key]));
