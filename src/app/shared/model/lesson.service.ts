@@ -100,41 +100,19 @@ export class LessonService {
 
   createLessonItem(courseUrl: string, lessonUrl: string, input: any, type: string, attributeExists = false): Observable<any> {
     const editLesson: boolean = input.lesson !== undefined;
-    let courseDetail: CourseDetail;
-    let order;
-    let courseDetailToSave;
-
-    if (editLesson) {
-      order = input.order;
-    } else {
-      this.courseService.getCourseDetail(courseUrl)
-        .subscribe(
-          courseInfo => courseDetail = courseInfo
-        );
-
-      order = courseDetail.lessons;
-      courseDetail.lessons = order;
-      courseDetailToSave = Object.assign({}, courseDetail);
-      delete(courseDetailToSave.$key);
-
-    }
-
 
     let lessonItemToSave;
 
 
     if (input.word) {
-      lessonItemToSave = Object.assign({}, {item: input.word}, {lesson: lessonUrl}, {course: courseUrl}, {order: order});
+      lessonItemToSave = Object.assign({}, {item: input.word}, {lesson: lessonUrl}, {course: courseUrl});
     } else if (input.alphabet) {
-      lessonItemToSave = Object.assign({}, {item: input.alphabet}, {lesson: lessonUrl}, {course: courseUrl}, {order: order});
+      lessonItemToSave = Object.assign({}, {item: input.alphabet}, {lesson: lessonUrl}, {course: courseUrl});
     }
 
     const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
 
     const dataToSave = {};
-    if (courseDetailToSave) {
-      dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
-    }
     dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
 
     if (!attributeExists) {
