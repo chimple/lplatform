@@ -188,7 +188,7 @@ export class AlphabetComponent implements OnInit {
 // }
 
   deleteAlphRow(alphabet: string) {
-    console.log(alphabet);
+  //  console.log(alphabet);
     this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
   }
 
@@ -201,6 +201,7 @@ export class AlphabetComponent implements OnInit {
         () => {
           //  alert('success in alphabet creation');
           form.reset();
+          this.myAlphabet = false;
         },
         err => alert(`error in creating new alphabet ${err}`)
       );
