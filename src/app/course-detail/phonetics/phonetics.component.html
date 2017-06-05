@@ -94,6 +94,7 @@
             <!--{{phonetic.pronunciation}}-->
           </td>
           <input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>
+          <input *ngIf="editPhone=== i" type="hidden" name="order" ngModel="{{ phonetic.order }}"/>
           <!--<input *ngIf="editPhone=== i" type="hidden" name="key" ngModel="{{ phonetic.alphabet }}"/>-->
           <!-- <input *ngIf="editPhone=== i" type="hidden" name="writing" ngModel="{{ phonetic.writing }}"/> -->
 
