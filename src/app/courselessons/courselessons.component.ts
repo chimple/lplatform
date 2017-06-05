@@ -34,16 +34,10 @@ export class CourselessonsComponent implements OnInit {
       .switchMap((params) => {
         that.courseId = params['courseId']
         return this.courseService.getCourseInformation(params['courseId']);
-      })
-      .first()
-      .publishLast()
-      .refCount();
+      });
 
     that.courseLessons$ = that.activatedRoute.params
-      .switchMap((params) => that.courseLessonsService.getCourseLessons(params['courseId']))
-      .first()
-      .publishLast()
-      .refCount();
+      .switchMap((params) => that.courseLessonsService.getCourseLessons(params['courseId']));
 
     this.authService.authInfo$
       .subscribe(

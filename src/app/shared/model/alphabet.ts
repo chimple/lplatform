@@ -15,10 +15,5 @@ export class Alphabet {
               public order: number,
               public pronunciation: string,
               public sound: string) {
-      console.log(`alphabet ${alphabet}`);
-      console.log(`sound ${sound}`);
-      console.log(`order ${order}`);
-      console.log(`pronunciation ${pronunciation}`);
   }
-
 }

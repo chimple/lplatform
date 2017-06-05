@@ -1,5 +1,4 @@
-
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../shared/model/course.service';
 import {Course} from '../shared/model/course';
 import {Observable} from 'rxjs/Observable';
@@ -18,10 +17,11 @@ export class UsercreatedcoursesComponent implements OnInit {
   filtered: Course[];
   authInfo: AuthInfo;
 
-  constructor(private courseService: CourseService,private authService: AuthService) { }
+  constructor(private courseService: CourseService, private authService: AuthService) {
+  }
 
   ngOnInit() {
-  	const that = this;
+    const that = this;
     this.authService.authInfo$
       .subscribe(
         authInfo => {
@@ -29,7 +29,7 @@ export class UsercreatedcoursesComponent implements OnInit {
         }
       );
 
-    const receivedCourses = this.courseService.findAllCourses();
+    const receivedCourses = this.courseService.findAllCoursesCreatedBy(this.authInfo.getUser().email);
     this.courses$ = receivedCourses;
     receivedCourses
       .subscribe(

@@ -46,30 +46,41 @@ export class PhoneticService {
 
   createPhonetic(courseUrl: string, input: any): Observable<any> {
     let courseDetail: CourseDetail;
+    let totalPhonetics = 0;
     this.courseService.getCourseDetail(courseUrl)
-      .subscribe(
-        courseInfo => courseDetail = courseInfo
+      .subscribe((courseInfo) => {
+          courseDetail = courseInfo;
+          totalPhonetics = courseDetail.phonetics;
+        }
       );
 
-    const order = courseDetail.phonetics + 1;
-    courseDetail.phonetics = order;
+    let phoneticToSave;
+    let newKey;
 
+    if (!input.key) {
+      totalPhonetics = courseDetail.phonetics + 1;
+      courseDetail.phonetics = totalPhonetics;
+      phoneticToSave = Object.assign({},
+        {phonetic: input.alphabet},
+        {pronunciation: input.pronunciation},
+        {writing: input.written}, {course: courseUrl}, {order: totalPhonetics});
+      newKey = phoneticToSave.phonetic;
+      delete(phoneticToSave.phonetic);
+    } else {
+      const phoneticsToDelete$ = this.db.object(`course_phonetics/${courseUrl}/${input.key}`);
+      phoneticsToDelete$.remove();
+      phoneticToSave = Object.assign({},
+        {phonetic: input.alphabet},
+        {pronunciation: input.pronunciation},
+        {writing: input.written}, {course: courseUrl}, {order: input.order});
+      newKey = phoneticToSave.phonetic;
+    }
     const courseDetailToSave = Object.assign({}, courseDetail);
     delete(courseDetailToSave.$key);
-
-    const phoneticToSave = Object.assign({},
-      {phonetic: input.alphabet},
-      {pronunciation: input.pronunciation},
-      {writing: input.written}, {course: courseUrl}, {order: order});
-
-    const newKey = phoneticToSave.phonetic;
-    delete(phoneticToSave.phonetic);
 
     const dataToSave = {};
     dataToSave[`course_details/${courseUrl}`] = courseDetailToSave;
     dataToSave[`course_phonetics/${courseUrl}/${newKey}`] = phoneticToSave;
-    const subject = new Subject();
-
     return this.firebaseUpdate(dataToSave);
   }
 
@@ -95,6 +106,7 @@ export class PhoneticService {
 
     return subject.asObservable();
   }
+
   deletePhonetic(courseUrl: string, input: any): void {
     console.log(`input ${JSON.stringify(input)}`);
     let courseDetail: CourseDetail;

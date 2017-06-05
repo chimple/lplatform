@@ -7,7 +7,6 @@ import {UserInformation} from './user-info';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {UserCourse} from './user-course';
 import {UtilHelper} from '../model/util-helper';
-import {fn} from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable()
