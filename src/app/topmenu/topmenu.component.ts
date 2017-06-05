@@ -86,7 +86,8 @@ export class TopmenuComponent implements OnInit {
       this.isCollapsedCourses = false;
     }
   }
-  closePopUp(){
+
+  closePopUp() {
     this.isCollapsedCourses = false;
     this.isCollapsedContent = false;
   }

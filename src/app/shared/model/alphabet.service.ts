@@ -8,6 +8,7 @@ import {Subject} from 'rxjs/Subject';
 import {Http} from '@angular/http';
 import {CourseService} from './course.service';
 import {CourseDetail} from './course-detail';
+import * as _ from 'lodash';
 
 @Injectable()
 export class AlphabetService {
@@ -20,7 +21,8 @@ export class AlphabetService {
   findAlphabetsByCourse(courseUrl: string, query: FirebaseListFactoryOpts = {query: {orderByChild: 'order'}}): Observable<Alphabet[]> {
     console.log(`findAlphabetsByCourse ${courseUrl}`);
     return this.db.list(`course_alphabets/${courseUrl}`, query)
-      .map(results => Alphabet.fromJsonList(results));
+      .map(results => _.sortBy(Alphabet.fromJsonList(results), 'order'));
+
   }
 
   loadFirstAlphabetsPage(courseUrl: string, pageSize: number): Observable<Alphabet[]> {
@@ -184,29 +186,55 @@ export class AlphabetService {
         orderByChild: 'order'
       }
     }).map(results => {
-        return results.filter((alphabetValue) => indexes.includes(alphabetValue.order));
-      });
+      return results.filter((alphabetValue) => indexes.includes(alphabetValue.order));
+    });
+    // const updateOperations = [];
+    // $result.subscribe(
+    //   (alphabetOrder) => {
+    //     alphabetOrder.forEach((alphabetO) => {
+    //       if (isDraggedUp) {
+    //         const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
+    //         const updateOrder = Object.assign({}, {order: newOrder});
+    //         const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
+    //         updateOperations.push(updateAlphabet$.update(updateOrder));
+    //       } else if (!isDraggedUp) {
+    //         const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
+    //         const updateOrder = Object.assign({}, {order: newOrder});
+    //         const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
+    //         updateOperations.push(updateAlphabet$.update(updateOrder));
+    //         // updateAlphabet$.update(updateOrder);
+    //       }
+    //     });
+    //   }
+    // );
+
+
+    const updateOperations = [];
     $result.subscribe(
       (alphabetOrder) => {
-
         alphabetOrder.forEach((alphabetO) => {
           if (isDraggedUp) {
             const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
             const updateOrder = Object.assign({}, {order: newOrder});
-            console.log(`alphabetO ${JSON.stringify(alphabetO)}`);
-            console.log(`updateOrder ${JSON.stringify(updateOrder)}`);
             const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-            updateAlphabet$.update(updateOrder);
-          } else {
+            updateOperations.push(Observable.fromPromise(updateAlphabet$.update(updateOrder)));
+          } else if (!isDraggedUp) {
             const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
             const updateOrder = Object.assign({}, {order: newOrder});
-            console.log(`alphabetO ${JSON.stringify(alphabetO)}`);
-            console.log(`updateOrder ${JSON.stringify(updateOrder)}`);
             const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-            updateAlphabet$.update(updateOrder);
+            updateOperations.push(Observable.fromPromise(updateAlphabet$.update(updateOrder)));
+            ;
           }
         });
+      },
+      err => console.log(err),
+      () => {
+        console.log('completed');
+        Observable.forkJoin(updateOperations)
+          .subscribe(done => console.log('DOne'));
+
       }
     );
+
   }
 }
