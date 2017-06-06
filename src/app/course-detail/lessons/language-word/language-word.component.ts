@@ -34,9 +34,7 @@ export class LanguageWordComponent implements OnInit {
   dropIndex = -1;
   dropvalue = '';
   dragElement;
-
   lesonWord$Arr = [];
-
   existingWordsForCourse = [];
 
   constructor(public dragulaService: DragulaService, public lessonService: LessonService, private wordService: WordService,
