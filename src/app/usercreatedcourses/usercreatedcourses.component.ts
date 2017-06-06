@@ -22,19 +22,21 @@ export class UsercreatedcoursesComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
+
     this.authService.authInfo$
       .subscribe(
         authInfo => {
           that.authInfo = authInfo;
+          const receivedCourses = that.courseService.findAllCoursesCreatedBy(that.authInfo.getUser().email);
+          that.courses$ = receivedCourses;
+          receivedCourses
+            .subscribe(
+              courses => that.allCourses = that.filtered = courses
+            );
+
         }
       );
 
-    const receivedCourses = this.courseService.findAllCoursesCreatedBy(this.authInfo.getUser().email);
-    this.courses$ = receivedCourses;
-    receivedCourses
-      .subscribe(
-        courses => this.allCourses = this.filtered = courses
-      );
   }
 
   search(search: string) {
