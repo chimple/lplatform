@@ -26,10 +26,10 @@ import {DragulaService} from 'ng2-dragula';
             transform: 'translateX(-50px)', opacity: 0.5 , offset: 0.3
           }),
           style({
-            transform: 'translateX(-20px)', opacity: 1, offset: 0.8
+            transform: 'translateX(-20px)', backgroundColor: '#A4FF0C', opacity: 1, offset: 0.8
           }),
           style({
-            transform: 'translateX(0px)', backgroundColor: 'green', opacity: 1, offset: 1
+            transform: 'translateX(0px)', backgroundColor: '#4DFF8D', opacity: 1, offset: 1
           })
         ]))
       ]),
@@ -37,7 +37,7 @@ import {DragulaService} from 'ng2-dragula';
       transition('* => void', [
         group([
           animate(300, style({
-            color: 'red', backgroundColor: 'red', opacity: 0.5
+            color: 'white', backgroundColor: '#FF090C', opacity: 0.5
           })),
           animate(800, style({
             transform: 'translateX(100px)', opacity: 0
