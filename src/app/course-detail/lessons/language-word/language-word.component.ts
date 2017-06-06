@@ -10,6 +10,7 @@ import {Word} from '../../../shared/model/word';
 import {WordService} from '../../../shared/model/word.service';
 import * as _ from 'lodash';
 import {DragulaService} from 'ng2-dragula';
+import {CourseService} from "../../../shared/model/course.service";
 
 
 @Component({
@@ -31,12 +32,16 @@ export class LanguageWordComponent implements OnInit {
   parts: string;
   dragStartIndex = -1;
   dropIndex = -1;
-  dropvalue= '';
+  dropvalue = '';
   dragElement;
+
   lesonWord$Arr = [];
 
-  constructor(public dragulaService: DragulaService, public lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute, public router: Router) {
-      dragulaService.drag.subscribe((value) => {
+  existingWordsForCourse = [];
+
+  constructor(public dragulaService: DragulaService, public lessonService: LessonService, private wordService: WordService,
+              private route: ActivatedRoute, public router: Router, private courseService: CourseService) {
+    dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
     });
@@ -49,22 +54,21 @@ export class LanguageWordComponent implements OnInit {
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
+    console.log("Latest Course Key: " + this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
     window.document.getElementById("showLesson").style.display = "none";
 
-    //this.runLessonWord();
+    this.wordService.findWordsByCourse(this.lessonWord$Key)
+      .subscribe(
+        (words) => {
+          this.existingWordsForCourse = words;
+        }
+      );
   }
 
-/*  runLessonWord(){
-    for(let x in this.lesonWord$){
-      this.lesonWord$Arr.push(x[lessonItem]);   
-    }
-  }*/
-
-/*  ngOnDestroy(){
-    window.document.getElementById("showLesson").style.display = "block";
-  }*/
-
+  /*  ngOnDestroy(){
+   window.document.getElementById("showLesson").style.display = "block";
+   }*/
 
 
   onDrag(args) {
@@ -86,9 +90,10 @@ export class LanguageWordComponent implements OnInit {
       this.dropIndex = e.rowIndex;
     }
   }
+
   /* -------------------------------------- */
 
-  navigateToParent(){
+  navigateToParent() {
     //this.lessonService.courseKey=1;
     //this.router.navigate(['../../'], { relativeTo: this.route });
     //reload();
@@ -105,7 +110,7 @@ export class LanguageWordComponent implements OnInit {
     // this.wordService.updateLessonWord(this.lessonWord$Key, this.lwForm.value);
     /* ------------------------------------------ */
 
-      /* ------------------------------------------ */
+    /* ------------------------------------------ */
   }
   deleteWord(course$Key, lesson$key, lessonItem$key){
     this.lessonService.deleteLessonWord(course$Key, lesson$key, lessonItem$key);
@@ -117,16 +122,11 @@ export class LanguageWordComponent implements OnInit {
 
   submitLW() {
     console.log(this.lwForm.value);
-    let existingWordsForCourse = [];
     const that = this;
     const updatedForm = this.lwForm.value;
-    this.wordService.findWordsByCourse('XX01')
-      .subscribe(
-        (words) => {
-          existingWordsForCourse = words;
-          const checkWordExists = existingWordsForCourse.map(word =>  word.word).includes(updatedForm.word);
-          that.lessonService.createLessonItem('XX01', that.lessonWord$Key, updatedForm, 'word', checkWordExists);
-        });
+
+    const checkWordExists = this.existingWordsForCourse.map(word => word.word).includes(updatedForm.word);
+    this.lessonService.createLessonItem(this.lessonWord$Key, this.lessonWord$Key, updatedForm, 'word', checkWordExists);
     this.lwInsertFlag = false;
   }
 
