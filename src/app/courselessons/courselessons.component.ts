@@ -33,13 +33,17 @@ export class CourselessonsComponent implements OnInit {
     this.currentCourse$ = this.activatedRoute.params
       .switchMap((params) => {
         that.courseId = params['courseId']
-        return this.courseService.getCourseInformation(params['courseId']);
+        return that.courseService.getCourseInformation(params['courseId']);
       });
 
     that.courseLessons$ = that.activatedRoute.params
       .switchMap((params) => that.courseLessonsService.getCourseLessons(params['courseId']));
 
-    this.authService.authInfo$
+    that.activatedRoute.params
+      .switchMap((params) => {
+        that.courseId = params['courseId'];
+        return that.authService.authInfo$;
+      })
       .subscribe(
         authInfo => {
           that.authInfo = authInfo;
@@ -49,6 +53,7 @@ export class CourselessonsComponent implements OnInit {
           }
         }
       );
+    ;
   }
 
   takeTheCourse(courseId) {

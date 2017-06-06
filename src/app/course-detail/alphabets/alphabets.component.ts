@@ -32,15 +32,15 @@ import {animate, group, keyframes, state, style, transition, trigger} from '@ang
             transform: 'translateX(-20px)', opacity: 1, offset: 0.8
           }),
           style({
-            transform: 'translateX(0px)', opacity: 1, offset: 1
+            transform: 'translateX(0px)', backgroundColor: 'green', opacity: 1, offset: 1
           })
         ]))
       ]),
 
       transition('* => void', [
         group([
-          animate(100, style({
-            color: 'red'
+          animate(300, style({
+            color: 'red', backgroundColor: 'red', opacity: 0.5
           })),
           animate(800, style({
             transform: 'translateX(100px)', opacity: 0
@@ -188,7 +188,9 @@ export class AlphabetComponent implements OnInit {
 
   deleteAlphRow(alphabet: string) {
   //  console.log(alphabet);
-    this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
+    if (confirm('Are you sure to delete ?')) {
+      this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
+    }
   }
 
 

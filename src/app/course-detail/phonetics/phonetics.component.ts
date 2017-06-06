@@ -31,15 +31,15 @@ declare var swal: any;
             transform: 'translateX(-20px)', opacity: 1, offset: 0.8
           }),
           style({
-            transform: 'translateX(0px)', opacity: 1, offset: 1
+            transform: 'translateX(0px)', backgroundColor: 'green', opacity: 1, offset: 1
           })
         ]))
       ]),
 
       transition('* => void', [
         group([
-          animate(100, style({
-            color: 'red'
+          animate(300, style({
+            color: 'red', backgroundColor: 'red', opacity: 0.5
           })),
           animate(800, style({
             transform: 'translateX(100px)', opacity: 0
@@ -141,8 +141,15 @@ export class PhoneticsComponent implements OnInit {
 
   save(form: NgForm) {
     console.log(form.value);
-    this.phoneticService.createPhonetic(this.phonetics$key, form.value);
-    form.reset();
+    this.phoneticService.createPhonetic(this.phonetics$key, form.value)
+      .subscribe(
+      () => {
+        // alert('success in Phonetic creation');
+        form.reset();
+        this.myPhonetics = false;
+       },
+      err => alert(`error in creating new alphabet ${err}`)
+    );
   }
 
   editPhonRow() {
@@ -157,9 +164,9 @@ export class PhoneticsComponent implements OnInit {
     );
    }
   ondeletePhonetics(phonetic: string) {
-   // if (confirm('Are you sure to delete ?')) {
+    if (confirm('Are you sure to delete ?')) {
     this.phoneticService.deletePhonetic(this.phonetics$key, phonetic);
-  // }
+  }
 }
   private trackEntryItems(i, item): number {
     return item.id;
