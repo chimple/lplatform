@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Word} from '../../shared/model/word';
 import {PhoneticService} from '../../shared/model/phonetic.service';
 import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {DragulaService} from 'ng2-dragula';
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
@@ -56,10 +57,30 @@ export class WordsComponent implements OnInit {
   show = '';
   word$Key: string;
   newphonetic: string;
+  dragStartIndex = -1;
+  dropIndex = -1;
+  dropvalue = '';
+  dragElement;
+  constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute,
+              private dragulaService: DragulaService) {
+    dragulaService.drag.subscribe((value) => {
+      //console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
 
-  constructor(private phoneticService: PhoneticService, private wordService: WordService, private route: ActivatedRoute) {
+    dragulaService.drop.subscribe((value) => {
+      //console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      //console.log(this.word$Key);
+    });
   }
-
+  onDrag(args) {
+    let [e] = args;
+    if (e) {
+      console.log(`drag:${e.rowIndex}`);
+      this.dragStartIndex = e.rowIndex;
+    }
+  }
   ngOnInit() {
     this.word$Key = this.route.snapshot.params['wordId'];
     this.words$ = this.wordService.findWordsByCourse(this.word$Key);
@@ -67,7 +88,17 @@ export class WordsComponent implements OnInit {
     console.log(this.phoneticsSelection$);
     this.initForm();
   }
-
+onDrop(args) {
+    const [e] = args;
+    console.log(e);
+    if (e) {
+      console.log(`drop ${e.rowIndex}`);
+      this.dropIndex = e.rowIndex;
+      this.dropvalue = e.cells[1].innerText;
+      console.log(this.dragStartIndex+"---"+this.dropIndex+"----"+this.word$Key+"---"+this.dropvalue);
+      //this.wordService.updateDragOrder(this.word$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+    }
+  }
   private initForm() {
     const word = '';
     const meaning = '';
