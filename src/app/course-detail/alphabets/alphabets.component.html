@@ -32,86 +32,89 @@
 
     <!--<form (ngSubmit)="editAlphRow(editAlphabet.value)" #editAlphabet="ngForm">-->
     <form (ngSubmit)="editAlphRow(editAlphabet)" #editAlphabet="ngForm">
+<div class="table-responsive">
+  <table class="table table-striped table-style " style="border: 3px solid #e4e4e4">
+    <tr>
+      <th></th>
+      <th>Alphabet </th>
+      <th>Sound <span class="glyphicon glyphicon-volume-up" style="color: #ff36ed"></span></th>
+      <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
+    </tr>
+    <tbody [dragula]='"alphabet-drag"'  >
+    <tr [@AnimatedStyle]="'in'" *ngFor="let alphab of (alphabets$ | async);trackBy:trackEntryItems ; let i = index " >
 
-      <table class="table table-striped table-style table-responsive" style="border: 3px solid #e4e4e4">
-        <tr>
-          <th></th>
-          <th>Alphabet </th>
-          <th>Sound <span class="glyphicon glyphicon-volume-up" style="color: #ff36ed"></span></th>
-          <th>Pronunciation <span class="glyphicon glyphicon-volume-down" style="color: #ff36ed"></span></th>
-        </tr>
-        <tbody [dragula]='"alphabet-drag"'  >
-        <tr [@AnimatedStyle]="'in'" *ngFor="let alphab of (alphabets$ | async);trackBy:trackEntryItems ; let i = index " >
-
-          <td >
-            <!--<span hidden>{{i+1}}</span> -->
-            <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
-                                                       style="border-radius: 60px">
+      <td >
+        <!--<span hidden>{{i+1}}</span> -->
+        <button class="btn btn-default" type="button" (click)="deleteAlphRow(alphab.alphabet)"
+                style="border-radius: 60px">
             <span class="glyphicon glyphicon-trash"
                   style="color: red; size: 1px; cursor: pointer"> </span>
 
-          </button>
+        </button>
 
-            <button *ngIf="editAlpha!== i "(click)="editAlph(i)" class="btn btn-default" type="button"  style="border-radius: 60px">
-            <span class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
-            </button>
+        <button *ngIf="editAlpha!== i "(click)="editAlph(i)" class="btn btn-default" type="button"  style="border-radius: 60px">
+          <span class="glyphicon glyphicon-pencil" style="color: green; cursor: pointer"></span>
+        </button>
 
-            <button class="btn btn-default" type="submit" *ngIf="editAlpha=== i" style="border-radius: 60px">
+        <button class="btn btn-default" type="submit" *ngIf="editAlpha=== i" style="border-radius: 60px">
             <span class="glyphicon glyphicon-ok"
                   style="color: green; size: 1px; cursor: pointer"> </span>
 
-            </button>
+        </button>
 
-          </td>
-          <input *ngIf="editAlpha=== i" type="hidden" name="order" ngModel="{{ alphab.order }}"/>
-          <input *ngIf="editAlpha=== i" type="hidden" name="key" ngModel="{{ alphab.alphabet }}"/>
-          <input *ngIf="editAlpha=== i" type="hidden" name="sound" [(ngModel)]="alphab.sound" />
-          <input *ngIf="editAlpha=== i" type="hidden" name="pronunciation" [(ngModel)]="alphab.pronunciation" />
+      </td>
+      <input *ngIf="editAlpha=== i" type="hidden" name="order" ngModel="{{ alphab.order }}"/>
+      <input *ngIf="editAlpha=== i" type="hidden" name="key" ngModel="{{ alphab.alphabet }}"/>
+      <input *ngIf="editAlpha=== i" type="hidden" name="sound" [(ngModel)]="alphab.sound" />
+      <input *ngIf="editAlpha=== i" type="hidden" name="pronunciation" [(ngModel)]="alphab.pronunciation" />
 
 
 
-          <td hidden>{{i+1}}</td>
-          <td hidden>{{alphab.alphabet}}</td>
-          <td class="col-xs-2">
+      <td hidden>{{i+1}}</td>
+      <td hidden>{{alphab.alphabet}}</td>
+      <td class="col-xs-2">
 
-            <p *ngIf="editAlpha!== i" >
-              {{alphab.alphabet}}
-            </p>
-            <input type="text" name="alphabetName" ngModel="{{alphab.alphabet}}"
-                   *ngIf="editAlpha=== i" class="form-control" />
+        <p *ngIf="editAlpha!== i" >
+          {{alphab.alphabet}}
+        </p>
+        <input type="text" name="alphabetName" ngModel="{{alphab.alphabet}}"
+               *ngIf="editAlpha=== i" class="form-control" />
 
-            <!--{{alphabet.alphabet}}-->
-          </td>
-          <td>
-            <app-upload-form [filedata]="{'objectname':alphab.alphabet,
+        <!--{{alphabet.alphabet}}-->
+      </td>
+      <td>
+        <app-upload-form [filedata]="{'objectname':alphab.alphabet,
 
             'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
-            </app-upload-form>
-            <app-record-audio [filedata]="{'objectname':alphab.alphabet,
+        </app-upload-form>
+        <app-record-audio [filedata]="{'objectname':alphab.alphabet,
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'sound'}" >
-            </app-record-audio>
+        </app-record-audio>
 
-            <app-play [filedata]="{'indexno': i,'source': alphab.sound,'playfor':'sound'}"></app-play>
+        <app-play [filedata]="{'indexno': i,'source': alphab.sound,'playfor':'sound'}"></app-play>
 
-          </td>
+      </td>
 
-          <td>
-            <!--<label>Sound</label><br>-->
-            <app-upload-form [filedata]="{'objectname':alphab.alphabet,
+      <td>
+        <!--<label>Sound</label><br>-->
+        <app-upload-form [filedata]="{'objectname':alphab.alphabet,
           'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}">
 
-            </app-upload-form>
+        </app-upload-form>
 
-            <app-record-audio [filedata]="{'objectname':alphab.alphabet,
+        <app-record-audio [filedata]="{'objectname':alphab.alphabet,
               'componentname':'alphabet','courseId':alphabet$Key,'uploadFor':'pronunciation'}" >
-            </app-record-audio>
+        </app-record-audio>
 
-            <app-play [filedata]="{'indexno': i,'source': alphab.pronunciation, 'playfor':'pronunciation'}"></app-play>
-            </td>
-        </tr>
-        </tbody>
+        <app-play [filedata]="{'indexno': i,'source': alphab.pronunciation, 'playfor':'pronunciation'}"></app-play>
+      </td>
+    </tr>
+    </tbody>
 
-      </table>
+  </table>
+
+</div>
+
 
     </form>
 
