@@ -1,0 +1,76 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-1">
+            <!-- <button type="button" [routerLink]="['../', { relativeTo: this.route }]" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
+        <!-- <button type="button" href="javascript:void(0);" (click)="navigateToParent()" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> -->
+        <!-- <button type="button" href="javascript:void(0);" [routerLink]="['../../parent']" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button> -->
+        <button type="button" [routerLink]="['../../']" (click)="navigateToParent()" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
+        </div>
+        <div class="col-xs-11">
+          <p class="customHeading1">Lesson Words</p> 
+        </div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="row">
+  <div class="col-xs-12">
+  <form (ngSubmit)="updateLessonWord()" #lwEdit="ngForm">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th class="textCenter">Delete</th>
+    <th class="textCenter">Edit</th>
+    <th class="customPaddingForLessonWord">Words</th>
+  </tr>
+  </thead>
+  <tbody [dragula]='"alphabet-drag"'>
+
+    <tr *ngFor="let lessonWord of lesonWord$ | async; let lwIndex=index ">
+      <td align="center" class="width8percent"><button type="button" class="btn btn-default" style="border-radius: 60px; color: red" (click)="deleteWord(lessonWord.course, lessonWord.lesson, lessonWord.lessonItem)"><span class="glyphicon glyphicon-trash"></span></button>
+      </td>
+      <td align="center" class="width8percent">
+        <div *ngIf="lwEditFlag!==lwIndex">
+          <button type="button" class="btn btn-default" style="border-radius: 60px; color: green" (click)="editLessonWord(lwIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
+        </div>
+        <div *ngIf="lwEditFlag===lwIndex">
+          <button type="submit" [disabled]="!lwEdit.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
+        </div>
+        <input *ngIf="lwEditFlag===lwIndex" type="hidden" name="lessonWord" [ngModel]="lessonWord.lessonItem" />
+      </td>
+      <td class="customPaddingForLessonWord">
+        <p *ngIf="lwEditFlag!==lwIndex">{{lessonWord.item}}</p>
+      <input *ngIf="lwEditFlag===lwIndex" type="text" required class="form-control" name="item" placeholder="Enter Word" [ngModel]="lessonWord.item" />
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</form>
+</div>
+</div>
+  </div>
+</div>
+
+
+
+
+<div class="row" *ngIf="lwInsertFlag">
+  <div class="col-xs-12">
+    <form (ngSubmit)="submitLW()" #lw="ngForm">        
+        <div class="row">
+          <div class="col-xs-4">
+            <label>Enter Word: <mark class="redColor">* Enter a word which is not in the dropdown list.</mark></label>
+            <!-- <input class="form-control" type="text" placeholder="Enter Word" ngModel name="word" required #lessonItem> -->
+            <input type="text" class='form-control' name="word" auto-complete [source]="lesonWord$Arr"  placeholder="Enter Word" required />
+          </div>
+          <div class="col-xs-4"><label>&nbsp;</label><button type="submit" [disabled]="!lw.valid" class="btn btn-success displayBlockImp">Save</button></div>
+        </div>
+    </form>
+  </div>
+</div>
+<button type="button" *ngIf="!lwInsertFlag" class="btn btn-default" (click)="addWord()">Add Word <span class="glyphicon glyphicon-plus greenColor"></span></button>
+
+<br /><br />

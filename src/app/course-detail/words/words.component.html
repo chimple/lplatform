@@ -1,0 +1,137 @@
+<form [formGroup]="editform" (ngSubmit)="oneditData(editform.value)">
+<div class="table-responsive">
+  <table class="table table-striped table-style" style="border: 3px solid #e4e4e4">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Word</th>
+        <th>Meaning</th>
+        <th>Pronunciation</th>
+        <th>Picture</th>
+        <th>Refer</th>
+      </tr>
+    </thead>
+    <tbody [dragula]='"alphabet-drag"'>
+      <ng-container  *ngFor="let worditem of (words$ | async);trackBy:trackEntryItems; let i=index ">
+      <tr [@AnimatedStyle]="'in'">
+      <td>
+      <button class="btn btn-default" type="button"
+              (click)="onDelete(worditem.word,i)" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+      <button class="btn btn-default" type="button" *ngIf="show!==i"
+              (click)="showitem(worditem,i)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil" title="Edit"></span></button>
+      <button class="btn btn-default" type="submit" *ngIf="show===i" style="border-radius: 60px; color: green" [disabled]="!editform.valid">
+        <span class="glyphicon glyphicon-ok" title="Save"></span></button>
+      </td>
+        <td>
+          <p *ngIf="show!==i">{{worditem.word}}</p>
+          <p *ngIf="show===i"><input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word"></p>
+          <p *ngIf="show===i"><input type="hidden" name="key" formControlName="key"></p>
+          <p *ngIf="show===i"><input type="hidden" name="order" formControlName="order"></p>
+          <p *ngIf="show===i"><input type="hidden" name="pronunciation" formControlName="pronunciation"></p>
+          <p *ngIf="show===i"><input type="hidden" name="image" formControlName="image"></p>
+        </td>
+        <td>
+          <p *ngIf="show!==i">{{worditem.meaning}}</p>
+          <p *ngIf="show===i"><input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" ></p>
+          <td>
+            <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-upload-form>
+            <app-record-audio [filedata]="{'objectname': worditem.word,'componentname':'word','courseId': word$Key,'uploadFor':'pronunciation'}"></app-record-audio>
+            <app-play [filedata]="{'indexno': i,'source': worditem.pronunciation,'playfor':'pronunciation'}"></app-play>
+          </td>
+          <td>
+          <app-upload-form [filedata]="{'objectname': worditem.word,'componentname':'word','courseId':word$Key,'uploadFor':'image'}"></app-upload-form>
+          </td>
+          <td>
+            <p *ngIf="show!==i">{{worditem.ref}}</p>
+            <p *ngIf="show===i"><textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea></p>
+        </tr>
+        <tr *ngIf="show===i">
+          <td colspan="6">
+            <div class="col-md-12 col-md-offset-1" formArrayName="phoneticdata" style="margin-top: 10px;">
+              <div class="row" *ngFor="let editctrl of editform.get('phoneticdata').controls; let ip=index " [formGroupName]="ip" style="margin-bottom: 10px;">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter Alphabet">
+                </div>
+                <div class="col-md-3">
+                <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async"  placeholder="Type phonetics..">
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
+                    <span class="glyphicon glyphicon-trash" title="Delete"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <div class="col-md-10">
+                  </div>
+                  <div class="col-md-2">
+                    <!-- <button type="submit" class="btn btn-info">Save</button> -->
+                    <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Phonetic" style="border-radius: 50%" >
+                      <span class="glyphicon glyphicon-plus-sign"></span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    </div>
+  </form>
+  <div *ngIf="chkflag">
+    <hr>
+    <form [formGroup]="wordform" (ngSubmit)="onSubmitData(wordform.value)">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <label>Word</label>
+            <input type="text" placeholder="Enter Word" class="form-control" name="word" formControlName="word" >
+          </div>
+          <div class="col-md-4">
+            <label>Meaning</label>
+            <input type="text" placeholder="meaning" class="form-control" name="meaning" formControlName="meaning" >
+          </div>
+          <div class="col-md-4">
+            <label>Ref</label>
+            <textarea type="text" placeholder="Reference" class="form-control" name="ref" formControlName="ref" ></textarea>
+          </div>
+        </div>
+        <input type="hidden" name="pronunciation" formControlName="pronunciation">
+        <input type="hidden" name="image" formControlName="image">
+        <div class="col-md-12 col-md-offset-1" formArrayName="phonetics" style="margin-top: 10px;">
+          <div class="row" *ngFor="let ingredientctrl of wordform.get('phonetics').controls; let ai=index" [formGroupName]="ai" style="margin-bottom: 10px;">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" formControlName="alphabet" placeholder="Enter Alphabet">
+            </div>
+            <div class="col-md-3">
+            <input class='form-control' auto-complete formControlName="phonetic" [source]="phoneticsSelection$ | async" placeholder="Type phonetics..">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-default" type="button" (click)="onDeleteold(ai)" style="border-radius: 60px; color: red">
+                <span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-info pull-left" (click)="onAddnew()" title="Add Phonetics" style="border-radius: 50%"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success pull-left" *ngIf="chkflag" [disabled]="!wordform.valid">Save Data</button>
+    </form>
+  </div>
+  <button type="button" class="btn btn-success pull-left" *ngIf="!chkflag" (click)="addnew()">Add New</button>
