@@ -147,6 +147,27 @@ export class LessonService {
     return this.firebaseUpdate(dataToSave);
   }
 
+  deleteLessonWord(course$Key, lesson$key, lessonItem$key){
+    let courseDetail: CourseDetail;
+    let order;
+    let courseDetailToSave;
+
+    this.courseService.getCourseDetail(course$Key)
+      .subscribe(
+        courseInfo => courseDetail = courseInfo
+      );
+    courseDetail.words = courseDetail.words-1;
+    courseDetailToSave = Object.assign({}, courseDetail);
+    delete(courseDetailToSave.$key);
+
+    const dataToSave = {};
+    dataToSave[`course_details/${course$Key}`] = courseDetailToSave;
+    this.firebaseUpdate(dataToSave);
+
+    const lessonWordToDelete$ = this.db.object(`course_lesson_items/${lesson$key}/${lessonItem$key}`);
+    lessonWordToDelete$.remove();
+  }
+
   firebaseUpdate(dataToSave): Observable<any> {
     const subject = new Subject();
 

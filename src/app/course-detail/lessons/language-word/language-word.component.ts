@@ -33,6 +33,7 @@ export class LanguageWordComponent implements OnInit {
   dropIndex = -1;
   dropvalue= '';
   dragElement;
+  lesonWord$Arr = [];
 
   constructor(public dragulaService: DragulaService, public lessonService: LessonService, private wordService: WordService, private route: ActivatedRoute, public router: Router) {
       dragulaService.drag.subscribe((value) => {
@@ -48,10 +49,17 @@ export class LanguageWordComponent implements OnInit {
 
   ngOnInit() {
     this.lessonWord$Key = this.route.snapshot.params['lessonWordId'];  // XX04
-    console.log("Latest Course Key: "+ this.course$key);
     this.lesonWord$ = this.lessonService.getLessonItems(this.lessonWord$Key);
     window.document.getElementById("showLesson").style.display = "none";
+
+    //this.runLessonWord();
   }
+
+/*  runLessonWord(){
+    for(let x in this.lesonWord$){
+      this.lesonWord$Arr.push(x[lessonItem]);   
+    }
+  }*/
 
 /*  ngOnDestroy(){
     window.document.getElementById("showLesson").style.display = "block";
@@ -98,6 +106,9 @@ export class LanguageWordComponent implements OnInit {
     /* ------------------------------------------ */
 
       /* ------------------------------------------ */
+  }
+  deleteWord(course$Key, lesson$key, lessonItem$key){
+    this.lessonService.deleteLessonWord(course$Key, lesson$key, lessonItem$key);
   }
 
   addWord() {

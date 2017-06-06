@@ -29,7 +29,8 @@
   <tbody [dragula]='"alphabet-drag"'>
 
     <tr *ngFor="let lessonWord of lesonWord$ | async; let lwIndex=index ">
-      <td align="center" class="width8percent"><button type="button" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
+      <td align="center" class="width8percent"><button type="button" class="btn btn-default" style="border-radius: 60px; color: red" (click)="deleteWord(lessonWord.course, lessonWord.lesson, lessonWord.lessonItem)"><span class="glyphicon glyphicon-trash"></span></button>
+      </td>
       <td align="center" class="width8percent">
         <div *ngIf="lwEditFlag!==lwIndex">
           <button type="button" class="btn btn-default" style="border-radius: 60px; color: green" (click)="editLessonWord(lwIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -61,8 +62,9 @@
     <form (ngSubmit)="submitLW()" #lw="ngForm">        
         <div class="row">
           <div class="col-xs-4">
-            <label>Enter Word:</label>
-            <input class="form-control" type="text" placeholder="Word" ngModel name="word" required #lessonItem>
+            <label>Enter Word: <mark class="redColor">* Enter a word which is not in the dropdown list.</mark></label>
+            <!-- <input class="form-control" type="text" placeholder="Enter Word" ngModel name="word" required #lessonItem> -->
+            <input type="text" class='form-control' name="word" auto-complete [source]="lesonWord$Arr"  placeholder="Enter Word" required />
           </div>
           <div class="col-xs-4"><label>&nbsp;</label><button type="submit" [disabled]="!lw.valid" class="btn btn-success displayBlockImp">Save</button></div>
         </div>

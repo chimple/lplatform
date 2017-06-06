@@ -12,6 +12,9 @@ textarea.ng-invalid.ng-touched{
 .greenColor{
     color:green;
 }
+.redColor{
+    color:red;
+}
 .textCenter{
     text-align:center;
 }

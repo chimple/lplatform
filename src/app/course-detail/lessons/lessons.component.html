@@ -23,7 +23,7 @@
           <div *ngIf="teachSelect=== 'words'" class="col-xs-4">
             <label>Phonetics: </label>
             <select class="form-control" name="phonetic" id="lessonPhonetics" ngModel required>
-              <option value="">--Select--</option>
+              <option value="">--Select a Phonetic--</option>
               <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
             </select>
             <!-- <input type="text" name="phonetic" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
@@ -89,26 +89,32 @@
     <td>
       <div *ngIf="lesson.teach==='words'">
         <div *ngIf="editFlag!==lIndex">
+          <!-- <span>{{lesson.phonetic}}</span> -->
+        </div>
+        <div *ngIf="editFlag===lIndex">
+          <select name="phonetic" class="form-control" ngModel required>
+            <option value="">--Select a Phonetic--</option>
+            <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+          </select>
+        </div>
+      </div>
+    </td>
+
+    <!-- <td>
+      <div *ngIf="lesson.teach==='words'">
+        <div *ngIf="editFlag!==lIndex">
           <span *ngFor="let category of (phoneticsSelection$ | async)">{{category}}, </span>
         </div>
         <div *ngIf="editFlag===lIndex">
           <select name="phonetic" class="form-control" ngModel required>
             <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
           </select>
-          <!-- <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required /> -->
+          <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required />
         </div>
       </div>
-    </td>
+    </td> -->
 
     <td align="center">
-      <!-- <div *ngIf="lesson.teach==='words'">
-      <a [routerLink]="['language-word',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-      </div>
-      <div *ngIf="lesson.teach==='alphabets'">
-        <a [routerLink]="['language-alphabet',lesson.lesson]"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24">
-      </div> -->
-
-     <!-- <a *ngIf="lesson.teach==='words'; then [routerLink]='["language-word",lesson.lesson]'; else [routerLink]='["language-alphabet",lesson.lesson]'" ><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a> -->
 
     <div *ngIf="lesson.teach==='words'">
      <a [routerLink]="['language-word',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
@@ -117,14 +123,6 @@
      <div *ngIf="lesson.teach!=='words'">
      <a [routerLink]="['language-alphabet',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
      </div>
-
-     <!-- <div *ngIf="lesson.teach==='words'">
-     <a (click)="callChildRoutes(language-word, lesson.lesson)"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-     </div>
-
-     <div *ngIf="lesson.teach!=='words'">
-     <a (click)="callChildRoutes(language-alphabet, lesson.lesson)"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-     </div> -->
 
     </td>
 
