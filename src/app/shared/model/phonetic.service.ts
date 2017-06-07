@@ -6,7 +6,7 @@ import {CourseDetail} from './course-detail';
 import {CourseService} from './course.service';
 import {Subject} from 'rxjs/Subject';
 import * as firebase from 'firebase/app';
-
+import * as _ from 'lodash';
 
 @Injectable()
 export class PhoneticService {
@@ -17,25 +17,16 @@ export class PhoneticService {
   }
 
   findPhoneticsByCourse(courseUrl: string) {
-    console.log(`findPhoneticsByCourse ${courseUrl}`);
     return this.db.list(`course_phonetics/${courseUrl}`, {
       query: {
         orderByChild: 'order'
       }
-    }).map(results => Phonetic.fromJsonList(results));
+    })
+      .take(1)
+      .map(results => _.sortBy(Phonetic.fromJsonList(results), 'order'));
   }
 
   findPhoneticsPropertyByCourse(courseUrl: string) {
-    console.log(`findPhoneticsByCourse ${courseUrl}`);
-
-    // const result$ = this.db.list(`course_phonetics/${courseUrl}`, {
-    //   query: {
-    //     orderByChild: 'order'
-    //   }
-    // }).map(results => Phonetic.fromJsonListFetchProperty(results, 'alphabet'));
-    //
-    // result$.subscribe(console.log);
-
     return this.db.list(`course_phonetics/${courseUrl}`, {
       query: {
         orderByChild: 'order'
@@ -125,5 +116,54 @@ export class PhoneticService {
 
     const phoneticToDelete$ = this.db.object(`course_phonetics/${courseUrl}/${input}`);
     phoneticToDelete$.remove();
+  }
+
+  updateDragOrder(courseUrl: string, startIndex: number, endIndex: number, alphabet: string) {
+    const that = this;
+    const indexes = [];
+    let isDraggedUp = false;
+    if (startIndex > endIndex) {
+      isDraggedUp = true;
+      for ( let i = endIndex; i <= startIndex; i++ ) {
+        indexes.push(i);
+      }
+    } else {
+      // drop down
+      isDraggedUp = false;
+      for ( let i = startIndex; i <= endIndex; i++ ) {
+        indexes.push(i);
+      }
+    }
+    const updateOperations = [];
+
+    const $result = this.findPhoneticsByCourse(courseUrl)
+      .map(results => {
+          return results.filter((alphabetValue) => indexes.includes(alphabetValue.order));
+    })
+      .subscribe(
+      (alphabetOrder) => {
+        alphabetOrder.forEach((alphabetO) => {
+          if (isDraggedUp) {
+            const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
+            const updateOrder = Object.assign({}, {order: newOrder});
+            const updateAlphabet$ = this.db.object(`course_phonetics/${courseUrl}/${alphabetO.alphabet}`);
+            updateOperations.push(updateAlphabet$.update(updateOrder));
+          } else if (!isDraggedUp) {
+            const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
+            const updateOrder = Object.assign({}, {order: newOrder});
+            const updateAlphabet$ = this.db.object(`course_phonetics/${courseUrl}/${alphabetO.alphabet}`);
+            updateOperations.push(updateAlphabet$.update(updateOrder));
+          }
+        });
+
+        Promise.all(updateOperations)
+          .then(function () {
+            console.log('all the files were created');
+            that.findPhoneticsByCourse(courseUrl);
+          }).catch(function () {
+        });
+      }
+    );
+
   }
 }

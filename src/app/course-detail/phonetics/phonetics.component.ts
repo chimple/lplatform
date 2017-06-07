@@ -1,4 +1,4 @@
-import {Component, OnInit , ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Phonetic} from '../../shared/model/phonetic';
@@ -16,16 +16,16 @@ declare var swal: any;
   animations: [
     trigger('AnimatedStyle', [
 
-      state('in', style({ opacity: 1, transform: 'translateX(0)' })),
+      state('in', style({opacity: 1, transform: 'translateX(0)'})),
 
       transition('void => *', [
         animate(1000, keyframes([
 
           style({
-            transform: 'translateX(-100px)', opacity: 0 , offset: 0
+            transform: 'translateX(-100px)', opacity: 0, offset: 0
           }),
           style({
-            transform: 'translateX(-50px)', opacity: 0.5 , offset: 0.3
+            transform: 'translateX(-50px)', opacity: 0.5, offset: 0.3
           }),
           style({
             transform: 'translateX(-20px)', backgroundColor: '#A4FF0C', opacity: 1, offset: 0.8
@@ -55,26 +55,15 @@ export class PhoneticsComponent implements OnInit {
   myPhonetics: boolean = false;
   editPhone: any;
   phonetics$: Observable<Phonetic[]>;
-
+  phonetics: Phonetic[];
   dragStartIndex = -1;
   dropIndex = -1;
-  dropvalue= '';
+  dropvalue = '';
   dragElement;
 
   @ViewChild('editPhonet') phoneticsEditForm: NgForm;
 
   constructor(private route: ActivatedRoute, private phoneticService: PhoneticService, private dragulaService: DragulaService) {
-    dragulaService.drag.subscribe((value) => {
-      console.log(`drag: ${value[0]}`);
-      this.onDrag(value.slice(1));
-    });
-
-    dragulaService.drop.subscribe((value) => {
-
-      console.log(`drop: ${value[0]}`);
-      this.onDrop(value.slice(1));
-      console.log(this.phonetics$key);
-    });
   }
 
   onDrag(args) {
@@ -92,11 +81,13 @@ export class PhoneticsComponent implements OnInit {
       console.log(`drop ${e.rowIndex}`);
       this.dropIndex = e.rowIndex;
       this.dropvalue = e.cells[1].innerText;
-      console.log(this.dropvalue);
       this.callReorderEvent();
-      console.log('alphabet');
+      if (this.dragStartIndex !== this.dropIndex) {
+        this.phoneticService.updateDragOrder(this.phonetics$key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+      }
     }
   }
+
   callReorderEvent() {
     console.log(`Phonetics : ${this.dropvalue}`)
     console.log(`dragStartIndex : ${this.dragStartIndex}`);
@@ -106,11 +97,24 @@ export class PhoneticsComponent implements OnInit {
   ngOnInit() {
     this.phonetics$key = this.route.snapshot.params['phoneticId'];
     this.phonetics$ = this.phoneticService.findPhoneticsByCourse(this.phonetics$key);
+    this.phonetics$.subscribe(
+      phonetics => this.phonetics = phonetics
+    );
+
+    this.dragulaService.drag.subscribe((value) => {
+      this.onDrag(value.slice(1));
+    });
+
+    this.dragulaService.drop.subscribe((value) => {
+      this.onDrop(value.slice(1));
+    });
+
   }
 
   addNewPhone() {
     this.myPhonetics = true;
   }
+
   editPhonetic(i) {
     this.editPhone = i;
   }
@@ -143,31 +147,33 @@ export class PhoneticsComponent implements OnInit {
     console.log(form.value);
     this.phoneticService.createPhonetic(this.phonetics$key, form.value)
       .subscribe(
-      () => {
-        // alert('success in Phonetic creation');
-        form.reset();
-        this.myPhonetics = false;
-       },
-      err => alert(`error in creating new alphabet ${err}`)
-    );
+        () => {
+          // alert('success in Phonetic creation');
+          form.reset();
+          this.myPhonetics = false;
+        },
+        err => alert(`error in creating new alphabet ${err}`)
+      );
   }
 
   editPhonRow() {
     console.log(this.phoneticsEditForm.value);
     this.phoneticService.createPhonetic(this.phonetics$key, this.phoneticsEditForm.value)
       .subscribe(
-      () => {
-       // alert('success in Phonetic creation');
-        this.editPhone = '';
-      },
-      err => alert(`error in creating new alphabet ${err}`)
-    );
-   }
+        () => {
+          // alert('success in Phonetic creation');
+          this.editPhone = '';
+        },
+        err => alert(`error in creating new alphabet ${err}`)
+      );
+  }
+
   ondeletePhonetics(phonetic: string) {
     if (confirm('Are you sure to delete ?')) {
-    this.phoneticService.deletePhonetic(this.phonetics$key, phonetic);
+      this.phoneticService.deletePhonetic(this.phonetics$key, phonetic);
+    }
   }
-}
+
   private trackEntryItems(i, item): number {
     return item.id;
   }
