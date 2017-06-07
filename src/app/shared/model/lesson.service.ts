@@ -146,6 +146,10 @@ export class LessonService {
     lessonWordToDelete$.remove();
   }
 
+  deleteLessonAlpha(){
+    
+  }
+
   firebaseUpdate(dataToSave): Observable<any> {
     const subject = new Subject();
 
