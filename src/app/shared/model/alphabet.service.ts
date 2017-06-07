@@ -21,8 +21,8 @@ export class AlphabetService {
   findAlphabetsByCourse(courseUrl: string, query: FirebaseListFactoryOpts = {query: {orderByChild: 'order'}}): Observable<Alphabet[]> {
     console.log(`findAlphabetsByCourse ${courseUrl}`);
     return this.db.list(`course_alphabets/${courseUrl}`, query)
+      .take(1)
       .map(results => _.sortBy(Alphabet.fromJsonList(results), 'order'));
-
   }
 
   loadFirstAlphabetsPage(courseUrl: string, pageSize: number): Observable<Alphabet[]> {
@@ -165,7 +165,8 @@ export class AlphabetService {
     return subject.asObservable();
   }
 
-  updateDragOrder(courseUrl: string, startIndex: number, endIndex: number, alphabet: string): void {
+  updateDragOrder(courseUrl: string, startIndex: number, endIndex: number, alphabet: string) {
+    const that = this;
     const indexes = [];
     let isDraggedUp = false;
     if (startIndex > endIndex) {
@@ -188,26 +189,6 @@ export class AlphabetService {
     }).map(results => {
       return results.filter((alphabetValue) => indexes.includes(alphabetValue.order));
     });
-    // const updateOperations = [];
-    // $result.subscribe(
-    //   (alphabetOrder) => {
-    //     alphabetOrder.forEach((alphabetO) => {
-    //       if (isDraggedUp) {
-    //         const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
-    //         const updateOrder = Object.assign({}, {order: newOrder});
-    //         const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-    //         updateOperations.push(updateAlphabet$.update(updateOrder));
-    //       } else if (!isDraggedUp) {
-    //         const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
-    //         const updateOrder = Object.assign({}, {order: newOrder});
-    //         const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-    //         updateOperations.push(updateAlphabet$.update(updateOrder));
-    //         // updateAlphabet$.update(updateOrder);
-    //       }
-    //     });
-    //   }
-    // );
-
 
     const updateOperations = [];
     $result.subscribe(
@@ -217,24 +198,22 @@ export class AlphabetService {
             const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order + 1;
             const updateOrder = Object.assign({}, {order: newOrder});
             const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-            updateOperations.push(Observable.fromPromise(updateAlphabet$.update(updateOrder)));
+            updateOperations.push(updateAlphabet$.update(updateOrder));
           } else if (!isDraggedUp) {
             const newOrder = alphabetO.order === startIndex ? endIndex : alphabetO.order - 1;
             const updateOrder = Object.assign({}, {order: newOrder});
             const updateAlphabet$ = this.db.object(`course_alphabets/${courseUrl}/${alphabetO.alphabet}`);
-            updateOperations.push(Observable.fromPromise(updateAlphabet$.update(updateOrder)));
-            ;
+            updateOperations.push(updateAlphabet$.update(updateOrder));
           }
         });
-      },
-      err => console.log(err),
-      () => {
-        console.log('completed');
-        Observable.forkJoin(updateOperations)
-          .subscribe(done => console.log('DOne'));
-
       }
     );
 
+    Promise.all(updateOperations)
+      .then(function () {
+        console.log('all the files were created');
+        this.findAlphabetsByCourse(courseUrl);
+      }).catch(function () {
+    });
   }
 }
