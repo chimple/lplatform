@@ -69,19 +69,9 @@ export class AlphabetComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private alphabetService: AlphabetService,
-              private dragulaService: DragulaService,) {
+              private dragulaService: DragulaService) {
 
-    dragulaService.drag.subscribe((value) => {
-      console.log(`drag: ${value[0]}`);
-      this.onDrag(value.slice(1));
-    });
 
-    dragulaService.drop.subscribe((value) => {
-
-      console.log(`drop: ${value[0]}`);
-      this.onDrop(value.slice(1));
-      console.log(this.alphabet$Key);
-    });
   }
 
   onDrag(args) {
@@ -101,7 +91,7 @@ export class AlphabetComponent implements OnInit {
       this.dropvalue = e.cells[2].innerText;
       this.callReorderEvent();
       console.log(this.dropvalue);
-      // this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+      this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
     }
   }
 
@@ -117,6 +107,17 @@ export class AlphabetComponent implements OnInit {
     this.alphabets$.subscribe(
       alphabets => this.alphabets = alphabets
     );
+
+    this.dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+
+    this.dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+      console.log(this.alphabet$Key);
+    });
   }
 
   onPlays() {
@@ -187,7 +188,7 @@ export class AlphabetComponent implements OnInit {
 // }
 
   deleteAlphRow(alphabet: string) {
-  //  console.log(alphabet);
+    //  console.log(alphabet);
     if (confirm('Are you sure to delete ?')) {
       this.alphabetService.deleteAlphabet(this.alphabet$Key, alphabet);
     }
