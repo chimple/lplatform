@@ -1,6 +1,14 @@
-<div *ngIf="lessonItems">
-  <h1>{{lessonItems[currentIndex].item}}</h1>
-  <h2>{{(word$ | async)?.meaning}}</h2>
-  <img src="{{(word$ | async)?.image}}">
-  <app-play *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}"></app-play>
+<div class="col-sm-4 col-xs-12"></div>
+<div class="col-sm-4 col-xs-12">
+  	<div *ngIf="lessonItems">
+  	  <img class="img-responsive" src="{{(word$ | async)?.image}}">
+	  <h1>{{lessonItems[currentIndex].item}}</h1>
+	  <h2>{{(word$ | async)?.meaning}}</h2>
+	</div>
 </div>
+<div class="col-sm-4 col-xs-12 play-audio">
+  <app-play-quiz *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}">
+  </app-play-quiz>
+</div>
+
+
