@@ -34,3 +34,13 @@ img{
 height: 256px;
 width: 256px
 }
+
+@media only screen and (max-width : 410px) {
+    #wordQuizOptionButton1,#wordQuizOptionButton2,#wordQuizOptionButton3,#wordQuizOptionButton4  {
+        width: 200px !important;
+    }
+    .word-quiz-img{
+      width: 200px !important;
+      margin: 2%;
+    }
+}

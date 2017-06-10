@@ -1,10 +1,6 @@
-
-
 <div class="row">
-
-  <div class="col-xs-2"></div>
-
-  <div class="col-xs-8" style="text-align: center">
+  <div class="col-sm-2 col-xs-12"></div>
+  <div class="col-sm-8 col-xs-12" style="text-align: center">
     <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 25px 25px 0px 0px; padding: 30px;">
   <!--<div>-->
     <!--{{answer}}*ngIf="(alphabet$ | async)?.sound"-->
@@ -12,39 +8,40 @@
   <app-play-quiz [@AnimatedStyle]  [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play-quiz>
   </div>
   </div>
-  <div class="col-xs-2"></div>
-
+  <div class="col-sm-2 col-xs-12"></div>
 </div>
 
-
-  <div class="row">
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8" style="text-align: center">
+<div class="row">
+  <div class="col-sm-2 col-xs-12"></div>
+  <div class="col-sm-8 col-xs-12" style="text-align: center">
       <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 0px 0px 25px 25px; padding: 30px;">
-
-  <div>
-    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[0])"
-            id="alphaQuizOptionButton1">
-      {{choices[0]}}
-    </button>
-    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[1])"
-            id="alphaQuizOptionButton2">
-      {{choices[1]}}
-    </button>
+        <div>
+          <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[0])"
+                  id="alphaQuizOptionButton1">
+            {{choices[0]}}
+          </button>
+          <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[1])"
+                  id="alphaQuizOptionButton2">
+            {{choices[1]}}
+          </button>
+        </div>
+        <div>
+          <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[2])"
+                  id="alphaQuizOptionButton3">
+            {{choices[2]}}
+          </button>
+          <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[3])"
+                  id="alphaQuizOptionButton4">
+            {{choices[3]}}
+          </button>
+        </div>
+        <!-- <div class="col-sm-6 col-xs-12" *ngFor="let choice of choices">
+          <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choice)"
+                  id="alphaQuizOptionButton1">
+            {{choice}}
+          </button>
+        </div> -->
+      </div>
   </div>
-  <div>
-    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[2])"
-            id="alphaQuizOptionButton3">
-      {{choices[2]}}
-    </button>
-    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[3])"
-            id="alphaQuizOptionButton4">
-      {{choices[3]}}
-    </button>
-  </div>
-    </div>
-    </div>
-    <div class="col-xs-2"></div>
-
-
+  <div class="col-sm-2 col-xs-12"></div>
 </div>

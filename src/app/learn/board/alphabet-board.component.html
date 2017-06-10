@@ -1,11 +1,13 @@
-
-<div class="col-xs-4"></div>
-<div class="col-xs-4">
-  <div [@flyInOut]="'in'" (@flyInOut.start)="animationStarted($event)" *ngIf="lessonItems">
-  <h1>{{lessonItems[currentIndex].item}}</h1>
-</div>
-</div>
-<div class="col-xs-4 play-audio">
-	<app-play-quiz *ngIf="(alphabet$ | async)?.sound" [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play-quiz>
+<div class="row">
+	<div class="col-xs-4"></div>
+	<div class="col-xs-4">
+	  <div [@flyInOut]="'in'" (@flyInOut.start)="animationStarted($event)" *ngIf="lessonItems">
+	  <h1>{{lessonItems[currentIndex].item}}</h1>
+	</div>
+	</div>
+	<div class="col-xs-4 play-audio">
+		<app-play-quiz *ngIf="(alphabet$ | async)?.sound" [filedata]="{'source': (alphabet$ | async)?.sound}">
+		</app-play-quiz>
+	</div>
 </div>
 

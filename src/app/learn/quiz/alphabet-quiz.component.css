@@ -28,3 +28,9 @@
 #alphaQuizOptionButton4:hover{
   background-color: #FFA41E;
 }
+
+@media only screen and (max-width : 410px) {
+    #alphaQuizOptionButton1,#alphaQuizOptionButton2,#alphaQuizOptionButton3,#alphaQuizOptionButton4  {
+        width: 200px !important;
+    }
+}
