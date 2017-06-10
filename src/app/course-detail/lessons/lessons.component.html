@@ -47,89 +47,94 @@
   <div class="col-xs-12">
 <form (ngSubmit)="updateLesson()" #lessonEdit="ngForm">
 <!-- <form [formGroup]="editform" (ngSubmit)="updateLesson(editform.value)"> -->
-<table class="table table-striped table-responsive">
-  <thead>
-  <tr>
-    <th class="textCenter">Delete</th>
-    <th class="textCenter">Edit</th>
-    <th>Name</th>
-    <th>Teach</th>
-    <th>Picture</th>
-    <th>Focus</th>
-    <th class="textCenter">Select</th>
-  </tr>
-  </thead>
+  <div class="table-responsive">
 
-  <tbody [dragula]='"alphabet-drag"'>
+    <table class="table table-striped " style="border: 3px solid #e4e4e4">
+      <thead>
+      <tr>
+        <th class="textCenter">Delete</th>
+        <th class="textCenter">Edit</th>
+        <th>Name</th>
+        <th>Teach</th>
+        <th>Picture</th>
+        <th>Focus</th>
+        <th class="textCenter">Select</th>
+      </tr>
+      </thead>
 
-  <tr *ngFor="let lesson of lessons$ | async; let lIndex = index ">
-    <td align="center"><button type="button" (click)="deleteLesson(lesson.lesson)" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
-    <td align="center">
-      <div *ngIf="editFlag!==lIndex">
-      <button type="button" class="btn btn-default" (click)="editLesson(lIndex)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil"></span></button>
-      </div>
-      <div *ngIf="editFlag===lIndex">
-      <button type="submit" [disabled]="!lessonEdit.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
-      </div>
-      <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
-      <input *ngIf="editFlag===lIndex" type="hidden" name="order" [ngModel]="lesson.order" />
-    </td>
-    <td>
-      <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
-      <input *ngIf="editFlag===lIndex" type="text" class="form-control" required name="name" placeholder="Enter Lesson" [ngModel]="lesson.name" />
-    </td>
+      <tbody [dragula]='"alphabet-drag"' >
 
-    <td>
-      <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
-      <input type="text" *ngIf="editFlag===lIndex" readonly required name="teach" class="form-control" [ngModel]="lesson.teach" />
-    </td>
-    <td>
-    <app-upload-form [filedata]="{'objectname': lesson.lesson,'componentname':'lesson','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
-    </td>
-    <td>
-      <div *ngIf="lesson.teach==='words'">
-        <div *ngIf="editFlag!==lIndex">
-          <!-- <span>{{lesson.phonetic}}</span> -->
-        </div>
-        <div *ngIf="editFlag===lIndex">
-          <select name="phonetic" class="form-control" ngModel required>
-            <option value="">--Select a Phonetic--</option>
-            <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-          </select>
-        </div>
-      </div>
-    </td>
+      <tr [@AnimatedStyle] *ngFor="let lesson of (lessons$ | async);trackBy:trackEntryItems; let lIndex = index ">
+        <td align="center"><button type="button" (click)="deleteLesson(lesson.lesson)" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
+        <td align="center">
+          <div *ngIf="editFlag!==lIndex">
+            <button type="button" class="btn btn-default" (click)="editLesson(lIndex)" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-pencil"></span></button>
+          </div>
+          <div *ngIf="editFlag===lIndex">
+            <button type="submit" [disabled]="!lessonEdit.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
+          </div>
+          <input *ngIf="editFlag===lIndex" type="hidden" name="lesson" [ngModel]="lesson.lesson" />
+          <input *ngIf="editFlag===lIndex" type="hidden" name="order" [ngModel]="lesson.order" />
+        </td>
+        <td>
+          <p *ngIf="editFlag!==lIndex">{{lesson.name}}</p>
+          <input *ngIf="editFlag===lIndex" type="text" class="form-control" required name="name" placeholder="Enter Lesson" [ngModel]="lesson.name" />
+        </td>
 
-    <!-- <td>
-      <div *ngIf="lesson.teach==='words'">
-        <div *ngIf="editFlag!==lIndex">
-          <span *ngFor="let category of (phoneticsSelection$ | async)">{{category}}, </span>
-        </div>
-        <div *ngIf="editFlag===lIndex">
-          <select name="phonetic" class="form-control" ngModel required>
-            <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
-          </select>
-          <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required />
-        </div>
-      </div>
-    </td> -->
+        <td>
+          <p *ngIf="editFlag!==lIndex">{{lesson.teach}}</p>
+          <input type="text" *ngIf="editFlag===lIndex" readonly required name="teach" class="form-control" [ngModel]="lesson.teach" />
+        </td>
+        <td>
+          <app-upload-form [filedata]="{'objectname': lesson.lesson,'componentname':'lesson','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
+        </td>
+        <td>
+          <div *ngIf="lesson.teach==='words'">
+            <div *ngIf="editFlag!==lIndex">
+              <!-- <span>{{lesson.phonetic}}</span> -->
+            </div>
+            <div *ngIf="editFlag===lIndex">
+              <select name="phonetic" class="form-control" ngModel required>
+                <option value="">--Select a Phonetic--</option>
+                <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+              </select>
+            </div>
+          </div>
+        </td>
 
-    <td align="center">
+        <!-- <td>
+          <div *ngIf="lesson.teach==='words'">
+            <div *ngIf="editFlag!==lIndex">
+              <span *ngFor="let category of (phoneticsSelection$ | async)">{{category}}, </span>
+            </div>
+            <div *ngIf="editFlag===lIndex">
+              <select name="phonetic" class="form-control" ngModel required>
+                <option [ngValue]="category" *ngFor="let category of (phoneticsSelection$ | async)">{{category}}</option>
+              </select>
+              <input type="text" class='form-control' auto-complete [source]="phoneticsSelection$ | async"  placeholder="Select Phonetic" required />
+            </div>
+          </div>
+        </td> -->
 
-    <div *ngIf="lesson.teach==='words'">
-     <a [routerLink]="['language-word',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-     </div>
+        <td align="center">
 
-     <div *ngIf="lesson.teach!=='words'">
-     <a [routerLink]="['language-alphabet',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
-     </div>
+          <div *ngIf="lesson.teach==='words'">
+            <a [routerLink]="['language-word',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+          </div>
 
-    </td>
+          <div *ngIf="lesson.teach!=='words'">
+            <a [routerLink]="['language-alphabet',lesson.lesson]" (click)="callChildRoutes()"><span class="glyphicon glyphicon-circle-arrow-right blue fontSize24"></span></a>
+          </div>
 
-  </tr>
-  </tbody>
+        </td>
 
-</table>
+      </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
   </form>
 </div>
 

@@ -9,7 +9,7 @@
         <button type="button" [routerLink]="['../../']" (click)="navigateToParent()" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
         </div>
         <div class="col-xs-11">
-          <p class="customHeading1">Lesson Alphabet</p> 
+          <p class="customHeading1">Lesson Alphabet</p>
         </div>
     </div>
   </div>
@@ -18,87 +18,93 @@
 <div class="row">
   <div class="col-xs-12">
   <form [formGroup]="editform" (ngSubmit)="updateLessonAlpha(editform.value)">
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th class="textCenter">Delete</th>
-    <th class="textCenter">Edit</th>
-    <th class="customPaddingForLessonWord">Alphabet</th>
-    <th>Words</th>
-  </tr>
-  </thead>
+    <div class="table-responsive">
 
-  <tbody [dragula]='"alphabet-drag"'>
-    <ng-container  *ngFor="let lessonAlpha of lesonAlpha$ | async; let laIndex=index ">
-    <tr>
-      <td align="center" class="width8percent"><button type="button" (click)="onDelete(lessonAlpha.course, lessonAlpha.lesson, lessonAlpha.lessonItem)" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
-      <td align="center" class="width8percent">
-        <div *ngIf="laEditFlag!==laIndex">
-          <button type="button" class="btn btn-default" style="border-radius: 60px; color: green" (click)="editLessonAlpha(lessonAlpha, laIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
-        </div>
-        <div *ngIf="laEditFlag===laIndex">
-          <button type="submit" [disabled]="!editform.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
-        </div>
-        <input *ngIf="laEditFlag===laIndex" type="hidden" name="lessonAlpha" [ngModel]="lessonAlpha.lessonItem" />
-      </td>
-      <td class="customPaddingForLessonWord">
-        <span *ngIf="laEditFlag!==laIndex">{{lessonAlpha.item}}</span>
-      <input *ngIf="laEditFlag===laIndex" formControlName="alpha" type="text" required class="form-control" name="alpha" placeholder="Enter Alphabet" formControlName="alpha" />
-      </td>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="textCenter">Delete</th>
+          <th class="textCenter">Edit</th>
+          <th class="customPaddingForLessonWord">Alphabet</th>
+          <th>Words</th>
+        </tr>
+        </thead>
 
-      <!-- <td>
-        <div *ngIf="laEditFlag!==laIndex">
-          <span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
-        </div>
-        <div *ngIf="laEditFlag===laIndex">
-        <select name="word" class="form-control" ngModel required>
-          <option *ngFor="let words of lessonAlpha.words">{{words}}</option>
-        </select>
-        </div>
-      </td> -->
-
-      <td *ngIf="laEditFlag!==laIndex">
-        <div>
-          <span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
-        </div>
-      </td>
-    </tr>
-<!-- -------------------------- Drop Down Functionality -------------------------- -->
-    <tr *ngIf="laEditFlag===laIndex">
-      <td colspan="6">
-            <div class="col-md-12 col-md-offset-1" formArrayName="words" style="margin-top: 10px;">
-              <div class="row" *ngFor="let editctrl of editform.get('words').controls; let ip=index " [formGroupName]="ip" style="margin-bottom: 10px;">
-                <div class="col-md-3">
-                </div>
-                <div class="col-md-3">
-                <input class='form-control' auto-complete formControlName="word" name="word"  placeholder="Enter a Word">
-                </div>
-                <div class="col-md-2">
-                  <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
-                    <span class="glyphicon glyphicon-trash" title="Delete"></span>
-                  </button>
-                </div>
+        <tbody [dragula]='"alphabet-drag"'>
+        <ng-container  *ngFor="let lessonAlpha of (lesonAlpha$ | async);trackBy:trackEntryItems; let laIndex=index ">
+          <tr [@AnimatedStyle]>
+            <td align="center" class="width8percent"><button type="button" (click)="onDelete(lessonAlpha.course, lessonAlpha.lesson, lessonAlpha.lessonItem)" class="btn btn-default" style="border-radius: 60px; color: red"><span class="glyphicon glyphicon-trash"></span></button></td>
+            <td align="center" class="width8percent">
+              <div *ngIf="laEditFlag!==laIndex">
+                <button type="button" class="btn btn-default" style="border-radius: 60px; color: green" (click)="editLessonAlpha(lessonAlpha, laIndex)"><span class="glyphicon glyphicon-pencil"></span></button>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div>
-                  <div class="col-md-10">
+              <div *ngIf="laEditFlag===laIndex">
+                <button type="submit" [disabled]="!editform.valid" class="btn btn-default" style="border-radius: 60px; color: green"><span class="glyphicon glyphicon-save"></span></button>
+              </div>
+              <input *ngIf="laEditFlag===laIndex" type="hidden" name="lessonAlpha" [ngModel]="lessonAlpha.lessonItem" />
+            </td>
+            <td class="customPaddingForLessonWord">
+              <span *ngIf="laEditFlag!==laIndex">{{lessonAlpha.item}}</span>
+              <input *ngIf="laEditFlag===laIndex" formControlName="alpha" type="text" required class="form-control" name="alpha" placeholder="Enter Alphabet" formControlName="alpha" />
+            </td>
+
+            <!-- <td>
+              <div *ngIf="laEditFlag!==laIndex">
+                <span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
+              </div>
+              <div *ngIf="laEditFlag===laIndex">
+              <select name="word" class="form-control" ngModel required>
+                <option *ngFor="let words of lessonAlpha.words">{{words}}</option>
+              </select>
+              </div>
+            </td> -->
+
+            <td *ngIf="laEditFlag!==laIndex">
+              <div>
+                <span *ngFor="let words of lessonAlpha.words">{{words}}, </span>
+              </div>
+            </td>
+          </tr>
+          <!-- -------------------------- Drop Down Functionality -------------------------- -->
+          <tr *ngIf="laEditFlag===laIndex">
+            <td colspan="6">
+              <div class="col-md-12 col-md-offset-1" formArrayName="words" style="margin-top: 10px;">
+                <div class="row" *ngFor="let editctrl of editform.get('words').controls; let ip=index " [formGroupName]="ip" style="margin-bottom: 10px;">
+                  <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
+                    <input class='form-control' auto-complete formControlName="word" name="word"  placeholder="Enter a Word">
                   </div>
                   <div class="col-md-2">
-                    <!-- <button type="submit" class="btn btn-info">Save</button> -->
-                    <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Word" style="border-radius: 50%" >
-                      <span class="glyphicon glyphicon-plus-sign"></span></button>
+                    <button class="btn btn-default" type="button" (click)="onDeleteEdit(ip)" style="border-radius: 60px; color: red">
+                      <span class="glyphicon glyphicon-trash" title="Delete"></span>
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-          </td>
-    </tr>
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <div class="col-md-10">
+                    </div>
+                    <div class="col-md-2">
+                      <!-- <button type="submit" class="btn btn-info">Save</button> -->
+                      <button type="button" class="btn btn-info" (click)="onAddEdit()" title="Add Word" style="border-radius: 50%" >
+                        <span class="glyphicon glyphicon-plus-sign"></span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
 
         </ng-container>
-  </tbody>
-</table>
+        </tbody>
+      </table>
+
+    </div>
+
+
 </form>
 </div>
 </div>
@@ -112,7 +118,7 @@
 
 <div class="row" *ngIf="laInsertFlag">
   <div class="col-xs-12">
-    <form [formGroup]="lessonAlphaform" (ngSubmit)="submitLA(lessonAlphaform.value)">  
+    <form [formGroup]="lessonAlphaform" (ngSubmit)="submitLA(lessonAlphaform.value)">
 
         <div class="row">
           <div class="col-xs-4">
