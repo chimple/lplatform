@@ -7,6 +7,9 @@ import {UserInformation} from './user-info';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {UserCourse} from './user-course';
 import {UtilHelper} from '../model/util-helper';
+import * as _ from 'lodash';
+import {LessonScore} from "./lesson-score";
+import {Lesson} from "../model/lesson";
 
 
 @Injectable()
@@ -83,6 +86,16 @@ export class AuthService {
           );
       }
     });
+  }
+
+  updateCurrentCourseFinishedInformation(user: UserInformation, lesson: Lesson, finishedCourseUrl: string): void {
+    const finishedCourse = _.find(user.courses, function(obj) {
+      return obj.courseUrl === finishedCourseUrl;
+    });
+    console.log('finishedCourse' + finishedCourse);
+    finishedCourse.scores.push(new LessonScore(lesson.lesson, 1));
+    const updateUser$ = this.db.object(`users/${user.uid}`);
+    updateUser$.update(user);
   }
 
   getUserInformation(uid: string): Observable<UserInformation> {

@@ -14,8 +14,8 @@ export class UserCourse {
     // return result;
   }
 
-  static fromJson({courseUrl, lessonScores = []}): UserCourse {
-    return new UserCourse(courseUrl, LessonScore.fromJsonList(lessonScores));
+  static fromJson(obj): UserCourse {
+    return new UserCourse(obj.courseUrl, LessonScore.fromJsonList(obj.scores));
   }
 
   constructor(public courseUrl: string,
