@@ -21,3 +21,15 @@
 #progressButton:hover{
   background-color: #8EFFFA;
 }
+
+.panel-heading{
+  margin: 10px;
+}
+
+.progress-bar-container{
+  padding: 10px;
+}
+
+.next-button-container,.panel-body{
+  text-align: center;
+}
