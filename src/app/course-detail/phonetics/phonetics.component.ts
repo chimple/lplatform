@@ -174,7 +174,7 @@ export class PhoneticsComponent implements OnInit {
     }
   }
 
-  private trackEntryItems(i, item): number {
+  trackEntryItems(i, item): number {
     return item.id;
   }
 }

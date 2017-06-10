@@ -231,7 +231,7 @@ onDrop(args) {
       })
     );
   }
-  private trackEntryItems(i, item): number {
+  trackEntryItems(i, item): number {
     return item.id;
   }
 }
