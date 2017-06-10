@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { LessonItem } from "app/shared/model/lesson-item";
 import { Word } from "app/shared/model/word";
 import { WordService } from "app/shared/model/word.service";
@@ -11,8 +11,7 @@ import { BoardComponent } from "app/learn/board.component";
   styleUrls: ['./word-board.component.css']
 })
 export class WordBoardComponent implements OnInit, BoardComponent {
-  readyToGo: EventEmitter<number>;
-  @Input() lessonItems: LessonItem[];
+  @Output() readyToGo = new EventEmitter<number>();  @Input() lessonItems: LessonItem[];
   @Input() currentIndex: number;
   word$: Observable<Word>;
 

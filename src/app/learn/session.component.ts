@@ -30,8 +30,8 @@ export class SessionComponent implements AfterViewInit, OnInit {
   courseId: string;
 
   static componentConfig = {
-    'alphabets': AlphabetQuizComponent,
-    'words': WordQuizComponent
+    'alphabets': AlphabetBoardComponent,
+    'words': WordBoardComponent
   };
 
   static chunk = 4;
