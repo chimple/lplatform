@@ -73,8 +73,8 @@ display: block !important;
 .list_of_courses_headline h4,.list_of_courseLesson_headline h4{
 	font-family: initial;
 	font-size: 20px;
-    color: #928080;
-    font-weight: 400;
+    font-weight: 700;
+    color: #264684;
 }
 .list_of_courses_headline,.list_of_courseLesson_headline{
     /*margin-bottom: 70px;*/
@@ -136,10 +136,12 @@ display: block !important;
     height: 54px;
     margin: 0;
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 20px;
     clear: both;
     text-align: center;
+    color: #777;
+    font-weight: 700;
 }
 .courseLesson_details h3 {
     height:35px;
@@ -177,4 +179,22 @@ display: block !important;
     }
 }
 
+@media only screen and (max-width : 768px) {
+    .list_of_courses_headline   {
+        text-align: center;
+    }
+}
+
 /* Displaying all courses CSS ends here */
+
+
+body{
+   /* font: 14px/1.42 'Raleway',Arial,Helvetica,sans-serif;*/
+   font-family: inherit;
+    /*text-align: center;*/
+    color: #444;
+    background: #DECEB9 url(http://chimple.cc/wp-content/themes/SocialStory/images/bgr/body.jpg) 0 0 repeat;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+}

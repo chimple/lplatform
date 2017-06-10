@@ -1,13 +1,23 @@
 .login a,.register a,.logout a,.header_logo{
-	color: white !important;
-	font-family: cursive;
+    color: black;
+    font-family: inherit;
 }
 
 .header{
-	background:rgba(15, 90, 206, 0.67);
+    background: white;
 }
 .login a:hover,.register a:hover,.logout a:hover{
-	background-color: rgba(78, 78, 84, 0.17);
+	background-color: #F4716A;
+    color: white;
+}
+.header-logo-loggedin{
+    margin-bottom: 10px;
+}
+.login a{
+    margin-top: 10px;
+}
+.header_logo img{
+    width: 150px;
 }
 .user_image img,.user_course_image img{
 	width: 40px;
@@ -101,5 +111,11 @@
     .header_logo {
         margin-top: 11px;
         padding: 0px;
+    }
+}
+
+@media only screen and (max-width : 350px) {
+    .header .navbar-nav {
+       margin-right: 8px !important;
     }
 }
