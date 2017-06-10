@@ -5,14 +5,40 @@ import { WordService } from "app/shared/model/word.service";
 import { Observable } from "rxjs/Observable";
 import { Word } from "app/shared/model/word";
 import { QuizService } from "app/shared/model/quiz.service";
+import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-word-quiz',
   templateUrl: './word-quiz.component.html',
-  styleUrls: ['./word-quiz.component.css']
+  styleUrls: ['./word-quiz.component.css'],
+  animations: [
+    trigger('AnimatedStyle', [
+
+      state('in', style({opacity: 1, transform: 'translateX(0)'})),
+
+      transition('void => *', [
+        style({
+          opacity: 0, transform: 'translateX(-100px)', backgroundColor: '#5EFF16'
+        }),
+        animate(500)]),
+
+      transition('* => void', [
+        group([
+          animate(300, style({
+            color: 'white', backgroundColor: '#FF090C', opacity: 0.5
+          })),
+          animate(300, style({
+            transform: 'translateX(100px)', opacity: 0
+          }))])
+
+
+      ])
+    ])
+  ]
 })
 export class WordQuizComponent implements BoardComponent, OnInit {
   @Input() lessonItems: LessonItem[];
+  @Input() reviewItem: LessonItem;
   @Input() currentIndex: number;
   @Output() readyToGo = new EventEmitter<number>();
 
@@ -24,8 +50,8 @@ export class WordQuizComponent implements BoardComponent, OnInit {
 
   ngOnInit() {
     let quizItems : LessonItem[] = this.quizService.getQuizItems(
-      this.lessonItems.slice(0, this.currentIndex + 1));
-    this.answer = quizItems[0].item;
+      this.lessonItems.slice(0, this.currentIndex + 1), this.reviewItem);
+    this.answer = this.reviewItem.item;
     this.choices = quizItems
       .slice(1, quizItems.length)
       .map((value) => {

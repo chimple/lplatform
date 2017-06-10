@@ -1,22 +1,50 @@
-<div>
-  <div>
-    {{answer}}
+
+
+<div class="row">
+
+  <div class="col-xs-2"></div>
+
+  <div class="col-xs-8" style="text-align: center">
+    <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 25px 25px 0px 0px; padding: 30px;">
+  <!--<div>-->
+    <!--{{answer}}*ngIf="(alphabet$ | async)?.sound"-->
+  <!--</div>-->
+  <app-play-quiz [@AnimatedStyle]  [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play-quiz>
   </div>
-  <app-play *ngIf="(alphabet$ | async)?.sound" [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play>
+  </div>
+  <div class="col-xs-2"></div>
+
+</div>
+
+
+  <div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8" style="text-align: center">
+      <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 0px 0px 25px 25px; padding: 30px;">
+
   <div>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[0])">
+    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[0])"
+            id="alphaQuizOptionButton1">
       {{choices[0]}}
     </button>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[1])">
+    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[1])"
+            id="alphaQuizOptionButton2">
       {{choices[1]}}
     </button>
   </div>
   <div>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[2])">
+    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[2])"
+            id="alphaQuizOptionButton3">
       {{choices[2]}}
     </button>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[3])">
+    <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[3])"
+            id="alphaQuizOptionButton4">
       {{choices[3]}}
     </button>
   </div>
+    </div>
+    </div>
+    <div class="col-xs-2"></div>
+
+
 </div>

@@ -13,6 +13,8 @@ import {WordQuizComponent} from "app/learn/quiz/word-quiz.component";
 import {Lesson} from "app/shared/model/lesson";
 import {AuthService} from "../shared/security/auth.service";
 import {AuthInfo} from "../shared/security/AuthInfo";
+import { QuizService } from "app/shared/model/quiz.service";
+
 
 @Component({
   selector: 'app-session',
@@ -25,7 +27,7 @@ export class SessionComponent implements AfterViewInit, OnInit {
   lesson$: Observable<Lesson>;
   currentIndex: number = -1;
   completed: number = 0;
-  toReview: number = 0;
+  reviewItems: LessonItem[] = [];
   reviewMode: boolean = false;
   @ViewChild(BoardDirective) board: BoardDirective;
   lessonItems: LessonItem[];
@@ -33,18 +35,25 @@ export class SessionComponent implements AfterViewInit, OnInit {
   courseId: string;
 
   static componentConfig = {
-    'alphabets': AlphabetQuizComponent,
-    'words': WordQuizComponent
+    'alphabets': {
+      'lesson': AlphabetBoardComponent,
+      'quiz': AlphabetQuizComponent
+    },
+    'words': {
+      'lesson': WordBoardComponent,
+      'quiz': WordQuizComponent
+    }
   };
 
   static chunk = 4;
+
 
   constructor(private authService: AuthService,
               private lessonService: LessonService,
               private activatedRoute: ActivatedRoute,
               private _componentFactoryResolver: ComponentFactoryResolver,
-              private router: Router) {
-  }
+              private router: Router,
+              private quizService: QuizService) {}
 
   ngOnInit() {
     this.authService.authInfo$
@@ -70,27 +79,30 @@ export class SessionComponent implements AfterViewInit, OnInit {
   }
 
   loadComponent() {
-    if (this.toReview === 0 && this.currentIndex >= this.lessonItems.length - 1) {
+    if(this.reviewItems.length == 0 && this.currentIndex >= this.lessonItems.length - 1) {
       this.authService.updateCurrentCourseFinishedInformation(this.authInfo.getUser(), this.lesson, this.courseId);
       this.router.navigate(['/lesson', this.courseId]);
     }
-    if ((this.currentIndex + 1) % SessionComponent.chunk === 0) {
-
+    let boardType = 'lesson';
+    let reviewItem: LessonItem;
+    if(((this.currentIndex + 1) % SessionComponent.chunk == 0 || this.currentIndex >= this.lessonItems.length - 1) && this.reviewItems.length > 0) {
+      boardType = 'quiz';
+      let aIndex = this.quizService.getRandomIntInclusive(0, this.reviewItems.length - 1);
+      [reviewItem] = this.reviewItems.splice(aIndex, 1)
+    } else {
+      this.currentIndex = this.currentIndex + 1;
+      let lessonItem = this.lessonItems[this.currentIndex];
+      this.reviewItems.push(lessonItem);
     }
 
-    this.currentIndex = this.currentIndex + 1;
-    let lessonItem = this.lessonItems[this.currentIndex];
-
-    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(SessionComponent.componentConfig[this.lesson.teach]);
-
+    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(SessionComponent.componentConfig[this.lesson.teach][boardType]);
     let viewContainerRef = this.board.viewContainerRef;
     viewContainerRef.clear();
-
     let componentRef = viewContainerRef.createComponent(componentFactory);
     (<BoardComponent>componentRef.instance).lessonItems = this.lessonItems;
     (<BoardComponent>componentRef.instance).currentIndex = this.currentIndex;
+    (<BoardComponent>componentRef.instance).reviewItem = reviewItem;
     (<BoardComponent>componentRef.instance).readyToGo.subscribe(this.readyToGo);
-
 
     this.completed = (this.currentIndex + 1) / this.lessonItems.length * 100;
   }

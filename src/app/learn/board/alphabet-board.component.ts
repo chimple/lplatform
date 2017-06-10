@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { LessonItem } from "app/shared/model/lesson-item";
 import { AlphabetService } from "app/shared/model/alphabet.service";
@@ -37,8 +37,9 @@ import { BoardComponent } from "app/learn/board.component";
   
 })
 export class AlphabetBoardComponent implements OnInit, BoardComponent {
-  readyToGo: EventEmitter<number>;
+  @Output() readyToGo = new EventEmitter<number>();
   @Input() lessonItems: LessonItem[];
+  @Input() reviewItem: LessonItem;
   @Input() currentIndex: number;
   alphabet$: Observable<Alphabet>;
 

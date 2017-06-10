@@ -1,23 +1,58 @@
-<div>
-  <div>
-    {{answer}}
+
+
+
+  <div class="row">
+
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8" style="text-align: center">
+      <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 25px 25px 0px 0px; padding: 30px;">
+      <!--<div>-->
+      <!--{{answer}}-->
+      <!--</div>-->
+      <img src="{{(word$ | async)?.image}}"
+           style="width: 256px; height: 256px; border-radius: 25px; background-color: white">
+      <app-play *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}"></app-play>
+      </div>
+      </div>
+    <div class="col-xs-2"></div>
   </div>
-  <img src="{{(word$ | async)?.image}}">
-  <app-play *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}"></app-play>
-  <div>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[0])">
-      {{choices[0]}}
-    </button>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[1])">
-      {{choices[1]}}
-    </button>
+
+  <div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+      <div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 0px 0px 25px 25px; padding: 30px;">
+
+      <div >
+        <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[0])"
+                id="wordQuizOptionButton1"
+        >
+          {{choices[0]}}
+        </button>
+        <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[1])"
+                id="wordQuizOptionButton2">
+          {{choices[1]}}
+        </button>
+      </div>
+      <div>
+        <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[2])"
+                id="wordQuizOptionButton3">
+          {{choices[2]}}
+        </button>
+        <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[3])"
+                id="wordQuizOptionButton4">
+          {{choices[3]}}
+        </button>
+      </div>
+
+      </div>
+    </div>
+
+    <div class="col-xs-2"></div>
+
+
   </div>
-  <div>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[2])">
-      {{choices[2]}}
-    </button>
-    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[3])">
-      {{choices[3]}}
-    </button>
-  </div>
-</div>
+
+
+
+
+

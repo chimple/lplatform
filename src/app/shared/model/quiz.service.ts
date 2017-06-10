@@ -6,17 +6,12 @@ export class QuizService {
 
   constructor() { }
 
-  getQuizItems(lessonItems: LessonItem[]) : LessonItem[] {
-    let aIndex = this.getRandomIntInclusive(0, lessonItems.length - 1);
-    let answer = lessonItems[aIndex];
-    if(lessonItems.length > 1) {
-      lessonItems.splice(aIndex, 1);
-    }
+  getQuizItems(lessonItems: LessonItem[], reviewItem: LessonItem) : LessonItem[] {
     let correctIndex = this.getRandomIntInclusive(0, 3);
-    let choices : LessonItem[] = [answer];
+    let choices : LessonItem[] = [];
     for (var index = 0; index < 4; index++) {
       if(index == correctIndex) {
-        choices.push(answer);
+        choices.push(reviewItem);
       }
       let randIndex = this.getRandomIntInclusive(0, lessonItems.length - 1);
       choices.push(lessonItems[randIndex]);

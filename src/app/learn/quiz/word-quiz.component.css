@@ -1,0 +1,36 @@
+#wordQuizOptionButton1{
+ height: 50px; width: 300px; border-radius: 10px;
+  margin-top: 5px;
+}
+#wordQuizOptionButton1:hover{
+  background-color: #FFA41E;
+}
+#wordQuizOptionButton2{
+  height: 50px; width: 300px; border-radius: 10px;
+  margin-top: 5px;
+}
+#wordQuizOptionButton2:hover{
+  background-color: #FFA41E;
+}
+
+#wordQuizOptionButton3{
+  height: 50px; width: 300px; border-radius: 10px;
+  margin-top: 5px;
+}
+#wordQuizOptionButton3:hover{
+  background-color: #FFA41E;
+}
+
+#wordQuizOptionButton4{
+  height: 50px; width: 300px; border-radius: 10px;
+  margin-top: 5px;
+}
+#wordQuizOptionButton4:hover{
+  background-color: #FFA41E;
+}
+
+img{
+  border:0;
+height: 256px;
+width: 256px
+}

@@ -1,0 +1,9 @@
+<button type="button" class="btn btn-default"
+        (click)="playaudio(filedata.source)"
+        style="border-radius:20px 20px 20px 20px ;cursor:pointer;color:deepskyblue ">
+<span
+  class="glyphicon glyphicon-volume-up" style="font-size: 40px"></span>
+</button>
+<audio controls="controls" id="sounds{{filedata.index}}{{filedata.playfor}}" hidden >
+  <source src="{{filedata.source}}" type="audio/mp3">
+</audio>

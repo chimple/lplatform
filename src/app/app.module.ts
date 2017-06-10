@@ -55,6 +55,7 @@ import { WordBoardComponent } from './learn/board/word-board.component';
 import { AlphabetQuizComponent } from './learn/quiz/alphabet-quiz.component';
 import { QuizService } from "app/shared/model/quiz.service";
 import { WordQuizComponent } from './learn/quiz/word-quiz.component';
+import { PlayQuizComponent } from './play-quiz/play-quiz.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { WordQuizComponent } from './learn/quiz/word-quiz.component';
     UsercreatedcoursesComponent,
     WordBoardComponent,
     AlphabetQuizComponent,
-    WordQuizComponent
+    WordQuizComponent,
+    PlayQuizComponent
   ],
   imports: [
     BrowserModule,
