@@ -1,19 +1,21 @@
+
+<div style="background-color: #5A95CB ; height: auto; width: auto; border-radius: 25px; padding: 30px;">
 <div class="row">
 
-  <div class="col-xs-5"></div>
-  <div class="col-xs-2" style="align-items: center">
+  <div class="col-xs-2"></div>
+  <div class="col-xs-8" style="text-align: center">
   <!--<div>-->
-    <!--{{answer}}-->
+    <!--{{answer}}*ngIf="(alphabet$ | async)?.sound"-->
   <!--</div>-->
-  <app-play-quiz *ngIf="(alphabet$ | async)?.sound" [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play-quiz>
+  <app-play-quiz [@AnimatedStyle]  [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play-quiz>
   </div>
-  <div class="col-xs-5"></div>
+  <div class="col-xs-2"></div>
 </div>
 
 
   <div class="row">
     <div class="col-xs-2"></div>
-    <div class="col-xs-8">
+    <div class="col-xs-8" style="text-align: center">
 
   <div>
     <button [@AnimatedStyle] class="btn btn-default" type="button" (click)="checkAnswer(choices[0])"
@@ -40,3 +42,4 @@
     <div class="col-xs-2"></div>
 </div>
 
+</div>

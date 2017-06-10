@@ -2,18 +2,29 @@
   height: 50px; width: 300px; border-radius: 10px;
   margin-top: 5px;
 }
+#alphaQuizOptionButton1:hover{
+  background-color: #FFA41E;
+}
 #alphaQuizOptionButton2{
   height: 50px; width: 300px; border-radius: 10px;
   margin-top: 5px;
+}
+#alphaQuizOptionButton2:hover{
+  background-color: #FFA41E;
 }
 
 #alphaQuizOptionButton3{
   height: 50px; width: 300px; border-radius: 10px;
   margin-top: 5px;
 }
+#alphaQuizOptionButton3:hover{
+  background-color: #FFA41E;
+}
 
 #alphaQuizOptionButton4{
   height: 50px; width: 300px; border-radius: 10px;
   margin-top: 5px;
 }
-
+#alphaQuizOptionButton4:hover{
+  background-color: #FFA41E;
+}
