@@ -32,6 +32,10 @@ export class LessonService {
       .map(LessonItem.fromJsonList);
   }
 
+  updateImageLink(courseUrl: string, key: string, imageFileName: string): void {
+    const lessonUpdate$ = this.db.object(`course_lessons/${courseUrl}/${key}`);
+    lessonUpdate$.update({image: imageFileName});
+  }
 
 
   getLessonItems(lessonId: string): Observable<LessonItem[]> {

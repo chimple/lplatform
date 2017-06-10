@@ -66,6 +66,12 @@ export class CourseService {
     return this.firebaseUpdate(dataToSave);
   }
 
+  updateImageLink(courseUrl: string, imageFileName: string): void {
+    const courseUpdate$ = this.db.object(`courses/${courseUrl}`);
+    courseUpdate$.update({image: imageFileName});
+  }
+
+
   firebaseUpdate(dataToSave): Observable<any> {
     const subject = new Subject();
 

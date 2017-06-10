@@ -84,7 +84,7 @@
       <input type="text" *ngIf="editFlag===lIndex" readonly required name="teach" class="form-control" [ngModel]="lesson.teach" />
     </td>
     <td>
-    <app-upload-form [filedata]="{'objectname': lesson.name,'componentname':'lession','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
+    <app-upload-form [filedata]="{'objectname': lesson.lesson,'componentname':'lesson','courseId':course$Key,'uploadFor':'image'}"></app-upload-form>
     </td>
     <td>
       <div *ngIf="lesson.teach==='words'">

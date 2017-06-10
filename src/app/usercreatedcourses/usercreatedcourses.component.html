@@ -9,24 +9,25 @@
 <div class="row course_container" *ngIf="authInfo?.getUser()">
 	<div class="list-group">
   		<div class="col-xs-12 col-sm-6 col-lg-3 " *ngFor="let course of filtered">
-			<div class="list_of_courses" routerLink="/home/{{course.$key}}/alphabet/{{course.$key}}">
-				<a>
+			<div class="list_of_courses" >
+				<a routerLink="/home/{{course.$key}}/alphabet/{{course.$key}}">
 					<img class="img-responsive" [src]="course.image" />
 				</a>
 				<div class="course_details">
 					<div class="clearfix">
 				    <span class="author pull-right">
-				        by 
+				        by
 				    	<a title="{{course.creator}}">{{course.creator}}</a>
 				    </span>
 				    <a class="category" title="{{course.lang}}">{{course.lang}}</a>
 				</div>
 				<h3>{{course.name}}</h3>
 				<div class="learners_count">
-					<span class="glyphicon glyphicon-user" title="{{course.learners}} are learning this course"></span> &nbsp; {{course.learners}}
+          <app-upload-form [filedata]="{'objectname': 'test','componentname':'course','courseId': course.$key,'uploadFor':'image'}"></app-upload-form>
 				</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
-</div>	
+</div>

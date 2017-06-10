@@ -7,6 +7,7 @@ import {AlphabetService} from '../model/alphabet.service';
 import {PhoneticService} from '../model/phonetic.service';
 import {WordService} from '../model/word.service';
 import {LessonService} from '../model/lesson.service';
+import {CourseService} from "../model/course.service";
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class UploadService {
 
   constructor(private db: AngularFireDatabase, private alphabetService: AlphabetService,
               private phoneticService: PhoneticService, private wordService: WordService,
-              private lessonService: LessonService) {
+              private lessonService: LessonService, private courseService: CourseService) {
   }
 
   getUploads(query = {}) {
@@ -56,6 +57,7 @@ export class UploadService {
         // upload success
         upload.url = this.uploadTask.snapshot.downloadURL;
         upload.name = upload.file.name;
+        upload.progress = 100;
         return this.saveFileData(upload);
       }
     );
@@ -98,6 +100,10 @@ export class UploadService {
       this.wordService.updatePronunciationLink(filedata.courseId, filedata.objectname, fileUrl);
     } else if (filedata.componentname === 'word' && filedata.uploadFor === 'image') {
       this.wordService.updateImageLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'lesson' && filedata.uploadFor === 'image') {
+      this.lessonService.updateImageLink(filedata.courseId, filedata.objectname, fileUrl);
+    } else if (filedata.componentname === 'course' && filedata.uploadFor === 'image') {
+      this.courseService.updateImageLink(filedata.courseId, fileUrl);
     }
   }
 
@@ -106,12 +112,9 @@ export class UploadService {
     this.db.list(`${this.basePath}/`).push(upload)
       .then(
         success => {
-          //alert('success');
-          // update related links
           this.updateReferenceForUpload(upload.fileData, upload.url);
         },
         fail => {
-          //alert('failure');
         }
       );
   }
