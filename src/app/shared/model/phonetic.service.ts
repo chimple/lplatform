@@ -22,7 +22,6 @@ export class PhoneticService {
         orderByChild: 'order'
       }
     })
-      .take(1)
       .map(results => _.sortBy(Phonetic.fromJsonList(results), 'order'));
   }
 

@@ -36,16 +36,16 @@ export class SessionComponent implements AfterViewInit, OnInit {
 
   static chunk = 4;
 
-  constructor(private lessonService: LessonService, 
-    private activatedRoute: ActivatedRoute, 
+  constructor(private lessonService: LessonService,
+    private activatedRoute: ActivatedRoute,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private router: Router) { }
 
   ngOnInit() {
     this.courseId = this.activatedRoute.snapshot.params['courseId'];
     const lessonId = this.activatedRoute.snapshot.params['lessonId'];
-    this.lessonItems$ = this.lessonService.getLessonItems(lessonId);
-    this.lesson$ = this.lessonService.getLesson(lessonId, this.courseId);
+    this.lessonItems$ = this.lessonService.getLessonItemsForSession(lessonId);
+    this.lesson$ = this.lessonService.getLessonForSession(lessonId, this.courseId);
     Observable.forkJoin(this.lessonItems$, this.lesson$)
       .subscribe(
         ([lessonItems, lesson]) => {
@@ -81,7 +81,7 @@ export class SessionComponent implements AfterViewInit, OnInit {
     (<BoardComponent>componentRef.instance).lessonItems = this.lessonItems;
     (<BoardComponent>componentRef.instance).currentIndex = this.currentIndex;
     (<BoardComponent>componentRef.instance).readyToGo.subscribe(this.readyToGo);
-    
+
 
     this.completed = (this.currentIndex + 1) / this.lessonItems.length * 100;
   }

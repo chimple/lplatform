@@ -27,7 +27,6 @@ export class AlphabetService {
   findAlphabetsByCourse(courseUrl: string, query: FirebaseListFactoryOpts = {query: {orderByChild: 'order'}}): Observable<Alphabet[]> {
     console.log(`findAlphabetsByCourse ${courseUrl}`);
     return this.db.list(`course_alphabets/${courseUrl}`, query)
-      .take(1)
       .map(results => _.sortBy(Alphabet.fromJsonList(results), 'order'));
   }
 

@@ -75,8 +75,6 @@ export class LessonsComponent implements OnInit {
   }
 
   callChildRoutes() {
-    //this.showLesson = 2;
-    //this.lessonService.courseKey = this.showLesson;
   }
 
   addLesson(): void {

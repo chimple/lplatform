@@ -9,7 +9,7 @@
         <button type="button" [routerLink]="['../../']" (click)="navigateToParent()" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button>
         </div>
         <div class="col-xs-11">
-          <p class="customHeading1">Lesson Words</p> 
+          <p class="customHeading1">Lesson Words</p>
         </div>
     </div>
   </div>
@@ -59,12 +59,12 @@
 
 <div class="row" *ngIf="lwInsertFlag">
   <div class="col-xs-12">
-    <form (ngSubmit)="submitLW()" #lw="ngForm">        
+    <form (ngSubmit)="submitLW()" #lw="ngForm">
         <div class="row">
           <div class="col-xs-4">
             <label>Enter Word: <mark class="redColor">* Enter a word which is not in the dropdown list.</mark></label>
             <!-- <input class="form-control" type="text" placeholder="Enter Word" ngModel name="word" required #lessonItem> -->
-            <input type="text" class='form-control' name="word" auto-complete [source]="lesonWord$Arr"  placeholder="Enter Word" required />
+            <input type="text" class='form-control' name="word" ngModel auto-complete [source]="lesonWord$Arr"  placeholder="Enter Word" required />
           </div>
           <div class="col-xs-4"><label>&nbsp;</label><button type="submit" [disabled]="!lw.valid" class="btn btn-success displayBlockImp">Save</button></div>
         </div>

@@ -83,7 +83,7 @@ export class PhoneticsComponent implements OnInit {
       this.dropvalue = e.cells[1].innerText;
       this.callReorderEvent();
       if (this.dragStartIndex !== this.dropIndex) {
-        this.phoneticService.updateDragOrder(this.phonetics$key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+        // this.phoneticService.updateDragOrder(this.phonetics$key, this.dragStartIndex, this.dropIndex, this.dropvalue);
       }
     }
   }

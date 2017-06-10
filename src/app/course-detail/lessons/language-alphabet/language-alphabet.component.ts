@@ -23,7 +23,7 @@ export class LanguageAlphabetComponent implements OnInit {
   course$key: string;
   dragStartIndex = -1;
   dropIndex = -1;
-  dropvalue= '';
+  dropvalue = '';
   dragElement;
 
   show = '';
@@ -43,22 +43,18 @@ export class LanguageAlphabetComponent implements OnInit {
     });
   }
 
-  navigateToParent(){
-    //this.lessonService.courseKey=1;
-    //this.router.navigate(['../../'], { relativeTo: this.route });
-    //reload();
-        window.document.getElementById("showLesson").style.display = "block";
+  navigateToParent() {
+    window.document.getElementById("showLesson").style.display = "block";
   }
 
   ngOnInit() {
     this.lessonAlpha$Key = this.route.snapshot.params['lessonAlphaId'];
-    //this.course$key = this.route.snapshot.params['lessonId'];
     this.lesonAlpha$ = this.lessonService.getLessonItems(this.lessonAlpha$Key);
     window.document.getElementById("showLesson").style.display = "none";
     this.initForm();
   }
 
-    private initForm() {
+  private initForm() {
     const alpha = '';
     const words = new FormArray([]);
     this.lessonAlphaform = new FormGroup({
@@ -73,7 +69,7 @@ export class LanguageAlphabetComponent implements OnInit {
   }
 
 
-onDrag(args) {
+  onDrag(args) {
     const [e] = args;
     if (e) {
       console.log(`drag:${e.rowIndex}`);
@@ -93,10 +89,10 @@ onDrag(args) {
     }
   }
 
-  onDelete(data) {
-    console.log(data);
-    if (confirm('Are you sure to delete ?')){
-      //this.LessonService.deleteLessonAlpha(this.word$Key, data);
+  onDelete(course, lesson, lessonItem) {
+    console.log(lessonItem);
+    if (confirm('Are you sure to delete ?')) {
+      this.lessonService.deleteLessonAlpha(lesson, lessonItem);
     }
   }
 
@@ -119,12 +115,12 @@ onDrag(args) {
     this.laEditFlag = laIndex;
     this.laInsertFlag = false;
     /*if (this.laEditFlag !== '' && laIndex === this.laEditFlag) {
-      console.log(this.laEditFlag);
-      this.laEditFlag = '';
-    } else {
-      this.laEditFlag = laIndex;
-      this.editdata(value);
-    }*/
+     console.log(this.laEditFlag);
+     this.laEditFlag = '';
+     } else {
+     this.laEditFlag = laIndex;
+     this.editdata(value);
+     }*/
     this.editdata(value);
   }
 
@@ -151,7 +147,7 @@ onDrag(args) {
     editdata.phonetics = editdata.phoneticdata;
     delete editdata.phoneticdata;
     console.log(editdata);
-   // this.wordService.createWord(this.word$Key, editdata);
+    // this.wordService.createWord(this.word$Key, editdata);
     this.show = '';
     // this.lessonService.updateLessonAlpha(this.lessonAlpha$Key, this.laEditForm.value);
     this.laEditFlag = '';
@@ -170,8 +166,6 @@ onDrag(args) {
   }
 
 
-
-
   /* -------------------------- Add new Alphabet block ------------------------------- */
 
   addAlpha() {
@@ -179,21 +173,10 @@ onDrag(args) {
   }
 
   submitLA(data) {
-    console.log(data);
-    // this.lessonService.createLessonAlpha(this.lessonAlpha$Key, this.laForm.value);
-
-    let existingAlphabetsForCourse = [];
     const that = this;
-    //const updatedForm = this.laForm.value;
     const updatedForm = data;
-    updatedForm['alphabet'] = updatedForm.item;
-    this.alphabetService.findAlphabetsByCourse('XX01')
-      .subscribe(
-        (alphabets) => {
-          existingAlphabetsForCourse = alphabets;
-          const checkAlphabetExists = existingAlphabetsForCourse.map(alphabet =>  alphabet.alphabet).includes(updatedForm.item);
-          that.lessonService.createLessonItem('XX01', that.lessonAlpha$Key, updatedForm, 'alphabet', checkAlphabetExists);
-        });
+    updatedForm['alphabet'] = updatedForm.alpha;
+    that.lessonService.createLessonItem(that.lessonAlpha$Key, that.lessonAlpha$Key, updatedForm, 'alphabet', false);
     this.laInsertFlag = false;
     this.lessonAlphaform.reset();
   }

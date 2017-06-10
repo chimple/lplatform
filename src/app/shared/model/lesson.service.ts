@@ -17,15 +17,13 @@ import {AlphabetService} from "./alphabet.service";
 export class LessonService {
 
   sdkDb: any;
+  courseKey: any;
 
   constructor(private db: AngularFireDatabase, private courseService: CourseService, private wordService: WordService, private alphabetService: AlphabetService) {
     this.sdkDb = firebase.database().ref();
   }
 
-  courseKey: any;
-
-
-  getLessonItems(lessonId: string): Observable<LessonItem[]> {
+  getLessonItemsForSession(lessonId: string): Observable<LessonItem[]> {
     console.log(lessonId);
 
     return this.db.list(`course_lesson_items/${lessonId}`)
@@ -34,12 +32,31 @@ export class LessonService {
       .map(LessonItem.fromJsonList);
   }
 
-  getLesson(lessonId: string, courseId: string): Observable<Lesson> {
+
+
+  getLessonItems(lessonId: string): Observable<LessonItem[]> {
+    console.log(lessonId);
+
+    return this.db.list(`course_lesson_items/${lessonId}`)
+      .do(console.log)
+      .map(LessonItem.fromJsonList);
+  }
+
+  getLessonForSession(lessonId: string, courseId: string): Observable<Lesson> {
     console.log(lessonId);
 
     return this.db.object(`course_lessons/${courseId}/${lessonId}`)
       .do(console.log)
       .take(1)
+      .map(Lesson.fromJson);
+  }
+
+
+  getLesson(lessonId: string, courseId: string): Observable<Lesson> {
+    console.log(lessonId);
+
+    return this.db.object(`course_lessons/${courseId}/${lessonId}`)
+      .do(console.log)
       .map(Lesson.fromJson);
   }
 
@@ -116,8 +133,8 @@ export class LessonService {
 
     if (input.word) {
       lessonItemToSave = Object.assign({}, {item: input.word}, {lesson: lessonUrl}, {course: courseUrl});
-    } else if (input.alphabet) {
-      lessonItemToSave = Object.assign({}, {item: input.alphabet}, {lesson: lessonUrl}, {course: courseUrl});
+    } else if (input.alpha) {
+      lessonItemToSave = Object.assign({}, {item: input.alpha}, {lesson: lessonUrl}, {course: courseUrl});
     }
 
     const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
@@ -125,39 +142,27 @@ export class LessonService {
     const dataToSave = {};
     dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
 
-    if (!attributeExists) {
-      if (type === 'word') {
-        this.wordService.createWordForLessonItem(courseUrl, input);
-      } else if (type === 'alphabet') {
-        this.alphabetService.createAlphabetForLessonItem(courseUrl, input);
-      }
-    }
+    // if (!attributeExists) {
+    //   if (type === 'word') {
+    //     this.wordService.createWordForLessonItem(courseUrl, input);
+    //   } else if (type === 'alphabet') {
+    //     this.alphabetService.createAlphabetForLessonItem(courseUrl, input);
+    //   }
+    // }
     return this.firebaseUpdate(dataToSave);
   }
 
-  deleteLessonWord(course$Key, lesson$key, lessonItem$key){
-    let courseDetail: CourseDetail;
-    let order;
-    let courseDetailToSave;
-
-    this.courseService.getCourseDetail(course$Key)
-      .subscribe(
-        courseInfo => courseDetail = courseInfo
-      );
-    courseDetail.words = courseDetail.words-1;
-    courseDetailToSave = Object.assign({}, courseDetail);
-    delete(courseDetailToSave.$key);
-
+  deleteLessonWord(lesson$key, lessonItem$key) {
     const dataToSave = {};
-    dataToSave[`course_details/${course$Key}`] = courseDetailToSave;
-    this.firebaseUpdate(dataToSave);
-
     const lessonWordToDelete$ = this.db.object(`course_lesson_items/${lesson$key}/${lessonItem$key}`);
     lessonWordToDelete$.remove();
   }
 
-  deleteLessonAlpha(){
-    
+  deleteLessonAlpha(lesson$key, lessonItem$key) {
+    const dataToSave = {};
+    const lessonWordToDelete$ = this.db.object(`course_lesson_items/${lesson$key}/${lessonItem$key}`);
+    lessonWordToDelete$.remove();
+
   }
 
   firebaseUpdate(dataToSave): Observable<any> {

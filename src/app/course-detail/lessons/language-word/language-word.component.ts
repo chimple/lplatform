@@ -110,8 +110,9 @@ export class LanguageWordComponent implements OnInit {
 
     /* ------------------------------------------ */
   }
-  deleteWord(course$Key, lesson$key, lessonItem$key){
-    this.lessonService.deleteLessonWord(course$Key, lesson$key, lessonItem$key);
+
+  deleteWord(course$Key, lesson$key, lessonItem$key) {
+    this.lessonService.deleteLessonWord(lesson$key, lessonItem$key);
   }
 
   addWord() {

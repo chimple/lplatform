@@ -91,7 +91,7 @@ export class AlphabetComponent implements OnInit {
       this.dropvalue = e.cells[2].innerText;
       this.callReorderEvent();
       console.log(this.dropvalue);
-      this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
+      // this.alphabetService.updateDragOrder(this.alphabet$Key, this.dragStartIndex, this.dropIndex, this.dropvalue);
     }
   }
 
