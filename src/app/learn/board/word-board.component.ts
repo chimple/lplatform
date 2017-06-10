@@ -11,7 +11,9 @@ import { BoardComponent } from "app/learn/board.component";
   styleUrls: ['./word-board.component.css']
 })
 export class WordBoardComponent implements OnInit, BoardComponent {
-  @Output() readyToGo = new EventEmitter<number>();  @Input() lessonItems: LessonItem[];
+  @Output() readyToGo = new EventEmitter<number>();
+  @Input() lessonItems: LessonItem[];
+  @Input() reviewItem: LessonItem;
   @Input() currentIndex: number;
   word$: Observable<Word>;
 

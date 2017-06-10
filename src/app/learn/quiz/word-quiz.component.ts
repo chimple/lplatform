@@ -38,6 +38,7 @@ import {animate, group, keyframes, state, style, transition, trigger} from '@ang
 })
 export class WordQuizComponent implements BoardComponent, OnInit {
   @Input() lessonItems: LessonItem[];
+  @Input() reviewItem: LessonItem;
   @Input() currentIndex: number;
   @Output() readyToGo = new EventEmitter<number>();
 
@@ -49,8 +50,8 @@ export class WordQuizComponent implements BoardComponent, OnInit {
 
   ngOnInit() {
     let quizItems : LessonItem[] = this.quizService.getQuizItems(
-      this.lessonItems.slice(0, this.currentIndex + 1));
-    this.answer = quizItems[0].item;
+      this.lessonItems.slice(0, this.currentIndex + 1), this.reviewItem);
+    this.answer = this.reviewItem.item;
     this.choices = quizItems
       .slice(1, quizItems.length)
       .map((value) => {
