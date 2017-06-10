@@ -1,3 +1,7 @@
-<div *ngIf="lessonItem">
-  {{lessonItem.item}}
+<div [@flyInOut]="'in'"
+  (@flyInOut.start)="animationStarted($event)"
+  *ngIf="lessonItems">
+  <h1>{{lessonItems[currentIndex].item}}</h1>
+  <h2>{{(alphabet$ | async)?.alphabet}}</h2>
+  <app-play *ngIf="(alphabet$ | async)?.sound" [filedata]="{'source': (alphabet$ | async)?.sound}"></app-play>
 </div>

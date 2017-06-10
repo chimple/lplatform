@@ -30,7 +30,17 @@ export class LessonService {
 
     return this.db.list(`course_lesson_items/${lessonId}`)
       .do(console.log)
+      .take(1)
       .map(LessonItem.fromJsonList);
+  }
+
+  getLesson(lessonId: string, courseId: string): Observable<Lesson> {
+    console.log(lessonId);
+
+    return this.db.object(`course_lessons/${courseId}/${lessonId}`)
+      .do(console.log)
+      .take(1)
+      .map(Lesson.fromJson);
   }
 
   findAllLessonByCourse(courseUrl: string): Observable<Lesson[]> {

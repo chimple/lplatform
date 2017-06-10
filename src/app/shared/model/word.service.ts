@@ -18,6 +18,12 @@ export class WordService {
     this.sdkDb = firebase.database().ref();
   }
 
+  getWord(word: string, courseUrl: string) : Observable<Word> {
+    return this.db.object(`course_words/${courseUrl}/${word}`)
+      .do(console.log)
+      .map(Word.fromJson);
+  }
+
   findAllPhoneticsInCourse(courseUrl: string): any {
     return this.phoneticService.findPhoneticsPropertyByCourse(courseUrl);
   }

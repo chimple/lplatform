@@ -1,0 +1,23 @@
+<div>
+  <div>
+    {{answer}}
+  </div>
+  <img src="{{(word$ | async)?.image}}">
+  <app-play *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}"></app-play>
+  <div>
+    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[0])">
+      {{choices[0]}}
+    </button>
+    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[1])">
+      {{choices[1]}}
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[2])">
+      {{choices[2]}}
+    </button>
+    <button class="btn btn-default" type="button" (click)="checkAnswer(choices[3])">
+      {{choices[3]}}
+    </button>
+  </div>
+</div>

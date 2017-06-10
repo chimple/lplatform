@@ -88,7 +88,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'session/:lessonId',
+    path: 'session/:courseId/:lessonId',
     component: SessionComponent
   },
   {

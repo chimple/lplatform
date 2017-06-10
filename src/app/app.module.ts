@@ -42,7 +42,7 @@ import { SessionComponent } from './learn/session.component';
 
 import { AllcoursesComponent } from './allcourses/allcourses.component';
 import { AlphabetBoardComponent } from './learn/board/alphabet-board.component';
-import { BoardDirective } from "app/learn/board/board.directive";
+import { BoardDirective } from "app/learn/board.directive";
 import { LanguageWordComponent } from './course-detail/lessons/language-word/language-word.component';
 import { LanguageAlphabetComponent } from './course-detail/lessons/language-alphabet/language-alphabet.component';
 import { CourselessonsComponent } from './courselessons/courselessons.component';
@@ -51,6 +51,10 @@ import {DragulaModule, DragulaService} from 'ng2-dragula';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { RegisterCourseComponent } from './register-course/register-course.component';
 import { UsercreatedcoursesComponent } from './usercreatedcourses/usercreatedcourses.component';
+import { WordBoardComponent } from './learn/board/word-board.component';
+import { AlphabetQuizComponent } from './learn/quiz/alphabet-quiz.component';
+import { QuizService } from "app/shared/model/quiz.service";
+import { WordQuizComponent } from './learn/quiz/word-quiz.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +81,10 @@ import { UsercreatedcoursesComponent } from './usercreatedcourses/usercreatedcou
     CourselessonsComponent,
     PlayComponent,
     RegisterCourseComponent,
-    UsercreatedcoursesComponent
+    UsercreatedcoursesComponent,
+    WordBoardComponent,
+    AlphabetQuizComponent,
+    WordQuizComponent
   ],
   imports: [
     BrowserModule,
@@ -93,8 +100,8 @@ import { UsercreatedcoursesComponent } from './usercreatedcourses/usercreatedcou
     Ng2AutoCompleteModule
   ],
   providers: [AuthService, AuthGuard, DragulaService ,
-    CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService],
-  entryComponents: [AlphabetBoardComponent],
+    CourseService, UploadService, AlphabetService, PhoneticService, WordService, LessonService, QuizService],
+  entryComponents: [AlphabetBoardComponent, WordBoardComponent, AlphabetQuizComponent, WordQuizComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

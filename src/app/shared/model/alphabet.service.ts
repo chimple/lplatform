@@ -18,6 +18,12 @@ export class AlphabetService {
     this.sdkDb = firebase.database().ref();
   }
 
+  getAlphabet(alphabet: string, courseUrl: string) : Observable<Alphabet> {
+    return this.db.object(`course_alphabets/${courseUrl}/${alphabet}`)
+      .do(console.log)
+      .map(Alphabet.fromJson);
+  }
+
   findAlphabetsByCourse(courseUrl: string, query: FirebaseListFactoryOpts = {query: {orderByChild: 'order'}}): Observable<Alphabet[]> {
     console.log(`findAlphabetsByCourse ${courseUrl}`);
     return this.db.list(`course_alphabets/${courseUrl}`, query)

@@ -1,11 +1,16 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import {LessonService} from '../shared/model/lesson.service';
+import { AlphabetService } from '../shared/model/alphabet.service';
 import {Observable} from 'rxjs/Observable';
 import {LessonItem} from '../shared/model/lesson-item';
-import {BoardDirective} from './board/board.directive';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AlphabetBoardComponent } from "app/learn/board/alphabet-board.component";
-import { BoardComponent } from "app/learn/board/board.component";
+import { WordBoardComponent } from "app/learn/board/word-board.component";
+import { BoardDirective } from "app/learn/board.directive";
+import { BoardComponent } from "app/learn/board.component";
+import { AlphabetQuizComponent } from "app/learn/quiz/alphabet-quiz.component";
+import { WordQuizComponent } from "app/learn/quiz/word-quiz.component";
+import { Lesson } from "app/shared/model/lesson";
 
 @Component({
   selector: 'app-session',
@@ -14,19 +19,39 @@ import { BoardComponent } from "app/learn/board/board.component";
 })
 export class SessionComponent implements AfterViewInit, OnInit {
   lessonItems$: Observable<LessonItem[]>;
+  lesson$: Observable<Lesson>;
   currentIndex: number = -1;
+  completed: number = 0;
+  toReview: number = 0;
+  reviewMode: boolean = false;
   @ViewChild(BoardDirective) board: BoardDirective;
   lessonItems: LessonItem[];
+  lesson: Lesson;
+  courseId: string;
 
-  constructor(private lessonService: LessonService, private router: ActivatedRoute, private _componentFactoryResolver: ComponentFactoryResolver) { }
+  static componentConfig = {
+    'alphabets': AlphabetQuizComponent,
+    'words': WordQuizComponent
+  };
+
+  static chunk = 4;
+
+  constructor(private lessonService: LessonService, 
+    private activatedRoute: ActivatedRoute, 
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private router: Router) { }
 
   ngOnInit() {
-    const lessonId = this.router.snapshot.params['lessonId'];
+    this.courseId = this.activatedRoute.snapshot.params['courseId'];
+    const lessonId = this.activatedRoute.snapshot.params['lessonId'];
     this.lessonItems$ = this.lessonService.getLessonItems(lessonId);
-    this.lessonItems$.subscribe(
-      lessonItems => {
-        this.lessonItems = lessonItems;
-        this.loadComponent();
+    this.lesson$ = this.lessonService.getLesson(lessonId, this.courseId);
+    Observable.forkJoin(this.lessonItems$, this.lesson$)
+      .subscribe(
+        ([lessonItems, lesson]) => {
+          this.lessonItems = lessonItems;
+          this.lesson = lesson;
+          this.loadComponent();
       }
     );
 
@@ -37,17 +62,32 @@ export class SessionComponent implements AfterViewInit, OnInit {
   }
 
   loadComponent() {
+    if(this.toReview == 0 && this.currentIndex >= this.lessonItems.length - 1) {
+      this.router.navigate(['/lesson', this.courseId]);
+    }
+    if((this.currentIndex + 1) % SessionComponent.chunk == 0) {
+
+    }
+
     this.currentIndex = this.currentIndex + 1;
     let lessonItem = this.lessonItems[this.currentIndex];
 
-    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(AlphabetBoardComponent);
+    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(SessionComponent.componentConfig[this.lesson.teach]);
 
     let viewContainerRef = this.board.viewContainerRef;
     viewContainerRef.clear();
 
     let componentRef = viewContainerRef.createComponent(componentFactory);
-    (<BoardComponent>componentRef.instance).lessonItem = this.lessonItems[this.currentIndex];
+    (<BoardComponent>componentRef.instance).lessonItems = this.lessonItems;
+    (<BoardComponent>componentRef.instance).currentIndex = this.currentIndex;
+    (<BoardComponent>componentRef.instance).readyToGo.subscribe(this.readyToGo);
+    
 
+    this.completed = (this.currentIndex + 1) / this.lessonItems.length * 100;
+  }
+
+  readyToGo(tries: number) {
+    console.log('ready');
   }
 
 }

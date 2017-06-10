@@ -1,0 +1,6 @@
+<div *ngIf="lessonItems">
+  <h1>{{lessonItems[currentIndex].item}}</h1>
+  <h2>{{(word$ | async)?.meaning}}</h2>
+  <img src="{{(word$ | async)?.image}}">
+  <app-play *ngIf="(word$ | async)?.pronunciation" [filedata]="{'source': (word$ | async)?.pronunciation}"></app-play>
+</div>
