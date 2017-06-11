@@ -10,6 +10,7 @@ export class PlayQuizComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.playaudio(this.filedata.source);
   }
   playaudio(audiosrc: string) {
     const audio = new Audio();

@@ -12,7 +12,8 @@ export class PlayComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
+     this.playaudio(this.filedata.source);
+ }
 
   playaudio(audiosrc: string) {
     const audio = new Audio();
