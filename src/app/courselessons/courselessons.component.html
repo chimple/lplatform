@@ -12,13 +12,12 @@
 
 <div class="row courseLesson_container">
 	<div class="col-xs-12 col-sm-6 col-lg-3"  *ngFor="let courseLesson of (courseLessons$ | async); let i = index">
-		<div class="list_of_courseLesson" [class.unsubscribed_lessons]="!authInfo?.isLoggedIn() || (authInfo?.isLoggedIn()&& isCourseNotTaken)">
+		<div class="list_of_courseLesson" [class.unsubscribed_lessons]="!authInfo?.isLoggedIn() || (authInfo?.isLoggedIn()&& isCourseNotTaken) || ( (i>0) &&  (i > maxLessonIndexToOpen) ) ">
 			<a [routerLink]="['/session', courseId, courseLesson.lesson]">
 				<img class="img-responsive" [src]="courseLesson.image" />
 			</a>
 			<div class="courseLesson_details">
 				<h3>{{courseLesson.name}}</h3>
-        <!--<h3>{{maxLessonIndexToOpen}}</h3>-->
 				<span class="course_lessons_count">{{courseLesson.order}}</span>
 			</div>
 		</div>
