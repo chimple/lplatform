@@ -134,14 +134,16 @@ export class LessonService {
 
     let lessonItemToSave;
 
+    // const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
+    let newKey;
 
     if (input.word) {
       lessonItemToSave = Object.assign({}, {item: input.word}, {lesson: lessonUrl}, {course: courseUrl});
+      newKey = input.word;
     } else if (input.alpha) {
       lessonItemToSave = Object.assign({}, {item: input.alpha}, {lesson: lessonUrl}, {course: courseUrl});
+      newKey = input.alpha;
     }
-
-    const newKey = this.sdkDb.child(`course_lesson_items/${courseUrl}`).push().key;
 
     const dataToSave = {};
     dataToSave[`course_lesson_items/${lessonUrl}/${newKey}`] = lessonItemToSave;
