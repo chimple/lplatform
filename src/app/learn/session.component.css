@@ -13,15 +13,18 @@
 
 #progressButton{
   height: 60px;
-  opacity: 0.7;
   color: #15F8FF;
+  background-color: #e67f23;
 
 }
 
 #progressButton:hover{
-  background-color: #8EFFFA;
+  background-color: #5cb85c;
 }
 
+#progressButton:disabled{
+  background-color: #999999;
+}
 .panel-heading{
   margin: 10px;
 }
