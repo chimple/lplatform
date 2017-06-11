@@ -1,33 +1,35 @@
 <div class="row list_of_courses_headline" *ngIf="authInfo?.getUser()">
-	<div class="col-xs-12 col-md-6 co-sm-6 col-lg-6">
- 		<h4>Courses created by you</h4>
- 	</div>
- 	<div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
- 		<input class="search-bar form-control" placeholder="Search your course here" (keyup) = "search(input.value)" #input>
- 	</div>
+  <div class="col-xs-12 col-md-6 co-sm-6 col-lg-6">
+    <h4>Courses created by you</h4>
+  </div>
+  <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+    <input class="search-bar form-control" placeholder="Search your course here" (keyup)="search(input.value)" #input>
+  </div>
 </div>
 <div class="row course_container" *ngIf="authInfo?.getUser()">
-	<div class="list-group">
-  		<div class="col-xs-12 col-sm-6 col-lg-3 " *ngFor="let course of filtered">
-			<div class="list_of_courses" >
-				<a routerLink="/home/{{course.$key}}/alphabet/{{course.$key}}">
-					<img class="img-responsive" [src]="course.image" />
-				</a>
-				<div class="course_details">
-					<div class="clearfix">
+  <div class="list-group">
+    <div class="col-xs-12 col-sm-6 col-lg-3 " *ngFor="let course of filtered">
+      <div class="list_of_courses">
+        <a routerLink="/home/{{course.$key}}/alphabet/{{course.$key}}">
+          <img class="img-responsive" [src]="course.image"/>
+        </a>
+        <div class="course_details">
+          <div class="clearfix">
 				    <span class="author pull-right">
 				        by
 				    	<a title="{{course.creator}}">{{course.creator}}</a>
 				    </span>
-				    <a class="category" title="{{course.lang}}">{{course.lang}}</a>
-				</div>
-				<h3>{{course.name}}</h3>
-				<div class="learners_count">
-          <app-upload-form [filedata]="{'objectname': 'test','componentname':'course','courseId': course.$key,'uploadFor':'image'}"></app-upload-form>
-				</div>
-				</div>
-			</div>
-		</div>
+            <a class="category" title="{{course.lang}}">{{course.lang}}</a>
+          </div>
+          <h3>{{course.name}}</h3>
+          <!--<h3>{{course.$key}}</h3>-->
+          <div class="learners_count">
+            <app-upload-form
+              [filedata]="{'objectname': course.name,'componentname':'course','courseId': course.$key,'uploadFor':'image'}"></app-upload-form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	</div>
+  </div>
 </div>
