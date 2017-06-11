@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="col-sm-2 col-xs-12 next-button-container">
-      <button type="button" class="btn btn-default" (click)="loadComponent()" id="progressButton" >
+      <button type="button" class="btn btn-default" (click)="loadComponent()" id="progressButton" [disabled]="isWaitingForAnswer">
       <span class="glyphicon glyphicon-play"  style="color:#1513ff"></span></button>
     </div>
   </div>

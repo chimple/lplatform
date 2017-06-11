@@ -53,11 +53,10 @@ export class WordQuizComponent implements BoardComponent, OnInit {
       this.lessonItems.slice(0, this.currentIndex + 1), this.reviewItem);
     this.answer = this.reviewItem.item;
     this.choices = quizItems
-      .slice(1, quizItems.length)
       .map((value) => {
         return value.item;
       });
-  this.word$ = this.wordService.getWord(quizItems[0].item, quizItems[0].course);
+    this.word$ = this.wordService.getWord(this.reviewItem.item, this.reviewItem.course);
 
   }
 

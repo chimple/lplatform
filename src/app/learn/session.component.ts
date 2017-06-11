@@ -33,6 +33,8 @@ export class SessionComponent implements AfterViewInit, OnInit {
   lessonItems: LessonItem[];
   lesson: Lesson;
   courseId: string;
+  isWaitingForAnswer: boolean;
+  fnReadyToGo: Function;
 
   static componentConfig = {
     'alphabets': {
@@ -71,7 +73,7 @@ export class SessionComponent implements AfterViewInit, OnInit {
           this.loadComponent();
         }
       );
-
+    this.fnReadyToGo = obj => this.readyToGo(obj);
   }
 
   ngAfterViewInit(): void {
@@ -88,7 +90,8 @@ export class SessionComponent implements AfterViewInit, OnInit {
     if(((this.currentIndex + 1) % SessionComponent.chunk == 0 || this.currentIndex >= this.lessonItems.length - 1) && this.reviewItems.length > 0) {
       boardType = 'quiz';
       let aIndex = this.quizService.getRandomIntInclusive(0, this.reviewItems.length - 1);
-      [reviewItem] = this.reviewItems.splice(aIndex, 1)
+      [reviewItem] = this.reviewItems.splice(aIndex, 1);
+      this.isWaitingForAnswer = true;
     } else {
       this.currentIndex = this.currentIndex + 1;
       let lessonItem = this.lessonItems[this.currentIndex];
@@ -102,13 +105,14 @@ export class SessionComponent implements AfterViewInit, OnInit {
     (<BoardComponent>componentRef.instance).lessonItems = this.lessonItems;
     (<BoardComponent>componentRef.instance).currentIndex = this.currentIndex;
     (<BoardComponent>componentRef.instance).reviewItem = reviewItem;
-    (<BoardComponent>componentRef.instance).readyToGo.subscribe(this.readyToGo);
+    (<BoardComponent>componentRef.instance).readyToGo.subscribe(this.fnReadyToGo);
 
     this.completed = (this.currentIndex + 1) / this.lessonItems.length * 100;
   }
 
   readyToGo(tries: number) {
     console.log('ready');
+    this.isWaitingForAnswer = false;
   }
 
 }
