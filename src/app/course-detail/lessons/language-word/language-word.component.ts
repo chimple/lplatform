@@ -125,7 +125,8 @@ export class LanguageWordComponent implements OnInit {
     const updatedForm = this.lwForm.value;
 
     const checkWordExists = this.existingWordsForCourse.map(word => word.word).includes(updatedForm.word);
-    this.lessonService.createLessonItem(this.lessonWord$Key, this.lessonWord$Key, updatedForm, 'word', checkWordExists);
+    const courseUrlKey = localStorage.getItem('editLessonForCourse') ? localStorage.getItem('editLessonForCourse') : this.lessonWord$Key;
+    this.lessonService.createLessonItem(courseUrlKey, this.lessonWord$Key, updatedForm, 'word', checkWordExists);
     this.lwInsertFlag = false;
   }
 

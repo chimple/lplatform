@@ -115,6 +115,7 @@ export class LessonsComponent implements OnInit {
   }
 
   callChildRoutes() {
+    localStorage.setItem('editLessonForCourse', this.course$Key);
   }
 
   addLesson(): void {

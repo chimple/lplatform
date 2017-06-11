@@ -216,7 +216,8 @@ export class LanguageAlphabetComponent implements OnInit {
     const that = this;
     const updatedForm = data;
     updatedForm['alphabet'] = updatedForm.alpha;
-    that.lessonService.createLessonItem(that.lessonAlpha$Key, that.lessonAlpha$Key, updatedForm, 'alphabet', false);
+    const courseUrlKey = localStorage.getItem('editLessonForCourse') ? localStorage.getItem('editLessonForCourse') : this.lessonAlpha$Key;
+    that.lessonService.createLessonItem(courseUrlKey, that.lessonAlpha$Key, updatedForm, 'alphabet', false);
     this.laInsertFlag = false;
     this.lessonAlphaform.reset();
   }
